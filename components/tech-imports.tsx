@@ -11,12 +11,12 @@ const output = [
   "  Installing: JavaScript, TypeScript, React, Next.js, Vue, Angular, Tailwind, Framer Motion",
   "",
   "Collecting backend...",
-  "  Installing: Node.js, Express, NestJS, Laravel, MongoDB, PostgreSQL, MySQL, Redis, Firebase",
+  "  Installing: Node.js, Express, NestJS, PHP (Laravel), Python (FastAPI), MongoDB, PostgreSQL, MySQL, Redis, Firebase",
   "",
   "Collecting cloud...",
   "  Installing: Git, AWS, Docker, Cloudflare",
   "",
-  "✓ Successfully installed 19 packages",
+  "✓ Successfully installed 21 packages",
 ];
 
 export function TechImports() {
