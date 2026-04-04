@@ -43,32 +43,26 @@ export function ContactSection() {
   }, [state]);
 
   return (
-    <section id="contact" className="relative py-32 px-6">
-      {/* Subtle background orbs */}
-      <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full opacity-10 blur-[100px] pointer-events-none bg-purple-600" />
-      <div className="absolute bottom-1/4 -right-32 w-72 h-72 rounded-full opacity-10 blur-[100px] pointer-events-none bg-purple-600" />
-
-      <div className="max-w-4xl mx-auto relative">
-        {/* Section Label */}
+    <section id="contact" className="relative py-32 px-6 md:px-12">
+      <div className="max-w-7xl mx-auto relative">
+        {/* Label */}
         <Reveal variant="fade-up">
-          <p className="text-xs tracking-[0.3em] text-purple-400/80 font-mono mb-4 uppercase">
-            Get in Touch
+          <p className="text-xs tracking-[0.3em] text-purple-400/80 font-mono mb-6 uppercase">
+            Contact
           </p>
         </Reveal>
 
         <Reveal variant="fade-up" delay={0.1}>
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            <span className="text-white/90">Let&apos;s build something </span>
-            <span className="text-purple-400">
-              amazing
-            </span>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <span className="text-white/90">Let&apos;s work </span>
+            <span className="text-purple-400">together</span>
           </h2>
         </Reveal>
 
-        <Reveal variant="fade-up" delay={0.2}>
+        <Reveal variant="fade-up" delay={0.15}>
           <a
             href={`mailto:${personalInfo.email}`}
-            className="inline-flex items-center gap-2 text-lg text-slate-400 hover:text-white transition-colors duration-200 mb-12"
+            className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-white transition-colors duration-200 mb-16"
             data-cursor-hover
           >
             <Mail className="w-4 h-4" />
@@ -76,21 +70,20 @@ export function ContactSection() {
           </a>
         </Reveal>
 
-        {/* Contact Form */}
-        <Reveal variant="fade-up" delay={0.3}>
-          <div className="max-w-xl">
+        {/* Form — left-aligned, max-width */}
+        <Reveal variant="fade-up" delay={0.2}>
+          <div className="max-w-2xl">
             {isMounted ? (
               <form
                 id="contact-form"
                 action={handleSubmit}
-                className="space-y-6"
+                className="space-y-8"
               >
-                {/* Status Message */}
+                {/* Status */}
                 {state && (
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, ease: "easeOut" }}
                     className={cn(
                       "flex items-center gap-3 p-4 rounded-xl",
                       state.success
@@ -98,16 +91,12 @@ export function ContactSection() {
                         : "bg-red-500/10 border border-red-500/20 text-red-400"
                     )}
                   >
-                    {state.success ? (
-                      <CheckCircle className="w-5 h-5 flex-shrink-0" />
-                    ) : (
-                      <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                    )}
+                    {state.success ? <CheckCircle className="w-5 h-5 shrink-0" /> : <AlertCircle className="w-5 h-5 shrink-0" />}
                     <span className="text-sm">{state.message}</span>
                   </motion.div>
                 )}
 
-                {/* Name Field */}
+                {/* Name */}
                 <div className="relative">
                   <label
                     htmlFor="name"
@@ -128,25 +117,20 @@ export function ContactSection() {
                       setFocused(null);
                       setFilled((prev) => ({ ...prev, name: !!e.target.value }));
                     }}
-                    className="w-full bg-transparent border-b border-white/10 focus:border-purple-500/50 py-3 text-white outline-none transition-colors duration-300 placeholder:text-transparent"
+                    className="w-full bg-transparent border-b border-white/10 focus:border-purple-500/50 py-3 text-white outline-none transition-colors duration-300"
                     required
                     disabled={isPending}
                     autoComplete="name"
                   />
-                  {/* Animated border line */}
                   <motion.div
-                    className="absolute bottom-0 left-1/2 h-px bg-purple-500/60"
-                    initial={{ width: 0, x: "-50%" }}
-                    animate={{
-                      width: focused === "name" ? "100%" : "0%",
-                      x: focused === "name" ? "0%" : "-50%",
-                      left: focused === "name" ? "0%" : "50%",
-                    }}
+                    className="absolute bottom-0 left-0 h-px bg-purple-500/60"
+                    initial={{ width: 0 }}
+                    animate={{ width: focused === "name" ? "100%" : "0%" }}
                     transition={{ duration: 0.3 }}
                   />
                 </div>
 
-                {/* Email Field */}
+                {/* Email */}
                 <div className="relative">
                   <label
                     htmlFor="email"
@@ -163,52 +147,36 @@ export function ContactSection() {
                     id="email"
                     name="email"
                     type="email"
-                    onFocus={() => {
-                      setFocused("email");
-                      setEmailError(null);
-                    }}
+                    onFocus={() => { setFocused("email"); setEmailError(null); }}
                     onBlur={(e) => {
                       setFocused(null);
-                      const value = e.target.value;
-                      setFilled((prev) => ({ ...prev, email: !!value }));
-                      if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-                        setEmailError("Please enter a valid email address");
-                      } else {
-                        setEmailError(null);
-                      }
+                      const v = e.target.value;
+                      setFilled((prev) => ({ ...prev, email: !!v }));
+                      if (v && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) setEmailError("Please enter a valid email address");
+                      else setEmailError(null);
                     }}
                     className={cn(
-                      "w-full bg-transparent border-b py-3 text-white outline-none transition-colors duration-300 placeholder:text-transparent",
-                      emailError
-                        ? "border-red-500/50"
-                        : "border-white/10 focus:border-purple-500/50"
+                      "w-full bg-transparent border-b py-3 text-white outline-none transition-colors duration-300",
+                      emailError ? "border-red-500/50" : "border-white/10 focus:border-purple-500/50"
                     )}
                     required
                     disabled={isPending}
                     autoComplete="email"
                   />
                   {emailError && (
-                    <motion.p
-                      initial={{ opacity: 0, y: -4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="text-red-400 text-xs mt-1 font-mono"
-                    >
+                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-400 text-xs mt-1 font-mono">
                       {emailError}
                     </motion.p>
                   )}
                   <motion.div
-                    className="absolute bottom-0 left-1/2 h-px bg-purple-500/60"
-                    initial={{ width: 0, x: "-50%" }}
-                    animate={{
-                      width: focused === "email" ? "100%" : "0%",
-                      x: focused === "email" ? "0%" : "-50%",
-                      left: focused === "email" ? "0%" : "50%",
-                    }}
+                    className="absolute bottom-0 left-0 h-px bg-purple-500/60"
+                    initial={{ width: 0 }}
+                    animate={{ width: focused === "email" ? "100%" : "0%" }}
                     transition={{ duration: 0.3 }}
                   />
                 </div>
 
-                {/* Message Field */}
+                {/* Message */}
                 <div className="relative">
                   <label
                     htmlFor="message"
@@ -230,60 +198,48 @@ export function ContactSection() {
                       setFocused(null);
                       setFilled((prev) => ({ ...prev, message: !!e.target.value }));
                     }}
-                    className="w-full bg-transparent border-b border-white/10 focus:border-purple-500/50 py-3 text-white outline-none transition-colors duration-300 resize-none placeholder:text-transparent"
+                    className="w-full bg-transparent border-b border-white/10 focus:border-purple-500/50 py-3 text-white outline-none transition-colors duration-300 resize-none"
                     required
                     disabled={isPending}
                   />
                   <motion.div
-                    className="absolute bottom-0 left-1/2 h-px bg-purple-500/60"
-                    initial={{ width: 0, x: "-50%" }}
-                    animate={{
-                      width: focused === "message" ? "100%" : "0%",
-                      x: focused === "message" ? "0%" : "-50%",
-                      left: focused === "message" ? "0%" : "50%",
-                    }}
+                    className="absolute bottom-0 left-0 h-px bg-purple-500/60"
+                    initial={{ width: 0 }}
+                    animate={{ width: focused === "message" ? "100%" : "0%" }}
                     transition={{ duration: 0.3 }}
                   />
                 </div>
 
-                {/* Submit Button */}
+                {/* Submit */}
                 <motion.button
                   type="submit"
                   disabled={isPending}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="relative w-full py-4 rounded-full font-medium text-sm tracking-wide overflow-hidden disabled:opacity-50 group bg-purple-600 hover:bg-purple-500 transition-colors duration-300"
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.99 }}
+                  className="px-8 py-3.5 rounded-full bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium tracking-wide transition-colors duration-300 disabled:opacity-50 flex items-center gap-2"
                   data-cursor-hover
                 >
-                  <span className="relative z-10 flex items-center justify-center gap-2 text-white">
-                    {isPending ? (
-                      <>
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        SENDING...
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-4 h-4" />
-                        SEND MESSAGE
-                      </>
-                    )}
-                  </span>
+                  {isPending ? (
+                    <><Loader2 className="w-4 h-4 animate-spin" /> SENDING...</>
+                  ) : (
+                    <><Send className="w-4 h-4" /> SEND MESSAGE</>
+                  )}
                 </motion.button>
               </form>
             ) : (
-              <div className="space-y-6 animate-pulse">
+              <div className="space-y-8 animate-pulse">
                 <div className="h-12 border-b border-white/10" />
                 <div className="h-12 border-b border-white/10" />
                 <div className="h-24 border-b border-white/10" />
-                <div className="h-14 rounded-full bg-purple-600/20" />
+                <div className="w-48 h-12 rounded-full bg-purple-600/20" />
               </div>
             )}
           </div>
         </Reveal>
 
         {/* Footer */}
-        <Reveal variant="fade-up" delay={0.5}>
-          <div className="mt-24 pt-8 border-t border-white/6">
+        <Reveal variant="fade-up" delay={0.4}>
+          <div className="mt-32 pt-8 border-t border-white/6">
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-600">
               <p>{personalInfo.copyright}</p>
               <p className="font-mono">Built with Next.js & Framer Motion</p>

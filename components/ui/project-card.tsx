@@ -58,17 +58,12 @@ export function ProjectCard({
       transition={{ duration: 0.7, delay: index * 0.15 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{
-        perspective: 1000,
-      }}
+      style={{ perspective: 1000 }}
       className="w-full group"
       data-cursor-hover
     >
       <motion.div
-        animate={{
-          rotateX,
-          rotateY,
-        }}
+        animate={{ rotateX, rotateY }}
         transition={{ type: "spring", stiffness: 200, damping: 30 }}
         className={cn(
           "relative overflow-hidden rounded-2xl",
@@ -84,8 +79,7 @@ export function ProjectCard({
           )}
         >
           {/* Image Section */}
-          <div className="relative w-full lg:w-1/2 h-64 lg:h-auto min-h-[280px] bg-linear-to-br from-purple-900/10 to-black/40 flex items-center justify-center overflow-hidden">
-            {/* Glow accents */}
+          <div className="relative w-full lg:w-1/2 h-64 lg:h-auto min-h-[280px] bg-gradient-to-br from-purple-950/10 to-black/40 flex items-center justify-center overflow-hidden">
             <div className="absolute top-0 left-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl" />
             <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/3 rounded-full blur-3xl" />
 
