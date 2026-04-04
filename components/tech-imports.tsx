@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 
 const command = "pip install -r requirements.txt";
 
@@ -23,27 +23,29 @@ const output = [
 ];
 
 export function TechImports() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
   const [signalReceived, setSignalReceived] = useState(false);
   const [started, setStarted] = useState(false);
   const [typedCmd, setTypedCmd] = useState("");
   const [showOutput, setShowOutput] = useState(false);
   const [visibleLines, setVisibleLines] = useState(0);
 
-  // Listen for the signal from the about terminal
+  // Listen for the signal from the about terminal (also check if already fired)
   useEffect(() => {
+    if ((window as any).__skillsReady) {
+      setSignalReceived(true);
+      return;
+    }
     const handler = () => setSignalReceived(true);
     window.addEventListener("terminal:skills-ready", handler);
     return () => window.removeEventListener("terminal:skills-ready", handler);
   }, []);
 
-  // Start only when BOTH in view and signal received
+  // Start only when signal received (no fallback — waits for cd command to finish)
   useEffect(() => {
-    if (signalReceived && isInView && !started) {
+    if (signalReceived) {
       setStarted(true);
     }
-  }, [signalReceived, isInView, started]);
+  }, [signalReceived]);
 
   // Type the command
   useEffect(() => {
@@ -57,7 +59,7 @@ export function TechImports() {
         clearInterval(timer);
         setTimeout(() => setShowOutput(true), 300);
       }
-    }, 50);
+    }, 30);
     return () => clearInterval(timer);
   }, [started]);
 
@@ -77,7 +79,7 @@ export function TechImports() {
   }, [showOutput]);
 
   return (
-    <div ref={ref}>
+    <div>
       <div className="font-mono text-[12px] leading-[1.8]">
         {/* Waiting state — blinking cursor */}
         {!started && (

@@ -19,6 +19,7 @@ export function HeaderAnimations({ name, title, email, linkedin, github }: Heade
   const letters = name.split("");
   const [typedTitle, setTypedTitle] = useState("");
   const [showCursor, setShowCursor] = useState(true);
+  const [typingDone, setTypingDone] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
@@ -30,9 +31,13 @@ export function HeaderAnimations({ name, title, email, linkedin, github }: Heade
           i++;
         } else {
           clearInterval(timer);
+          setTypingDone(true);
           setTimeout(() => setShowCursor(false), 2000);
+          // Signal the about terminal to start
+          (window as any).__titleDone = true;
+          window.dispatchEvent(new CustomEvent("terminal:title-done"));
         }
-      }, 60);
+      }, 15);
       return () => clearInterval(timer);
     }, 900);
 
@@ -40,6 +45,13 @@ export function HeaderAnimations({ name, title, email, linkedin, github }: Heade
   }, [title]);
 
   const closeModal = useCallback(() => setModalOpen(false), []);
+
+  // Listen for command palette "Send Email" action
+  useEffect(() => {
+    const handler = () => setModalOpen(true);
+    window.addEventListener("open-email-modal", handler);
+    return () => window.removeEventListener("open-email-modal", handler);
+  }, []);
 
   return (
     <>
@@ -67,10 +79,8 @@ export function HeaderAnimations({ name, title, email, linkedin, github }: Heade
       <p className="text-sm text-purple-400 mt-1 font-mono h-5 flex items-center">
         <span>{typedTitle}</span>
         {showCursor && (
-          <motion.span
-            animate={{ opacity: [1, 0] }}
-            transition={{ duration: 0.6, repeat: Infinity, repeatType: "reverse" }}
-            className="inline-block w-[2px] h-[14px] bg-purple-400 ml-0.5"
+          <span
+            className={`inline-block w-[2px] h-[14px] bg-purple-400 ml-0.5 ${typingDone ? "animate-pulse" : ""}`}
           />
         )}
       </p>
