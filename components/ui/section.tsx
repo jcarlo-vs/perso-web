@@ -59,7 +59,7 @@ export function SectionHeader({
       transition={{ duration: 0.5 }}
       className={cn("mb-12", className)}
     >
-      {icon && <div className="mb-4 text-purple-500">{icon}</div>}
+      {icon && <div className="mb-4 text-neutral-500">{icon}</div>}
       <h2 className="text-4xl md:text-5xl font-bold mb-4">{title}</h2>
       {subtitle && (
         <p className="text-lg text-muted-foreground">{subtitle}</p>

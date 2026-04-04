@@ -44,15 +44,15 @@ export function HeroSection() {
       {/* Gradient Orbs - Parallax Layers */}
       <motion.div
         className="absolute top-1/4 -left-32 w-125 h-125 rounded-full opacity-20 blur-[100px] pointer-events-none"
-        style={{ y: orb1Y, background: "radial-gradient(circle, #7e22ce 0%, transparent 70%)" }}
+        style={{ y: orb1Y, background: "radial-gradient(circle, #404040 0%, transparent 70%)" }}
       />
       <motion.div
         className="absolute bottom-1/4 -right-32 w-100 h-100 rounded-full opacity-15 blur-[100px] pointer-events-none"
-        style={{ y: orb2Y, background: "radial-gradient(circle, #9333ea 0%, transparent 70%)" }}
+        style={{ y: orb2Y, background: "radial-gradient(circle, #525252 0%, transparent 70%)" }}
       />
       <motion.div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 w-75 h-75 rounded-full opacity-10 blur-[80px] pointer-events-none"
-        style={{ y: orb3Y, background: "radial-gradient(circle, #9333ea 0%, transparent 70%)" }}
+        style={{ y: orb3Y, background: "radial-gradient(circle, #525252 0%, transparent 70%)" }}
       />
 
       {/* Content */}
@@ -65,7 +65,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-sm md:text-base tracking-[0.3em] text-purple-400/80 font-mono mb-6 uppercase"
+          className="text-sm md:text-base tracking-[0.3em] text-neutral-500 font-mono mb-6 uppercase"
         >
           Full Stack Developer
         </motion.p>
@@ -80,7 +80,7 @@ export function HeroSection() {
           <br />
           <LetterReveal
             text="Juan Carlo"
-            className="bg-linear-to-r from-white via-purple-200 to-white bg-clip-text text-transparent"
+            className="bg-linear-to-r from-white via-neutral-400 to-white bg-clip-text text-transparent"
             delay={0.6}
           />
         </h1>
@@ -121,7 +121,7 @@ export function HeroSection() {
               data-cursor-hover
             >
               {/* Animated gradient border */}
-              <span className="absolute inset-0 rounded-full p-[1px] bg-gradient-to-r from-purple-500/40 via-purple-400/20 to-purple-500/40">
+              <span className="absolute inset-0 rounded-full p-[1px] bg-gradient-to-r from-neutral-500/40 via-neutral-400/20 to-neutral-500/40">
                 <span className="absolute inset-[1px] rounded-full bg-black" />
               </span>
               <span className="relative z-10 flex items-center gap-2 text-white/80 group-hover:text-white transition-colors">
@@ -142,7 +142,7 @@ export function HeroSection() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 text-slate-400 hover:text-white hover:border-purple-400/40 hover:bg-purple-500/10 transition-all duration-300"
+                  className="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 text-slate-400 hover:text-white hover:border-neutral-400/40 hover:bg-neutral-500/10 transition-all duration-300"
                   aria-label={social.label}
                   data-cursor-hover
                 >
@@ -170,7 +170,7 @@ export function HeroSection() {
           <span className="text-[10px] text-slate-600 tracking-[0.3em] font-mono">
             SCROLL
           </span>
-          <div className="w-[1px] h-12 bg-gradient-to-b from-purple-400/40 to-transparent" />
+          <div className="w-[1px] h-12 bg-gradient-to-b from-neutral-400/40 to-transparent" />
         </motion.div>
       </motion.div>
     </section>

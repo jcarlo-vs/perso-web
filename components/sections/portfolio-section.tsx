@@ -10,7 +10,7 @@ export function PortfolioSection() {
       <div className="max-w-6xl mx-auto">
         {/* Section Label */}
         <Reveal variant="fade-up">
-          <p className="text-xs tracking-[0.3em] text-purple-400/80 font-mono mb-4 uppercase">
+          <p className="text-xs tracking-[0.3em] text-neutral-500 font-mono mb-4 uppercase">
             Portfolio
           </p>
         </Reveal>
@@ -18,7 +18,7 @@ export function PortfolioSection() {
         <Reveal variant="fade-up" delay={0.1}>
           <h2 className="text-3xl md:text-5xl font-bold mb-16">
             <span className="text-white/90">Featured </span>
-            <span className="text-purple-400">
+            <span className="text-neutral-400">
               Projects
             </span>
           </h2>

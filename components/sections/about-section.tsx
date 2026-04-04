@@ -40,7 +40,7 @@ export function AboutSection() {
       <div className="max-w-6xl mx-auto">
         {/* Section Label */}
         <Reveal variant="fade-up">
-          <p className="text-xs tracking-[0.3em] text-purple-400/80 font-mono mb-4 uppercase">
+          <p className="text-xs tracking-[0.3em] text-neutral-500 font-mono mb-4 uppercase">
             About Me
           </p>
         </Reveal>
@@ -50,7 +50,7 @@ export function AboutSection() {
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
             <span className="text-white/90">{aboutContent.heading}</span>
             <br />
-            <span className="text-purple-400">
+            <span className="text-neutral-400">
               {aboutContent.highlight}
             </span>
           </h2>

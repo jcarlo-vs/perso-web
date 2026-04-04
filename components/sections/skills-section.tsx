@@ -21,17 +21,16 @@ export function SkillsSection() {
       <div className="max-w-6xl mx-auto">
         {/* Section Label */}
         <Reveal variant="fade-up">
-          <p className="text-xs tracking-[0.3em] text-purple-400/80 font-mono mb-4 uppercase">
+          <p className="text-xs tracking-[0.3em] text-neutral-500 font-mono mb-4 uppercase">
             Tech Stack
           </p>
         </Reveal>
 
         <Reveal variant="fade-up" delay={0.1}>
-          <h2 className="text-3xl md:text-5xl font-bold mb-16">
-            <span className="text-purple-400">
-              Technologies
+          <h2 className="text-3xl md:text-4xl font-bold mb-16">
+            <span className="text-neutral-400">
+              Tech Stack
             </span>
-            <span className="text-white/90"> I work with</span>
           </h2>
         </Reveal>
 
@@ -40,7 +39,7 @@ export function SkillsSection() {
           {categories.map((category, catIndex) => (
             <div key={category.label}>
               <Reveal variant="fade-up" delay={catIndex * 0.1}>
-                <h3 className="text-sm tracking-[0.2em] font-semibold mb-8 text-purple-400/70">
+                <h3 className="text-sm tracking-[0.2em] font-semibold mb-8 text-neutral-400/70">
                   {category.label}
                 </h3>
               </Reveal>
@@ -52,7 +51,7 @@ export function SkillsSection() {
                     variant="scale-in"
                     delay={catIndex * 0.1 + index * 0.02}
                   >
-                    <div className="group flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:border-purple-500/25 hover:bg-white/10 transition-all duration-300">
+                    <div className="group flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:border-neutral-500/25 hover:bg-white/10 transition-all duration-300">
                       <SkillIcon
                         name={skill.name}
                         className="relative w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity duration-300"

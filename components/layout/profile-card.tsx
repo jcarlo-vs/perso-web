@@ -18,7 +18,7 @@ export function ProfileCard() {
       {/* Main card - clean glass effect */}
       <div className="relative flex flex-col items-center gap-5 px-10 py-10 rounded-3xl bg-slate-900/40 backdrop-blur-xl border border-slate-700/40 shadow-xl min-w-[280px]">
         {/* Subtle top accent line */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-[2px] bg-gradient-to-r from-transparent via-purple-500/50 to-transparent rounded-full" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-[2px] bg-gradient-to-r from-transparent via-neutral-500/50 to-transparent rounded-full" />
 
         {/* Name */}
         <motion.h3
@@ -38,7 +38,7 @@ export function ProfileCard() {
           className="relative"
         >
           {/* Simple gradient ring */}
-          <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-purple-500/30 via-purple-400/15 to-purple-500/10" />
+          <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-neutral-500/30 via-neutral-400/15 to-neutral-500/10" />
 
           {/* Image container */}
           <div className="relative w-36 h-36 rounded-full overflow-hidden border-2 border-slate-800">

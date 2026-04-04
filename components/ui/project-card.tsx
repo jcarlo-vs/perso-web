@@ -73,7 +73,7 @@ export function ProjectCard({
         className={cn(
           "relative overflow-hidden rounded-2xl",
           "border border-white/[0.06] bg-white/[0.02]",
-          "hover:border-purple-500/20",
+          "hover:border-neutral-500/20",
           "transition-colors duration-300"
         )}
       >
@@ -84,9 +84,9 @@ export function ProjectCard({
           )}
         >
           {/* Image Section */}
-          <div className="relative w-full lg:w-1/2 h-64 lg:h-auto min-h-[280px] bg-linear-to-br from-purple-900/10 to-black/40 flex items-center justify-center overflow-hidden">
+          <div className="relative w-full lg:w-1/2 h-64 lg:h-auto min-h-[280px] bg-linear-to-br from-neutral-900/10 to-black/40 flex items-center justify-center overflow-hidden">
             {/* Glow accents */}
-            <div className="absolute top-0 left-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl" />
+            <div className="absolute top-0 left-0 w-32 h-32 bg-neutral-500/10 rounded-full blur-3xl" />
             <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/3 rounded-full blur-3xl" />
 
             <div className="relative w-[80%] h-[80%] group-hover:scale-105 transition-transform duration-500">
@@ -101,7 +101,7 @@ export function ProjectCard({
 
           {/* Content Section */}
           <div className="w-full lg:w-1/2 p-8 lg:p-10 flex flex-col justify-center">
-            <h3 className="text-xl lg:text-2xl font-bold mb-3 text-white group-hover:text-purple-300 transition-colors duration-300">
+            <h3 className="text-xl lg:text-2xl font-bold mb-3 text-white group-hover:text-neutral-300 transition-colors duration-300">
               {title}
             </h3>
 
@@ -115,7 +115,7 @@ export function ProjectCard({
                 <Badge
                   key={i}
                   variant="outline"
-                  className="border-purple-500/20 text-purple-300/80 bg-purple-500/5 text-xs"
+                  className="border-neutral-500/20 text-neutral-300/80 bg-neutral-500/5 text-xs"
                 >
                   {tech}
                 </Badge>
@@ -128,7 +128,7 @@ export function ProjectCard({
                 href={demoLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium transition-colors duration-200"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-neutral-700 hover:bg-neutral-600 text-white text-sm font-medium transition-colors duration-200"
                 data-cursor-hover
               >
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -138,7 +138,7 @@ export function ProjectCard({
                 href={githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/10 hover:border-purple-500/30 text-slate-300 hover:text-white text-sm font-medium transition-all duration-200"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/10 hover:border-neutral-500/30 text-slate-300 hover:text-white text-sm font-medium transition-all duration-200"
                 data-cursor-hover
               >
                 <Github className="w-3.5 h-3.5" />

@@ -50,7 +50,7 @@ export function TypingEffect({
         <motion.span
           animate={{ opacity: [1, 0] }}
           transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
-          className="inline-block w-[2px] h-[1em] bg-purple-400 ml-0.5"
+          className="inline-block w-[2px] h-[1em] bg-neutral-400 ml-0.5"
         />
       )}
     </span>

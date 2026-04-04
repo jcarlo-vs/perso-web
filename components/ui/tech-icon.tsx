@@ -16,7 +16,7 @@ export function TechIcon({ name, icon, className }: TechIconProps) {
         "group flex flex-col items-center justify-center",
         "w-24 h-24 p-3 rounded-xl",
         "border border-slate-700/40 bg-slate-900/30",
-        "hover:border-purple-500/40 hover:bg-slate-800/40",
+        "hover:border-neutral-500/40 hover:bg-slate-800/40",
         "transition-all duration-200 cursor-default",
         className
       )}

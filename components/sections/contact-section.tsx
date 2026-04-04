@@ -45,13 +45,13 @@ export function ContactSection() {
   return (
     <section id="contact" className="relative py-32 px-6">
       {/* Subtle background orbs */}
-      <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full opacity-10 blur-[100px] pointer-events-none bg-purple-600" />
-      <div className="absolute bottom-1/4 -right-32 w-72 h-72 rounded-full opacity-10 blur-[100px] pointer-events-none bg-purple-600" />
+      <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full opacity-10 blur-[100px] pointer-events-none bg-neutral-600" />
+      <div className="absolute bottom-1/4 -right-32 w-72 h-72 rounded-full opacity-10 blur-[100px] pointer-events-none bg-neutral-600" />
 
       <div className="max-w-4xl mx-auto relative">
         {/* Section Label */}
         <Reveal variant="fade-up">
-          <p className="text-xs tracking-[0.3em] text-purple-400/80 font-mono mb-4 uppercase">
+          <p className="text-xs tracking-[0.3em] text-neutral-500 font-mono mb-4 uppercase">
             Get in Touch
           </p>
         </Reveal>
@@ -59,7 +59,7 @@ export function ContactSection() {
         <Reveal variant="fade-up" delay={0.1}>
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             <span className="text-white/90">Let&apos;s build something </span>
-            <span className="text-purple-400">
+            <span className="text-neutral-400">
               amazing
             </span>
           </h2>
@@ -114,7 +114,7 @@ export function ContactSection() {
                     className={cn(
                       "absolute left-0 transition-all duration-200 pointer-events-none font-mono",
                       focused === "name" || filled["name"]
-                        ? "-top-5 text-[10px] tracking-[0.2em] text-purple-400"
+                        ? "-top-5 text-[10px] tracking-[0.2em] text-neutral-400"
                         : "top-3 text-sm text-slate-600"
                     )}
                   >
@@ -128,14 +128,14 @@ export function ContactSection() {
                       setFocused(null);
                       setFilled((prev) => ({ ...prev, name: !!e.target.value }));
                     }}
-                    className="w-full bg-transparent border-b border-white/10 focus:border-purple-500/50 py-3 text-white outline-none transition-colors duration-300 placeholder:text-transparent"
+                    className="w-full bg-transparent border-b border-white/10 focus:border-neutral-500/50 py-3 text-white outline-none transition-colors duration-300 placeholder:text-transparent"
                     required
                     disabled={isPending}
                     autoComplete="name"
                   />
                   {/* Animated border line */}
                   <motion.div
-                    className="absolute bottom-0 left-1/2 h-px bg-purple-500/60"
+                    className="absolute bottom-0 left-1/2 h-px bg-neutral-500/60"
                     initial={{ width: 0, x: "-50%" }}
                     animate={{
                       width: focused === "name" ? "100%" : "0%",
@@ -153,7 +153,7 @@ export function ContactSection() {
                     className={cn(
                       "absolute left-0 transition-all duration-200 pointer-events-none font-mono",
                       focused === "email" || filled["email"]
-                        ? "-top-5 text-[10px] tracking-[0.2em] text-purple-400"
+                        ? "-top-5 text-[10px] tracking-[0.2em] text-neutral-400"
                         : "top-3 text-sm text-slate-600"
                     )}
                   >
@@ -181,7 +181,7 @@ export function ContactSection() {
                       "w-full bg-transparent border-b py-3 text-white outline-none transition-colors duration-300 placeholder:text-transparent",
                       emailError
                         ? "border-red-500/50"
-                        : "border-white/10 focus:border-purple-500/50"
+                        : "border-white/10 focus:border-neutral-500/50"
                     )}
                     required
                     disabled={isPending}
@@ -197,7 +197,7 @@ export function ContactSection() {
                     </motion.p>
                   )}
                   <motion.div
-                    className="absolute bottom-0 left-1/2 h-px bg-purple-500/60"
+                    className="absolute bottom-0 left-1/2 h-px bg-neutral-500/60"
                     initial={{ width: 0, x: "-50%" }}
                     animate={{
                       width: focused === "email" ? "100%" : "0%",
@@ -215,7 +215,7 @@ export function ContactSection() {
                     className={cn(
                       "absolute left-0 transition-all duration-200 pointer-events-none font-mono",
                       focused === "message" || filled["message"]
-                        ? "-top-5 text-[10px] tracking-[0.2em] text-purple-400"
+                        ? "-top-5 text-[10px] tracking-[0.2em] text-neutral-400"
                         : "top-3 text-sm text-slate-600"
                     )}
                   >
@@ -230,12 +230,12 @@ export function ContactSection() {
                       setFocused(null);
                       setFilled((prev) => ({ ...prev, message: !!e.target.value }));
                     }}
-                    className="w-full bg-transparent border-b border-white/10 focus:border-purple-500/50 py-3 text-white outline-none transition-colors duration-300 resize-none placeholder:text-transparent"
+                    className="w-full bg-transparent border-b border-white/10 focus:border-neutral-500/50 py-3 text-white outline-none transition-colors duration-300 resize-none placeholder:text-transparent"
                     required
                     disabled={isPending}
                   />
                   <motion.div
-                    className="absolute bottom-0 left-1/2 h-px bg-purple-500/60"
+                    className="absolute bottom-0 left-1/2 h-px bg-neutral-500/60"
                     initial={{ width: 0, x: "-50%" }}
                     animate={{
                       width: focused === "message" ? "100%" : "0%",
@@ -252,7 +252,7 @@ export function ContactSection() {
                   disabled={isPending}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="relative w-full py-4 rounded-full font-medium text-sm tracking-wide overflow-hidden disabled:opacity-50 group bg-purple-600 hover:bg-purple-500 transition-colors duration-300"
+                  className="relative w-full py-4 rounded-full font-medium text-sm tracking-wide overflow-hidden disabled:opacity-50 group bg-neutral-700 hover:bg-neutral-600 transition-colors duration-300"
                   data-cursor-hover
                 >
                   <span className="relative z-10 flex items-center justify-center gap-2 text-white">
@@ -275,7 +275,7 @@ export function ContactSection() {
                 <div className="h-12 border-b border-white/10" />
                 <div className="h-12 border-b border-white/10" />
                 <div className="h-24 border-b border-white/10" />
-                <div className="h-14 rounded-full bg-purple-600/20" />
+                <div className="h-14 rounded-full bg-neutral-700/20" />
               </div>
             )}
           </div>
