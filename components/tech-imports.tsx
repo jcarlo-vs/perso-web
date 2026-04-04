@@ -13,10 +13,13 @@ const output = [
   "Collecting backend...",
   "  Installing: Node.js, Express, NestJS, PHP (Laravel), Python (FastAPI), MongoDB, PostgreSQL, MySQL, Redis, Firebase",
   "",
-  "Collecting cloud...",
-  "  Installing: Git, AWS, Docker, Cloudflare",
+  "Collecting devops...",
+  "  Installing: Git, Docker, CI/CD, Cloudflare",
   "",
-  "✓ Successfully installed 21 packages",
+  "Collecting aws...",
+  "  Installing: Fargate, RDS, ElastiCache, SQS, SNS, Lambda, S3, CloudWatch",
+  "",
+  "✓ Successfully installed 27 packages",
 ];
 
 export function TechImports() {
