@@ -30,35 +30,45 @@ export function ThemeToggle() {
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
   }, []);
 
-  const onPointerMove = useCallback((e: React.PointerEvent) => {
+  // Attach move/up to window so dragging outside the bead still works
+  useEffect(() => {
     if (!isPulling) return;
-    const delta = Math.max(0, Math.min(25, e.clientY - startY.current));
-    chainY.set(delta);
-  }, [isPulling, chainY]);
 
-  const onPointerUp = useCallback(() => {
-    if (!isPulling) return;
-    setIsPulling(false);
-    const pulled = chainY.get();
+    const onMove = (e: PointerEvent) => {
+      const delta = Math.max(0, Math.min(25, e.clientY - startY.current));
+      chainY.set(delta);
+    };
 
-    if (pulled > 15) {
-      // Toggle theme
-      const next = !isDark;
-      setIsDark(next);
-      if (next) {
-        document.documentElement.classList.remove("light-mode");
-      } else {
-        document.documentElement.classList.add("light-mode");
+    const onUp = () => {
+      setIsPulling(false);
+      const pulled = chainY.get();
+
+      if (pulled > 15) {
+        const next = !isDark;
+        setIsDark(next);
+        if (next) {
+          document.documentElement.classList.remove("light-mode");
+        } else {
+          document.documentElement.classList.add("light-mode");
+        }
       }
-    }
 
-    // Spring back
-    animate(chainY, 0, {
-      type: "spring",
-      stiffness: 500,
-      damping: 15,
-      mass: 0.5,
-    });
+      animate(chainY, 0, {
+        type: "spring",
+        stiffness: 500,
+        damping: 15,
+        mass: 0.5,
+      });
+    };
+
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+    window.addEventListener("pointercancel", onUp);
+    return () => {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+      window.removeEventListener("pointercancel", onUp);
+    };
   }, [isPulling, isDark, chainY]);
 
   return (
@@ -129,9 +139,6 @@ export function ThemeToggle() {
         <div className="relative">
           <motion.div
             onPointerDown={(e) => { setTooltipVisible(false); onPointerDown(e); }}
-            onPointerMove={onPointerMove}
-            onPointerUp={onPointerUp}
-            onPointerCancel={onPointerUp}
             className="w-3 h-3 rounded-full bg-neutral-400 border border-neutral-500 shadow-sm cursor-grab active:cursor-grabbing touch-none hover:bg-neutral-300 transition-colors"
           />
 
