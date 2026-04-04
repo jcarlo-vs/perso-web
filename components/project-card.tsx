@@ -43,7 +43,11 @@ export function ProjectCard({ project }: { project: Project }) {
     setRotateY(0);
   };
 
-  const closeModal = useCallback(() => setModalOpen(false), []);
+  const closeModal = useCallback(() => {
+    setRotateX(0);
+    setRotateY(0);
+    setModalOpen(false);
+  }, []);
 
   useEffect(() => {
     if (modalOpen) {
