@@ -147,34 +147,6 @@ export function ProjectCard({ project }: { project: Project }) {
               onClick={closeModal}
             />
 
-            {/* Gradient orbs behind the glass */}
-            <div className="fixed inset-0 z-50 pointer-events-none overflow-hidden">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.5 }}
-                className="absolute top-[10%] left-[15%] w-[400px] h-[400px] rounded-full blur-[100px]"
-                style={{ background: "radial-gradient(circle, rgba(147,51,234,0.4) 0%, transparent 70%)" }}
-              />
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.5, delay: 0.05 }}
-                className="absolute bottom-[5%] right-[10%] w-[350px] h-[350px] rounded-full blur-[100px]"
-                style={{ background: "radial-gradient(circle, rgba(236,72,153,0.35) 0%, transparent 70%)" }}
-              />
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="absolute top-[40%] right-[25%] w-[250px] h-[250px] rounded-full blur-[80px]"
-                style={{ background: "radial-gradient(circle, rgba(59,130,246,0.3) 0%, transparent 70%)" }}
-              />
-            </div>
-
             {/* Floating card → modal */}
             <div className="fixed inset-0 z-50 flex items-center justify-center p-6 pointer-events-none">
               <motion.div
