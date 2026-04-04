@@ -42,9 +42,9 @@ export default function Home() {
                   About
                 </h2>
                 <p className="text-sm text-neutral-400 leading-relaxed">
-                  I write code that ships. 4+ years building web apps end to end.
-                  Frontends that feel right, backends that don&apos;t break at 3am,
-                  and infrastructure that scales when it needs to.
+                  I write code that ships. Frontends that feel right,
+                  backends that don&apos;t break at 3am, and infrastructure
+                  that scales when it needs to.
                 </p>
                 <p className="mt-8 text-xl font-bold font-mono tracking-tight">
                   <span className="text-white/80">Ship fast.</span>{" "}
