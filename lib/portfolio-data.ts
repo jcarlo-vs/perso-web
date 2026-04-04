@@ -1,6 +1,6 @@
 export const personalInfo = {
   name: 'Juan Carlo Senin',
-  title: 'Full Stack Developer',
+  title: 'Full Stack Developer | AI & Automation',
   email: 'senin.juancarlo@gmail.com',
   tagline: 'Building the future, one line at a time.',
   subtitle:

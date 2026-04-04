@@ -78,13 +78,21 @@ export function HeaderAnimations({ name, title, email, linkedin, github }: Heade
       {/* Social + CTA */}
       <div className="flex flex-wrap items-center gap-3 mt-4">
         {/* Available badge */}
-        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-400">
+        <span className="inline-flex items-center gap-1.5 text-[10px] text-emerald-400">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
           </span>
-          Available to work
+          Open to work
         </span>
+        <button
+          type="button"
+          onClick={() => setModalOpen(true)}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-500/15 border border-purple-500/30 text-xs text-purple-300 hover:text-white hover:bg-purple-500/25 hover:border-purple-400/50 transition-colors cursor-pointer"
+        >
+          <HiOutlineEnvelope className="w-3 h-3" />
+          Send Email
+        </button>
         <Link
           href={linkedin}
           target="_blank"
@@ -103,14 +111,6 @@ export function HeaderAnimations({ name, title, email, linkedin, github }: Heade
           <FaGithub className="w-3 h-3" />
           GitHub
         </Link>
-        <button
-          type="button"
-          onClick={() => setModalOpen(true)}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-500/15 border border-purple-500/30 text-xs text-purple-300 hover:text-white hover:bg-purple-500/25 hover:border-purple-400/50 transition-colors cursor-pointer"
-        >
-          <HiOutlineEnvelope className="w-3 h-3" />
-          Send Email
-        </button>
       </div>
 
       {/* Email Modal */}

@@ -3,6 +3,7 @@ import { HeaderAnimations } from "@/components/header-animations";
 import { ProjectCard } from "@/components/project-card";
 import { ProfileCard } from "@/components/profile-card";
 import { CodeBlock } from "@/components/code-block";
+import { AboutReveal, FadeIn } from "@/components/about-reveal";
 import { TechImports } from "@/components/tech-imports";
 import { StatusBar } from "@/components/status-bar";
 import { PageShell } from "@/components/page-shell";
@@ -35,20 +36,23 @@ export default function Home() {
         <section id="about" className="mb-16">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             {/* Left — label + text */}
-            <div>
-              <h2 className="text-xs font-mono tracking-[0.2em] text-purple-400/80 uppercase mb-3">
-                About
-              </h2>
-              <p className="text-sm text-neutral-400 leading-relaxed">
-                Full-stack developer specializing in building modern web applications.
-                I work across the entire stack, from pixel-perfect UIs to scalable backend
-                infrastructure, delivering clean, performant solutions that solve real problems.
-              </p>
-              <p className="mt-8 text-xl font-bold font-mono tracking-tight">
-                <span className="text-white/80">Clean code.</span>{" "}
-                <span className="text-purple-400/80">Real results.</span>
-              </p>
-            </div>
+            <AboutReveal>
+              <div>
+                <h2 className="text-xs font-mono tracking-[0.2em] text-purple-400/80 uppercase mb-3">
+                  About
+                </h2>
+                <p className="text-sm text-neutral-400 leading-relaxed">
+                  I write code that ships. 4+ years building web apps end to end.
+                  Frontends that feel right, backends that don&apos;t break at 3am,
+                  and infrastructure that scales when it needs to.
+                </p>
+                <p className="mt-8 text-xl font-bold font-mono tracking-tight">
+                  <span className="text-white/80">Ship fast.</span>{" "}
+                  <span className="text-purple-400/80">Real results.</span>{" "}
+                  <span className="text-white/80">Sleep well.</span>
+                </p>
+              </div>
+            </AboutReveal>
 
             {/* Right — terminal block */}
             <CodeBlock />
@@ -66,6 +70,7 @@ export default function Home() {
           </section>
 
           {/* Experience */}
+          <FadeIn>
           <section id="experience">
             <h2 className="text-xs font-mono tracking-[0.2em] text-purple-400/80 uppercase mb-6">
               Experience
@@ -96,12 +101,14 @@ export default function Home() {
               ))}
             </div>
           </section>
+          </FadeIn>
         </div>
 
         {/* ── Divider ── */}
         <div className="border-t border-dashed border-purple-500/10 mb-16" />
 
         {/* ── Projects ── */}
+        <FadeIn>
         <section id="projects" className="mb-16">
           <h2 className="text-xs font-mono tracking-[0.2em] text-purple-400/80 uppercase mb-6">
             Projects
@@ -114,6 +121,7 @@ export default function Home() {
             ))}
           </div>
         </section>
+        </FadeIn>
 
         {/* ── Footer ── */}
         <footer className="pt-8 border-t border-purple-500/10">

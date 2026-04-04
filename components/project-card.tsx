@@ -115,7 +115,7 @@ export function ProjectCard({ project }: { project: Project }) {
                 <div className="flex items-start justify-between gap-2 flex-1 min-h-0">
                   <div className="min-w-0">
                     <h3 className="text-sm font-semibold text-white/90 group-hover:text-purple-300 transition-colors duration-200 truncate">{project.title}</h3>
-                    <p className="text-[11px] text-neutral-600 mt-1 line-clamp-3 leading-relaxed">{project.description}</p>
+                    <p className="text-[11px] text-neutral-400 mt-1 line-clamp-3 leading-relaxed">{project.description}</p>
                   </div>
                   <HiArrowUpRight className="w-3.5 h-3.5 text-neutral-700 group-hover:text-purple-400 shrink-0 mt-0.5 transition-all duration-200" />
                 </div>

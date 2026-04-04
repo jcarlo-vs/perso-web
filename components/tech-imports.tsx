@@ -3,17 +3,20 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 
-const command = "print(skills)";
+const command = "pip install -r requirements.txt";
 
 const output = [
   "",
-  "→ frontend:  JavaScript · TypeScript · React · Next.js · Vue · Angular · Tailwind · Framer Motion",
+  "Collecting frontend...",
+  "  Installing: JavaScript, TypeScript, React, Next.js, Vue, Angular, Tailwind, Framer Motion",
   "",
-  "→ backend:   Node.js · Express · NestJS · Laravel · MongoDB · PostgreSQL · MySQL · Redis · Firebase",
+  "Collecting backend...",
+  "  Installing: Node.js, Express, NestJS, Laravel, MongoDB, PostgreSQL, MySQL, Redis, Firebase",
   "",
-  "→ cloud:     Git · AWS · Docker · Cloudflare",
+  "Collecting cloud...",
+  "  Installing: Git, AWS, Docker, Cloudflare",
   "",
-  "✓ 19 technologies loaded.",
+  "✓ Successfully installed 19 packages",
 ];
 
 export function TechImports() {
@@ -112,12 +115,15 @@ export function TechImports() {
               <br />
             ) : line.startsWith("✓") ? (
               <span className="text-[#4ade80]">{line}</span>
-            ) : (
+            ) : line.startsWith("Collecting") ? (
+              <span className="text-amber-300/80">{line}</span>
+            ) : line.startsWith("  Installing:") ? (
               <>
-                <span className="text-purple-400/60">{line.slice(0, 2)}</span>
-                <span className="text-amber-300/80">{line.slice(2, line.indexOf(":") + 1)}</span>
-                <span className="text-neutral-400">{line.slice(line.indexOf(":") + 1)}</span>
+                <span className="text-neutral-600">{"  Installing: "}</span>
+                <span className="text-neutral-300">{line.slice(14)}</span>
               </>
+            ) : (
+              <span className="text-neutral-400">{line}</span>
             )}
           </motion.div>
         ))}

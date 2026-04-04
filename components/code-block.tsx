@@ -23,7 +23,7 @@ const lines: TermLine[] = [
   { text: "Ready. Listening on port 3000...", prefix: "", prefixColor: "", color: "#4ade80" },
 ];
 
-const cdCommand = "cd ../jcvs/skills";
+const cdCommand = "cd ../jcvs/tech-stack";
 
 export function CodeBlock() {
   const ref = useRef<HTMLDivElement>(null);

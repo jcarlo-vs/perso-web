@@ -49,8 +49,9 @@ export function ProfileCard({ src, alt }: ProfileCardProps) {
       <motion.div
         animate={{ rotateX, rotateY }}
         transition={{ type: "spring", stiffness: 200, damping: 25 }}
-        className="relative w-20 h-20 rounded-2xl overflow-hidden border border-purple-500/30 bg-neutral-900/50 backdrop-blur-sm cursor-pointer"
+        className="relative w-28 h-28 rounded-2xl border border-purple-500/30 bg-neutral-900/50 backdrop-blur-sm cursor-pointer p-2"
       >
+        <div className="relative w-full h-full rounded-xl overflow-hidden">
         <Image
           src={src}
           alt={alt}
@@ -58,6 +59,7 @@ export function ProfileCard({ src, alt }: ProfileCardProps) {
           className="object-cover object-top"
           priority
         />
+        </div>
 
         {/* Glare */}
         <div
