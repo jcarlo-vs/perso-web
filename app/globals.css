@@ -148,7 +148,8 @@ body {
   filter: invert(1) hue-rotate(180deg);
 }
 
-.light-mode img {
+.light-mode img,
+.light-mode svg {
   filter: invert(1) hue-rotate(180deg);
 }
 
