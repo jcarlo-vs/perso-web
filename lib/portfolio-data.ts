@@ -109,15 +109,6 @@ export const projects = [
     githubLink: 'https://github.com/jcarlo-vs/job-hiring-platform',
   },
   {
-    title: 'NOTELIFY APP',
-    description:
-      'A full-stack note-taking application with secure user authentication, personal data storage, and a clean interface that lets users organize thoughts and plans effortlessly.',
-    image: '/assets/images/notelifyv1.png',
-    technologies: ['MONGODB', 'EXPRESS JS', 'REACT JS', 'NODE JS'],
-    demoLink: 'https://notelify-app.vercel.app/landing',
-    githubLink: 'https://github.com/jcarlo-vs/NOTELIFY-APP',
-  },
-  {
     title: 'CRYPTO METER',
     description:
       'An all-in-one cryptocurrency library for browsing exchanges, tracking thousands of coins, reading crypto news, and calculating conversions — all in a single, responsive dashboard.',
