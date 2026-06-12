@@ -104,6 +104,7 @@ export const projects = [
     description:
       'An AI-assisted job hiring platform that screens resumes in seconds with transparent, auditable scoring - AI ranks and explains every candidate while humans keep the final say.',
     image: '/assets/images/talentscreenv1.png',
+    modalImage: '/assets/images/talentscreen-overview.png',
     technologies: ['NEXT JS', 'SUPABASE', 'INNGEST', 'CLAUDE AI'],
     demoLink: 'https://talent-screen.vercel.app/',
     githubLink: 'https://github.com/jcarlo-vs/job-hiring-platform',

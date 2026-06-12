@@ -11,6 +11,7 @@ interface Project {
   title: string;
   description: string;
   image: string;
+  modalImage?: string;
   technologies: string[];
   demoLink: string;
   githubLink: string;
@@ -174,7 +175,7 @@ export function ProjectCard({ project }: { project: Project }) {
             <div className="fixed inset-0 z-50 flex items-center justify-center p-6 pointer-events-none">
               <motion.div
                 layoutId={cardId}
-                className="w-full max-w-lg pointer-events-auto"
+                className={`w-full ${project.modalImage ? "max-w-3xl" : "max-w-lg"} pointer-events-auto`}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               >
                 <div
@@ -187,8 +188,10 @@ export function ProjectCard({ project }: { project: Project }) {
                   }}
                 >
                   {/* Image */}
-                  <div className="relative w-full h-56 bg-white/[0.03] border-b border-white/[0.08]">
-                    {project.image ? (
+                  <div className={`relative w-full ${project.modalImage ? "aspect-video" : "h-56"} bg-white/[0.03] border-b border-white/[0.08]`}>
+                    {project.modalImage ? (
+                      <Image src={project.modalImage} alt={project.title} fill sizes="768px" className="object-cover" />
+                    ) : project.image ? (
                       <Image src={project.image} alt={project.title} fill className="object-contain p-6" />
                     ) : (
                       <ImagePlaceholder />
