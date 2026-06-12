@@ -20,9 +20,12 @@ const output = [
   "  Installing: AWS Fargate, RDS, ElastiCache, SQS, SNS, Lambda, S3, CloudWatch",
   "",
   "Collecting automation...",
-  "  Installing: n8n, Zapier, Inngest",
+  "  Installing: n8n, Zapier",
   "",
-  "✓ Successfully installed 33 packages",
+  "Collecting ai tools...",
+  "  Installing: Claude, GitHub Copilot",
+  "",
+  "✓ Successfully installed 34 packages",
 ];
 
 export function TechImports() {
