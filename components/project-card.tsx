@@ -13,7 +13,7 @@ interface Project {
   image: string;
   modalImage?: string;
   technologies: string[];
-  demoLink: string;
+  demoLink?: string;
   githubLink: string;
 }
 
@@ -222,10 +222,12 @@ export function ProjectCard({ project }: { project: Project }) {
 
                     {/* Actions */}
                     <div className="flex gap-3">
-                      <Link href={project.demoLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-purple-500/15 border border-purple-500/25 text-sm text-purple-300 hover:text-white hover:bg-purple-500/25 hover:border-purple-400/40 transition-colors">
-                        <ExternalLink className="w-3.5 h-3.5" />
-                        Live Demo
-                      </Link>
+                      {project.demoLink && (
+                        <Link href={project.demoLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-purple-500/15 border border-purple-500/25 text-sm text-purple-300 hover:text-white hover:bg-purple-500/25 hover:border-purple-400/40 transition-colors">
+                          <ExternalLink className="w-3.5 h-3.5" />
+                          Live Demo
+                        </Link>
+                      )}
                       <Link href={project.githubLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-white/10 text-sm text-neutral-400 hover:text-white hover:border-white/20 transition-colors">
                         <Github className="w-3.5 h-3.5" />
                         Source Code

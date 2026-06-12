@@ -16,6 +16,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://jcvs-codes.com'),
   title: 'Juan Carlo Senin | Full Stack Developer',
   description:
     'Portfolio of Juan Carlo Senin - Full Stack Developer specializing in React, Next.js, Node.js, and modern web technologies.',
@@ -29,10 +30,29 @@ export const metadata: Metadata = {
     'Portfolio',
   ],
   authors: [{ name: 'Juan Carlo Senin' }],
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     title: 'Juan Carlo Senin | Full Stack Developer',
     description: 'Portfolio of Juan Carlo Senin - Full Stack Developer',
     type: 'website',
+    url: 'https://jcvs-codes.com',
+    siteName: 'Juan Carlo Senin',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Juan Carlo Senin - Full Stack Developer',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Juan Carlo Senin | Full Stack Developer',
+    description: 'Portfolio of Juan Carlo Senin - Full Stack Developer',
+    images: ['/og-image.png'],
   },
 };
 

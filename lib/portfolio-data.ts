@@ -115,7 +115,6 @@ export const projects = [
       'An all-in-one cryptocurrency library for browsing exchanges, tracking thousands of coins, reading crypto news, and calculating conversions - all in a single, responsive dashboard.',
     image: '/assets/images/cryptometerv1.png',
     technologies: ['REACT JS', 'REDUX', 'REST APIS'],
-    demoLink: 'https://crypto-meter.vercel.app/',
     githubLink: 'https://github.com/jcarlo-vs/CRYPTO-METER',
   },
   {
@@ -124,7 +123,6 @@ export const projects = [
       'A social media platform for sharing photos publicly, adding captions, and browsing user profiles - built with a full MERN stack and real-time data syncing.',
     image: '/assets/images/picabookv1.png',
     technologies: ['MONGODB', 'EXPRESS JS', 'REACT JS', 'NODE JS'],
-    demoLink: 'https://picabook-app.vercel.app/login',
     githubLink: 'https://github.com/jcarlo-vs/picabook-app',
   },
 ];

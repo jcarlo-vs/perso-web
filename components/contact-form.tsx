@@ -57,11 +57,22 @@ export function ContactForm() {
         </div>
       )}
 
+      {/* Honeypot - off-screen field humans never see; bots auto-fill it */}
+      <input
+        type="text"
+        name="company"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden"
+      />
+
       <div className="grid sm:grid-cols-2 gap-3">
         <input
           name="name"
           placeholder="Your name"
           required
+          maxLength={100}
           disabled={isPending}
           autoComplete="name"
           className={cn(inputStyles, "bg-white/[0.04]")}
@@ -72,6 +83,7 @@ export function ContactForm() {
             type="email"
             placeholder="Your email"
             required
+            maxLength={200}
             disabled={isPending}
             autoComplete="email"
             onFocus={() => setEmailError(null)}
@@ -92,6 +104,7 @@ export function ContactForm() {
         placeholder="What's on your mind?"
         rows={4}
         required
+        maxLength={5000}
         disabled={isPending}
         className={cn(inputStyles, "bg-white/[0.04] resize-none")}
       />
