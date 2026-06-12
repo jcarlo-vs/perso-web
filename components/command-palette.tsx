@@ -14,6 +14,7 @@ import {
   Github,
   Linkedin,
   Command,
+  Sparkles,
 } from "lucide-react";
 
 interface CommandItem {
@@ -51,6 +52,7 @@ export function CommandPalette({ onSendEmail }: CommandPaletteProps) {
       { id: "nav-projects", label: "Go to Projects", category: "Navigation", icon: <FolderOpen className="w-4 h-4" />, action: () => scrollTo("projects"), keywords: ["projects", "portfolio", "work"] },
 
       // Actions
+      { id: "act-ai", label: "Ask AI about Juan", category: "Actions", icon: <Sparkles className="w-4 h-4" />, action: () => { setOpen(false); setTimeout(() => window.dispatchEvent(new CustomEvent("ai-terminal:open")), 200); }, keywords: ["ai", "ask", "chat", "assistant", "claude"] },
       { id: "act-email", label: "Send Email", category: "Actions", icon: <Mail className="w-4 h-4" />, action: () => { setOpen(false); setTimeout(onSendEmail, 200); }, keywords: ["email", "contact", "message", "hire"] },
       { id: "act-cv", label: "Download CV", category: "Actions", icon: <Download className="w-4 h-4" />, action: () => { setOpen(false); window.open("/resume.pdf", "_blank"); }, keywords: ["cv", "resume", "download", "pdf"] },
 
@@ -59,9 +61,9 @@ export function CommandPalette({ onSendEmail }: CommandPaletteProps) {
       { id: "link-linkedin", label: "Open LinkedIn", category: "Links", icon: <Linkedin className="w-4 h-4" />, action: () => { setOpen(false); window.open("https://www.linkedin.com/in/jcarlo-senin/", "_blank"); }, keywords: ["linkedin", "social", "connect"] },
 
       // Projects
-      { id: "proj-notelify", label: "View Notelify App", category: "Projects", icon: <ExternalLink className="w-4 h-4" />, action: () => { setOpen(false); window.open("https://notelify-app.vercel.app/landing", "_blank"); }, keywords: ["notelify", "notes", "app"] },
-      { id: "proj-crypto", label: "View Crypto Meter", category: "Projects", icon: <ExternalLink className="w-4 h-4" />, action: () => { setOpen(false); window.open("https://crypto-meter.vercel.app/", "_blank"); }, keywords: ["crypto", "meter", "exchange"] },
-      { id: "proj-picabook", label: "View Picabook", category: "Projects", icon: <ExternalLink className="w-4 h-4" />, action: () => { setOpen(false); window.open("https://picabook-app.vercel.app/login", "_blank"); }, keywords: ["picabook", "social", "photos"] },
+      { id: "proj-talentscreen", label: "View Talent Screen", category: "Projects", icon: <ExternalLink className="w-4 h-4" />, action: () => { setOpen(false); window.open("https://talent-screen.vercel.app/", "_blank"); }, keywords: ["talent", "screen", "hiring", "jobs", "ai"] },
+      { id: "proj-crypto", label: "Crypto Meter on GitHub", category: "Projects", icon: <Github className="w-4 h-4" />, action: () => { setOpen(false); window.open("https://github.com/jcarlo-vs/CRYPTO-METER", "_blank"); }, keywords: ["crypto", "meter", "exchange"] },
+      { id: "proj-picabook", label: "Picabook on GitHub", category: "Projects", icon: <Github className="w-4 h-4" />, action: () => { setOpen(false); window.open("https://github.com/jcarlo-vs/picabook-app", "_blank"); }, keywords: ["picabook", "social", "photos"] },
     ],
     [scrollTo, onSendEmail]
   );

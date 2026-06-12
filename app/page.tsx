@@ -7,11 +7,15 @@ import { AboutReveal, FadeIn } from "@/components/about-reveal";
 import { TechImports } from "@/components/tech-imports";
 import { StatusBar } from "@/components/status-bar";
 import { PageShell } from "@/components/page-shell";
+import { AuroraBackground } from "@/components/ui/aurora-background";
+import { AiTerminal } from "@/components/ai-terminal";
 
 export default function Home() {
   return (
     <div className="relative bg-black min-h-screen">
-      <main className="max-w-[1000px] mx-auto px-6 py-16 md:py-24">
+      <AuroraBackground />
+      <AiTerminal />
+      <main className="relative max-w-[1000px] mx-auto px-6 py-16 md:py-24">
         {/* Status bar + Command Palette */}
         <StatusBar />
         <PageShell />
