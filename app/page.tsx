@@ -111,7 +111,7 @@ export default function Home() {
         <FadeIn>
         <section id="projects" className="mb-16">
           <h2 className="text-xs font-mono tracking-[0.2em] text-purple-400/80 uppercase mb-6">
-            Projects
+            Featured Projects
           </h2>
 
           {/* Horizontal scrollable row */}

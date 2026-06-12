@@ -16,10 +16,13 @@ const output = [
   "Collecting devops...",
   "  Installing: Git, Docker, CI/CD, Cloudflare",
   "",
-  "Collecting aws...",
-  "  Installing: Fargate, RDS, ElastiCache, SQS, SNS, Lambda, S3, CloudWatch",
+  "Collecting cloud services...",
+  "  Installing: AWS Fargate, RDS, ElastiCache, SQS, SNS, Lambda, S3, CloudWatch",
   "",
-  "✓ Successfully installed 27 packages",
+  "Collecting automation...",
+  "  Installing: n8n, Zapier, Inngest",
+  "",
+  "✓ Successfully installed 33 packages",
 ];
 
 export function TechImports() {
