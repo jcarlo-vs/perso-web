@@ -35,7 +35,7 @@ export default function Home() {
         {/* ── About ── */}
         <section id="about" className="mb-16">
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            {/* Left — label + text */}
+            {/* Left - label + text */}
             <AboutReveal>
               <div>
                 <h2 className="text-xs font-mono tracking-[0.2em] text-purple-400/80 uppercase mb-3">
@@ -54,7 +54,7 @@ export default function Home() {
               </div>
             </AboutReveal>
 
-            {/* Right — terminal block */}
+            {/* Right - terminal block */}
             <CodeBlock />
           </div>
         </section>

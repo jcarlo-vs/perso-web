@@ -85,7 +85,7 @@ export function ProjectCard({ project }: { project: Project }) {
 
   return (
     <>
-      {/* Card slot — keeps space when card floats away */}
+      {/* Card slot - keeps space when card floats away */}
       <div className="min-w-[280px] flex-1 snap-start h-[360px]">
         {!modalOpen ? (
           <motion.div
@@ -152,7 +152,7 @@ export function ProjectCard({ project }: { project: Project }) {
             </motion.div>
           </motion.div>
         ) : (
-          // Empty ghost slot — dashed border where the card was
+          // Empty ghost slot - dashed border where the card was
           <div className="h-full rounded-xl border border-dashed border-purple-500/15 bg-purple-500/[0.02]" />
         )}
       </div>

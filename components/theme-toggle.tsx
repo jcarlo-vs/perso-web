@@ -12,7 +12,7 @@ export function ThemeToggle() {
   const startY = useRef(0);
 
   // Chain stretches as you pull
-  // Chain stretches with pull — bead stays at the end
+  // Chain stretches with pull - bead stays at the end
   const chainLength = useTransform(chainY, [0, 25], [20, 45]);
 
   // Show tooltip after page load, stays until first pull
@@ -75,7 +75,7 @@ export function ThemeToggle() {
     <div className="relative flex flex-col items-center select-none" style={{ width: 32, height: 72 }}>
       {/* Bulb */}
       <div className="relative z-10">
-        {/* Bulb glow — only when light mode (on) */}
+        {/* Bulb glow - only when light mode (on) */}
         {!isDark && (
           <>
             <div
@@ -119,7 +119,7 @@ export function ThemeToggle() {
         </svg>
       </div>
 
-      {/* Chain/string — swings like a pendulum */}
+      {/* Chain/string - swings like a pendulum */}
       <motion.div
         className="relative z-10 flex flex-col items-center origin-top"
         animate={isPulling || !nudged ? {} : { rotate: [0, 3, -2, 2.5, -1.5, 1, 0] }}
@@ -142,7 +142,7 @@ export function ThemeToggle() {
             className="w-3 h-3 rounded-full bg-neutral-400 border border-neutral-500 shadow-sm cursor-grab active:cursor-grabbing touch-none hover:bg-neutral-300 transition-colors"
           />
 
-          {/* Price tag — points left toward the bead */}
+          {/* Price tag - points left toward the bead */}
           {tooltipVisible && (
             <motion.div
               initial={{ opacity: 0, rotate: -5 }}

@@ -55,7 +55,7 @@ export function HeaderAnimations({ name, title, email, linkedin, github }: Heade
 
   return (
     <>
-      {/* Name — letter by letter reveal */}
+      {/* Name - letter by letter reveal */}
       <h1 className="text-2xl font-bold tracking-tight">
         {letters.map((letter, i) => (
           <motion.span
@@ -75,7 +75,7 @@ export function HeaderAnimations({ name, title, email, linkedin, github }: Heade
         ))}
       </h1>
 
-      {/* Title — typing effect */}
+      {/* Title - typing effect */}
       <p className="text-sm text-purple-400 mt-1 font-mono h-5 flex items-center">
         <span>{typedTitle}</span>
         {showCursor && (

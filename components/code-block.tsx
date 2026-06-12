@@ -115,7 +115,7 @@ export function CodeBlock() {
           </div>
         ))}
 
-        {/* cd command — types after output finishes */}
+        {/* cd command - types after output finishes */}
         {showCd && (
           <div className="mt-1">
             <span className="text-purple-400">❯ </span>

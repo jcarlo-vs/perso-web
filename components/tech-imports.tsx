@@ -40,7 +40,7 @@ export function TechImports() {
     return () => window.removeEventListener("terminal:skills-ready", handler);
   }, []);
 
-  // Start only when signal received (no fallback — waits for cd command to finish)
+  // Start only when signal received (no fallback - waits for cd command to finish)
   useEffect(() => {
     if (signalReceived) {
       setStarted(true);
@@ -81,7 +81,7 @@ export function TechImports() {
   return (
     <div>
       <div className="font-mono text-[12px] leading-[1.8]">
-        {/* Waiting state — blinking cursor */}
+        {/* Waiting state - blinking cursor */}
         {!started && (
           <div>
             <span className="text-purple-400">❯ </span>
