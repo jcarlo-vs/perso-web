@@ -18,7 +18,7 @@ function TactileGrid() {
     if (!ctx) return;
 
     const CELL = 56;
-    const RADIUS = 150;
+    const RADIUS = 170;
     let w = 0, h = 0, cols = 0, rows = 0;
     let elevations = new Float32Array(0);
     const mouse = { x: -9999, y: -9999 };
@@ -56,8 +56,9 @@ function TactileGrid() {
           const cx = c * CELL + CELL / 2;
           const cy = r * CELL + CELL / 2;
           const dist = Math.hypot(cx - mouse.x, cy - mouse.y);
-          const target = dist < RADIUS ? Math.pow(1 - dist / RADIUS, 1.6) : 0;
-          elevations[i] += (target - elevations[i]) * 0.16;
+          // steep pyramid falloff - the cell under the cursor spikes, neighbors barely ripple
+          const target = dist < RADIUS ? Math.pow(1 - dist / RADIUS, 3.2) : 0;
+          elevations[i] += (target - elevations[i]) * 0.18;
           const f = elevations[i];
           if (f < 0.015) {
             elevations[i] = target === 0 ? 0 : elevations[i];
@@ -65,22 +66,24 @@ function TactileGrid() {
           }
           anyActive = true;
 
-          const lift = f * 7;
-          const pad = 2.5;
+          const lift = f * 16;
+          // the face tapers as it rises - reads as a pyramid tip / scale
+          const shrink = f * 4;
+          const pad = 2.5 + shrink / 2;
           const x = c * CELL + pad;
           const yRest = r * CELL + pad;
           const y = yRest - lift;
           const s = CELL - pad * 2;
 
-          // shadow beneath the raised key
-          ctx.fillStyle = `rgba(0, 0, 0, ${0.5 * f})`;
-          roundRect(x, yRest + 2, s, 7);
+          // shadow beneath the raised key - deepens and drops with height
+          ctx.fillStyle = `rgba(0, 0, 0, ${0.55 * f})`;
+          roundRect(x, yRest + 2 + f * 2, s, 7);
           ctx.fill();
 
           // keycap face - lighter at the top like catching light
           const grad = ctx.createLinearGradient(0, y, 0, y + s);
-          grad.addColorStop(0, `rgba(192, 140, 255, ${0.15 * f})`);
-          grad.addColorStop(1, `rgba(110, 55, 210, ${0.05 * f})`);
+          grad.addColorStop(0, `rgba(192, 140, 255, ${0.2 * f})`);
+          grad.addColorStop(1, `rgba(110, 55, 210, ${0.06 * f})`);
           ctx.fillStyle = grad;
           roundRect(x, y, s, 7);
           ctx.fill();
