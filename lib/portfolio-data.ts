@@ -100,6 +100,15 @@ export const experience = [
 
 export const projects = [
   {
+    title: 'TALENTSCREEN',
+    description:
+      'An AI-assisted job hiring platform that screens resumes in seconds with transparent, auditable scoring — AI ranks and explains every candidate while humans keep the final say.',
+    image: '/assets/images/talentscreenv1.png',
+    technologies: ['NEXT JS', 'SUPABASE', 'INNGEST', 'CLAUDE AI'],
+    demoLink: 'https://talent-screen.vercel.app/',
+    githubLink: 'https://github.com/jcarlo-vs/job-hiring-platform',
+  },
+  {
     title: 'NOTELIFY APP',
     description:
       'A full-stack note-taking application with secure user authentication, personal data storage, and a clean interface that lets users organize thoughts and plans effortlessly.',

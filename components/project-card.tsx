@@ -5,7 +5,7 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { HiArrowUpRight } from "react-icons/hi2";
-import { X, ExternalLink, Github } from "lucide-react";
+import { X, ExternalLink, Github, ImageIcon } from "lucide-react";
 
 interface Project {
   title: string;
@@ -14,6 +14,21 @@ interface Project {
   technologies: string[];
   demoLink: string;
   githubLink: string;
+}
+
+function ImagePlaceholder() {
+  return (
+    <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "radial-gradient(circle at 50% 60%, rgba(168,85,247,0.08) 0%, transparent 70%)",
+        }}
+      />
+      <ImageIcon className="w-6 h-6 text-neutral-600" />
+      <span className="text-[10px] uppercase tracking-widest text-neutral-600">Preview coming soon</span>
+    </div>
+  );
 }
 
 export function ProjectCard({ project }: { project: Project }) {
@@ -108,7 +123,11 @@ export function ProjectCard({ project }: { project: Project }) {
 
                 {/* Thumbnail */}
                 <div className="relative w-full h-[160px] rounded-lg overflow-hidden bg-neutral-900 mb-3 group-hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] transition-shadow duration-300">
-                  <Image src={project.image} alt={project.title} fill className="object-contain p-2 group-hover:scale-105 transition-transform duration-500" />
+                  {project.image ? (
+                    <Image src={project.image} alt={project.title} fill className="object-contain p-2 group-hover:scale-105 transition-transform duration-500" />
+                  ) : (
+                    <ImagePlaceholder />
+                  )}
                 </div>
 
                 {/* Title + description */}
@@ -169,7 +188,11 @@ export function ProjectCard({ project }: { project: Project }) {
                 >
                   {/* Image */}
                   <div className="relative w-full h-56 bg-white/[0.03] border-b border-white/[0.08]">
-                    <Image src={project.image} alt={project.title} fill className="object-contain p-6" />
+                    {project.image ? (
+                      <Image src={project.image} alt={project.title} fill className="object-contain p-6" />
+                    ) : (
+                      <ImagePlaceholder />
+                    )}
                     <button
                       type="button"
                       onClick={closeModal}
