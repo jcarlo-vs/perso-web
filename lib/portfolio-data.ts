@@ -100,7 +100,7 @@ export const experience = [
 
 export const projects = [
   {
-    title: 'TALENTSCREEN',
+    title: 'TALENT SCREEN',
     description:
       'An AI-assisted job hiring platform that screens resumes in seconds with transparent, auditable scoring - AI ranks and explains every candidate while humans keep the final say.',
     image: '/assets/images/talentscreenv1.png',
