@@ -18,7 +18,7 @@ const GAMES = [
   { id: "duel", emoji: "🤖", name: "Beat the AI: Word Duel", desc: "Trade tech words with Juan's AI", Comp: WordDuel },
   { id: "type", emoji: "⌨️", name: "Type the Stack", desc: "30s speed test + global leaderboard", Comp: TypingGame },
   { id: "ghost", emoji: "👻", name: "Ghost Race", desc: "Type against the record holder's ghost", Comp: GhostRace },
-  { id: "keyfall", emoji: "🎹", name: "Keyfall", desc: "Hit F G H J as the tiles drop", Comp: Keyfall },
+  { id: "keyfall", emoji: "🎹", name: "Keyfall", desc: "Hit 1 2 3 4 as the tiles drop", Comp: Keyfall },
   { id: "incident", emoji: "🚨", name: "On-Call: Incident Rush", desc: "Resolve incidents before outage", Comp: IncidentRush },
   { id: "react", emoji: "⚡", name: "Reaction Time", desc: "Click the instant it turns green", Comp: ReactionGame },
   { id: "memory", emoji: "🧠", name: "Keycap Memory", desc: "Repeat the glowing sequence", Comp: KeycapMemory },

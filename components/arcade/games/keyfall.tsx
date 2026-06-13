@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Trophy } from "lucide-react";
 
-const LANES = ["f", "g", "h", "j"];
+const LANES = ["1", "2", "3", "4"];
 const LANE_W = 46;
 const W = LANES.length * LANE_W;
 const H = 240;
@@ -168,7 +168,7 @@ export function Keyfall() {
         {!running && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/55 rounded-lg backdrop-blur-sm">
             <p className="text-sm text-white text-center">{over ? `Game over — ${score} hits` : "Keyfall"}</p>
-            {!over && <p className="text-[11px] text-neutral-400 text-center px-4">Press F G H J as the tiles hit the line.</p>}
+            {!over && <p className="text-[11px] text-neutral-400 text-center px-4">Press 1 2 3 4 as the tiles hit the line.</p>}
             <button type="button" onClick={start} className="px-4 py-2 rounded-lg bg-purple-500/15 border border-purple-500/30 text-[13px] text-purple-300 hover:text-white hover:bg-purple-500/25 transition-colors cursor-pointer">{over ? "Play again" : "Start"}</button>
           </div>
         )}
