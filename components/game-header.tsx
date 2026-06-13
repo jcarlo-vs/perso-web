@@ -27,10 +27,13 @@ function DinoRunner() {
     if (!wrap || !dino) return;
 
     let width = wrap.clientWidth || 400;
-    const onResize = () => (width = wrap.clientWidth || 400);
+    let dinoX = width / 2; // T-rex runs in the middle
+    const onResize = () => {
+      width = wrap.clientWidth || 400;
+      dinoX = width / 2;
+    };
     window.addEventListener("resize", onResize);
 
-    const DINO_X = 14;
     const GRAVITY = 1500;
 
     // obstacle state, spaced out and at varied speeds
@@ -69,7 +72,7 @@ function DinoRunner() {
       // react: jump when a cactus enters a (randomized) reaction window
       if (!jumping) {
         for (const o of obs) {
-          const dist = o.x - DINO_X;
+          const dist = o.x - dinoX;
           if (dist > 6 && dist < rnd(40, 64)) {
             vy = rnd(245, 285);
             jumping = true;
@@ -87,7 +90,8 @@ function DinoRunner() {
         }
       }
       const bob = jumping ? 0 : Math.sin(now / 90) * 1.5;
-      dino.style.transform = `translateX(${DINO_X}px) translateY(${-(dy) - bob}px)`;
+      // scaleX(-1) flips the T-rex to face right, toward the PLAY ME button
+      dino.style.transform = `translateX(${dinoX}px) translateY(${-(dy) - bob}px) scaleX(-1)`;
 
       // background walker: varied speed + occasional pauses
       if (walker) {
@@ -139,7 +143,7 @@ function DinoRunner() {
       <span ref={c2Ref} className="absolute bottom-[6px] left-0 text-[13px] select-none" style={{ transform: "translateX(700px)" }}>
         🌵
       </span>
-      <span ref={dinoRef} className="absolute bottom-[6px] left-0 text-[17px] select-none" style={{ transform: "translateX(14px)" }}>
+      <span ref={dinoRef} className="absolute bottom-[6px] left-0 text-[17px] select-none" style={{ transform: "translateX(160px) scaleX(-1)" }}>
         🦖
       </span>
     </button>
