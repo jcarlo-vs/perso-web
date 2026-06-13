@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Trophy } from "lucide-react";
+import { GameBoard } from "../game-board";
 
 const W = 440;
 const H = 250;
@@ -183,6 +184,7 @@ export function PacketCatch() {
           </div>
         )}
       </div>
+      {over && score > 0 && <GameBoard game="catch" score={score} />}
     </div>
   );
 }

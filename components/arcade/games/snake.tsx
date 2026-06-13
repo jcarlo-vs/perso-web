@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Trophy } from "lucide-react";
+import { GameBoard } from "../game-board";
 
 const COLS = 21;
 const ROWS = 14;
@@ -153,6 +154,7 @@ export function SnakeGame() {
           </div>
         )}
       </div>
+      {over && score > 0 && <GameBoard game="snake" score={score} />}
     </div>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Zap, Trophy } from "lucide-react";
+import { GameBoard } from "../game-board";
 
 const BEST_KEY = "reaction-best-ms";
 type Phase = "idle" | "waiting" | "go" | "result" | "tooSoon";
@@ -95,6 +96,9 @@ export function ReactionGame() {
         <p className="mt-3 text-center text-[11px] text-neutral-500 flex items-center justify-center gap-1.5">
           <Trophy className="w-3 h-3 text-amber-300/80" /> best {best} ms
         </p>
+      )}
+      {phase === "result" && (
+        <GameBoard game="reaction" score={ms} unit="ms" submittable={ms >= 80 && ms <= 2000} />
       )}
     </div>
   );
