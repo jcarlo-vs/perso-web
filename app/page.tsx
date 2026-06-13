@@ -10,6 +10,8 @@ import { PageShell } from "@/components/page-shell";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { AiTerminal } from "@/components/ai-terminal";
 import { AiLauncher } from "@/components/ai-launcher";
+import { TypingGame } from "@/components/typing-game";
+import { PlayTrigger } from "@/components/play-trigger";
 
 export default function Home() {
   return (
@@ -17,6 +19,7 @@ export default function Home() {
       <AuroraBackground />
       <AiTerminal />
       <AiLauncher />
+      <TypingGame />
       <main className="relative max-w-[1000px] mx-auto px-6 py-16 md:py-24">
         {/* Status bar + Command Palette */}
         <StatusBar />
@@ -69,9 +72,12 @@ export default function Home() {
         <div className="grid md:grid-cols-2 gap-12 mb-16">
           {/* Tech Stack */}
           <section id="tech-stack">
-            <h2 className="text-xs font-mono tracking-[0.2em] text-purple-400/80 uppercase mb-6">
-              Tech Stack
-            </h2>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xs font-mono tracking-[0.2em] text-purple-400/80 uppercase">
+                Tech Stack
+              </h2>
+              <PlayTrigger />
+            </div>
             <TechImports />
           </section>
 
