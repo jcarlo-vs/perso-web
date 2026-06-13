@@ -8,13 +8,23 @@ import { ReactionGame } from "./games/reaction";
 import { KeycapMemory } from "./games/keycap-memory";
 import { SnakeGame } from "./games/snake";
 import { BugSquash } from "./games/bug-squash";
+import { WordDuel } from "./games/word-duel";
+import { Keyfall } from "./games/keyfall";
+import { IncidentRush } from "./games/incident-rush";
+import { GhostRace } from "./games/ghost-race";
+import { HireRunner } from "./games/hire-runner";
 
 const GAMES = [
+  { id: "duel", emoji: "🤖", name: "Beat the AI: Word Duel", desc: "Trade tech words with Juan's AI", Comp: WordDuel },
   { id: "type", emoji: "⌨️", name: "Type the Stack", desc: "30s speed test + global leaderboard", Comp: TypingGame },
+  { id: "ghost", emoji: "👻", name: "Ghost Race", desc: "Type against the record holder's ghost", Comp: GhostRace },
+  { id: "keyfall", emoji: "🎹", name: "Keyfall", desc: "Hit F G H J as the tiles drop", Comp: Keyfall },
+  { id: "incident", emoji: "🚨", name: "On-Call: Incident Rush", desc: "Resolve incidents before outage", Comp: IncidentRush },
   { id: "react", emoji: "⚡", name: "Reaction Time", desc: "Click the instant it turns green", Comp: ReactionGame },
   { id: "memory", emoji: "🧠", name: "Keycap Memory", desc: "Repeat the glowing sequence", Comp: KeycapMemory },
   { id: "snake", emoji: "🐍", name: "Terminal Snake", desc: "Eat, grow, don't bite yourself", Comp: SnakeGame },
   { id: "bugs", emoji: "🐛", name: "Bug Squash", desc: "Squash the bugs before they escape", Comp: BugSquash },
+  { id: "hire", emoji: "🏃", name: "Hire Juan: Runner", desc: "Jump rejections, grab skills", Comp: HireRunner },
 ];
 
 export function Arcade({ onClose }: { onClose: () => void }) {
@@ -93,7 +103,7 @@ export function Arcade({ onClose }: { onClose: () => void }) {
                 <p className="font-mono text-[11px] text-neutral-500 mb-4">
                   <span className="text-purple-400">❯</span> pick a game — high scores save locally
                 </p>
-                <div className="grid sm:grid-cols-2 gap-2.5">
+                <div className="grid sm:grid-cols-2 gap-2.5 max-h-[60vh] overflow-y-auto pr-1 scrollbar-thin">
                   {GAMES.map((g) => (
                     <button
                       key={g.id}
