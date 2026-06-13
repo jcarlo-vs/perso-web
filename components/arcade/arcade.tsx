@@ -8,14 +8,14 @@ import { ReactionGame } from "./games/reaction";
 import { KeycapMemory } from "./games/keycap-memory";
 import { SnakeGame } from "./games/snake";
 import { BugSquash } from "./games/bug-squash";
-import { WordDuel } from "./games/word-duel";
+import { PacketCatch } from "./games/catch";
 import { Keyfall } from "./games/keyfall";
 import { IncidentRush } from "./games/incident-rush";
 import { GhostRace } from "./games/ghost-race";
 import { HireRunner } from "./games/hire-runner";
 
 const GAMES = [
-  { id: "duel", emoji: "🤖", name: "Beat the AI: Word Duel", desc: "Trade tech words with Juan's AI", Comp: WordDuel },
+  { id: "catch", emoji: "🧺", name: "Packet Catch", desc: "Catch packets, dodge falling bugs", Comp: PacketCatch },
   { id: "type", emoji: "⌨️", name: "Type the Stack", desc: "30s speed test + global leaderboard", Comp: TypingGame },
   { id: "ghost", emoji: "👻", name: "Ghost Race", desc: "Type against the record holder's ghost", Comp: GhostRace },
   { id: "keyfall", emoji: "🎹", name: "Keyfall", desc: "Hit 1 2 3 4 as the tiles drop", Comp: Keyfall },
@@ -23,7 +23,7 @@ const GAMES = [
   { id: "react", emoji: "⚡", name: "Reaction Time", desc: "Click the instant it turns green", Comp: ReactionGame },
   { id: "memory", emoji: "🧠", name: "Keycap Memory", desc: "Repeat the glowing sequence", Comp: KeycapMemory },
   { id: "snake", emoji: "🐍", name: "Terminal Snake", desc: "Eat, grow, don't bite yourself", Comp: SnakeGame },
-  { id: "bugs", emoji: "🐛", name: "Bug Squash", desc: "Squash the bugs before they escape", Comp: BugSquash },
+  { id: "bugs", emoji: "🐞", name: "Bug Squash", desc: "Squash the bugs before they escape", Comp: BugSquash },
   { id: "hire", emoji: "🏃", name: "Hire Juan: Runner", desc: "Jump rejections, grab skills", Comp: HireRunner },
 ];
 

@@ -6,20 +6,19 @@ import { Trophy, ArrowUp, ArrowDown } from "lucide-react";
 const W = 460;
 const H = 180;
 const GROUND = H - 30;
-const RX = Math.round(W * 0.45); // runner sits around the middle
+const RX = Math.round(W * 0.45);
 const BEST_KEY = "hire-best";
 
-const LOW_H = 26;       // ground obstacle height -> must JUMP
-const GAP = 22;         // gap under overhead bar -> must SLIDE
-const STAND_TOP = 36;   // runner height standing
-const SLIDE_TOP = 14;   // runner height sliding
+const LOW_H = 26;
+const GAP = 22;
+const STAND_TOP = 36;
+const SLIDE_TOP = 14;
 const JUMP_V = 360;
 const GRAV = 1300;
-const SLIDE_MS = 550;
 
 const SKILLS = ["React", "AWS", "n8n", "Next", "Node", "TS", "Claude"];
 const LOW_LABELS = ["lowball", "rejected", "no reply"];
-const HIGH_LABELS = ["ghosted", " signed?"];
+const HIGH_LABELS = ["ghosted", "signed?"];
 
 type Ob = { x: number; w: number; type: "low" | "high"; label: string };
 type Pickup = { x: number; y: number; label: string; got: boolean };
@@ -33,7 +32,7 @@ export function HireRunner() {
 
   const y = useRef(0);
   const vy = useRef(0);
-  const slideUntil = useRef(0);
+  const slideHeld = useRef(false);
   const phase = useRef(0);
   const obstacles = useRef<Ob[]>([]);
   const pickups = useRef<Pickup[]>([]);
@@ -46,6 +45,8 @@ export function HireRunner() {
   const last = useRef(0);
   const runningRef = useRef(false);
 
+  const isSliding = () => slideHeld.current && y.current <= 1;
+
   useEffect(() => {
     try { const b = localStorage.getItem(BEST_KEY); if (b) setBest(parseInt(b, 10)); } catch {}
     const c = canvasRef.current;
@@ -55,13 +56,13 @@ export function HireRunner() {
       c.style.width = `${W}px`; c.style.height = `${H}px`;
       c.getContext("2d")?.scale(dpr, dpr);
     }
-    draw(0);
+    draw();
     return () => cancelAnimationFrame(raf.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const drawRunner = useCallback((ctx: CanvasRenderingContext2D, now: number) => {
-    const sliding = now < slideUntil.current && y.current <= 1;
+  const drawRunner = useCallback((ctx: CanvasRenderingContext2D) => {
+    const sliding = isSliding();
     const bottom = GROUND - y.current;
     const P = "#c4b5fd";
     ctx.save();
@@ -96,7 +97,7 @@ export function HireRunner() {
     ctx.restore();
   }, []);
 
-  const draw = useCallback((now: number) => {
+  const draw = useCallback(() => {
     const ctx = canvasRef.current?.getContext("2d");
     if (!ctx) return;
     ctx.clearRect(0, 0, W, H);
@@ -128,7 +129,7 @@ export function HireRunner() {
       ctx.fillStyle = "#d8b4fe"; ctx.font = "9px monospace"; ctx.textAlign = "center";
       ctx.fillText(p.label, p.x + 17, p.y + 11);
     }
-    drawRunner(ctx, now);
+    drawRunner(ctx);
   }, [drawRunner]);
 
   const endGame = useCallback(() => {
@@ -147,13 +148,7 @@ export function HireRunner() {
 
   const jump = useCallback(() => {
     if (!runningRef.current) return;
-    const now = performance.now();
-    if (y.current <= 1 && now >= slideUntil.current) vy.current = JUMP_V;
-  }, []);
-
-  const slide = useCallback(() => {
-    if (!runningRef.current) return;
-    if (y.current <= 1) slideUntil.current = performance.now() + SLIDE_MS;
+    if (y.current <= 1) vy.current = JUMP_V;
   }, []);
 
   const tick = useCallback((now: number) => {
@@ -166,7 +161,7 @@ export function HireRunner() {
     vy.current -= GRAV * dt;
     y.current += vy.current * dt;
     if (y.current < 0) { y.current = 0; vy.current = 0; }
-    const sliding = now < slideUntil.current && y.current <= 1;
+    const sliding = isSliding();
 
     spawnAcc.current += dt;
     if (spawnAcc.current > Math.max(0.95, 1.7 - dist.current / 4500)) {
@@ -190,8 +185,8 @@ export function HireRunner() {
       o.x -= speed.current * dt;
       const overlap = o.x < RX + 10 && o.x + o.w > RX - 10;
       if (overlap) {
-        if (o.type === "low" && y.current <= LOW_H) { draw(now); endGame(); return; }
-        if (o.type === "high" && runnerTop >= GAP) { draw(now); endGame(); return; }
+        if (o.type === "low" && y.current <= LOW_H) { draw(); endGame(); return; }
+        if (o.type === "high" && runnerTop >= GAP) { draw(); endGame(); return; }
       }
       if (o.x + o.w > -10) keepO.push(o);
     }
@@ -209,12 +204,12 @@ export function HireRunner() {
     pickups.current = keepP;
 
     setScore(Math.floor(dist.current / 10) + skills.current * 5);
-    draw(now);
+    draw();
     raf.current = requestAnimationFrame(tick);
   }, [draw, endGame]);
 
   const start = () => {
-    y.current = 0; vy.current = 0; slideUntil.current = 0; phase.current = 0;
+    y.current = 0; vy.current = 0; slideHeld.current = false; phase.current = 0;
     obstacles.current = []; pickups.current = [];
     speed.current = 190; dist.current = 0; skills.current = 0;
     spawnAcc.current = 0; pickAcc.current = 0;
@@ -225,14 +220,19 @@ export function HireRunner() {
   };
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
+    const down = (e: KeyboardEvent) => {
       const k = e.key.toLowerCase();
       if (k === " " || k === "arrowup" || k === "w") { e.preventDefault(); jump(); }
-      else if (k === "arrowdown" || k === "s") { e.preventDefault(); slide(); }
+      else if (k === "arrowdown" || k === "s") { e.preventDefault(); slideHeld.current = true; }
     };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [jump, slide]);
+    const up = (e: KeyboardEvent) => {
+      const k = e.key.toLowerCase();
+      if (k === "arrowdown" || k === "s") slideHeld.current = false;
+    };
+    window.addEventListener("keydown", down);
+    window.addEventListener("keyup", up);
+    return () => { window.removeEventListener("keydown", down); window.removeEventListener("keyup", up); };
+  }, [jump]);
 
   return (
     <div className="font-mono flex flex-col items-center">
@@ -245,7 +245,7 @@ export function HireRunner() {
         {!running && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 bg-black/55 rounded-lg backdrop-blur-sm">
             <p className="text-sm text-white text-center px-4">{over ? `Game over — score ${score}` : "Hire Juan: The Runner"}</p>
-            {!over && <p className="text-[11px] text-neutral-400 text-center px-6">Jump low rejections, slide under overhead ones, grab skills.</p>}
+            {!over && <p className="text-[11px] text-neutral-400 text-center px-6">Jump low rejections, hold slide under overhead ones, grab skills.</p>}
             <button type="button" onClick={start} className="px-4 py-2 rounded-lg bg-purple-500/15 border border-purple-500/30 text-[13px] text-purple-300 hover:text-white hover:bg-purple-500/25 transition-colors cursor-pointer">{over ? "Run again" : "Start running"}</button>
           </div>
         )}
@@ -253,10 +253,17 @@ export function HireRunner() {
       {running && (
         <div className="flex gap-2 mt-3">
           <button type="button" onClick={jump} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/[0.04] border border-white/10 text-[12px] text-neutral-300 hover:border-purple-500/40 hover:text-white transition-colors cursor-pointer active:scale-95"><ArrowUp className="w-3.5 h-3.5" /> Jump</button>
-          <button type="button" onClick={slide} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/[0.04] border border-white/10 text-[12px] text-neutral-300 hover:border-purple-500/40 hover:text-white transition-colors cursor-pointer active:scale-95"><ArrowDown className="w-3.5 h-3.5" /> Slide</button>
+          <button
+            type="button"
+            onPointerDown={(e) => { e.preventDefault(); slideHeld.current = true; }}
+            onPointerUp={() => { slideHeld.current = false; }}
+            onPointerLeave={() => { slideHeld.current = false; }}
+            onPointerCancel={() => { slideHeld.current = false; }}
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/[0.04] border border-white/10 text-[12px] text-neutral-300 hover:border-purple-500/40 hover:text-white transition-colors cursor-pointer active:scale-95 touch-none"
+          ><ArrowDown className="w-3.5 h-3.5" /> Slide (hold)</button>
         </div>
       )}
-      <p className="text-[10px] text-neutral-600 mt-2">↑ / space to jump · ↓ to slide</p>
+      <p className="text-[10px] text-neutral-600 mt-2">↑ / space to jump · hold ↓ to slide</p>
     </div>
   );
 }

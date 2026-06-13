@@ -91,7 +91,7 @@ export function BugSquash() {
                 className="w-[68px] h-[68px] rounded-xl border border-white/[0.08] bg-white/[0.02] flex items-center justify-center text-3xl transition-transform active:scale-90"
                 style={{ cursor: hasBug ? "pointer" : "default" }}
               >
-                <span className={hasBug ? "inline-block animate-[wiggle_0.5s_ease-in-out_infinite]" : "opacity-0"}>🐛</span>
+                <span className={hasBug ? "inline-block animate-[wiggle_0.5s_ease-in-out_infinite]" : "opacity-0"}>🐞</span>
               </button>
             );
           })}
@@ -100,7 +100,7 @@ export function BugSquash() {
         {phase !== "play" && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/55 rounded-xl backdrop-blur-sm">
             <p className="text-sm text-white text-center">
-              {phase === "over" ? `Time! You squashed ${score} 🐛` : "Bug Squash"}
+              {phase === "over" ? `Time! You squashed ${score} 🐞` : "Bug Squash"}
             </p>
             {phase === "idle" && <p className="text-[11px] text-neutral-400 text-center px-6">Click the bugs before they scurry off. 20 seconds.</p>}
             <button type="button" onClick={start} className="px-4 py-2 rounded-lg bg-purple-500/15 border border-purple-500/30 text-[13px] text-purple-300 hover:text-white hover:bg-purple-500/25 transition-colors cursor-pointer">
