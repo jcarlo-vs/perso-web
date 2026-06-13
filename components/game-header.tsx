@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import { Play } from "lucide-react";
 
 function openGame() {
   window.dispatchEvent(new CustomEvent("typing-game:open"));
@@ -108,23 +106,14 @@ function PetParade() {
       title="Play the typing game"
       className="group relative flex-1 h-12 overflow-hidden cursor-pointer text-left"
     >
-      {/* pulsing invite */}
-      <motion.span
-        animate={{
-          scale: [1, 1.07, 1],
-          opacity: [0.75, 1, 0.75],
-          boxShadow: [
-            "0 0 0px rgba(168,85,247,0.0)",
-            "0 0 14px rgba(168,85,247,0.4)",
-            "0 0 0px rgba(168,85,247,0.0)",
-          ],
-        }}
-        transition={{ duration: 1.9, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1 left-1 z-10 inline-flex items-center gap-1.5 rounded-full border border-purple-500/35 bg-purple-500/10 px-2.5 py-1 font-mono text-[10px] tracking-wide text-purple-200 group-hover:text-fuchsia-200 group-hover:border-fuchsia-400/50 transition-colors"
-      >
-        <Play className="w-2.5 h-2.5 fill-current" />
+      {/* invite (borderless, right side) with a pulsing dot cue */}
+      <span className="absolute top-1 right-1 z-10 inline-flex items-center gap-1.5 font-mono text-[10px] tracking-wide text-neutral-500 group-hover:text-fuchsia-300 transition-colors">
         click to play
-      </motion.span>
+        <span className="relative flex h-1.5 w-1.5">
+          <span className="absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75 animate-ping" />
+          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-purple-500" />
+        </span>
+      </span>
 
       {/* ground */}
       <div className="absolute bottom-1.5 left-0 right-0 border-b border-dashed border-purple-500/25" />
