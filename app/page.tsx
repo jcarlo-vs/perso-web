@@ -11,7 +11,7 @@ import { AuroraBackground } from "@/components/ui/aurora-background";
 import { AiTerminal } from "@/components/ai-terminal";
 import { AiLauncher } from "@/components/ai-launcher";
 import { TypingGame } from "@/components/typing-game";
-import { PlayTrigger } from "@/components/play-trigger";
+import { GameHeader } from "@/components/game-header";
 
 export default function Home() {
   return (
@@ -19,7 +19,6 @@ export default function Home() {
       <AuroraBackground />
       <AiTerminal />
       <AiLauncher />
-      <PlayTrigger />
       <TypingGame />
       <main className="relative max-w-[1000px] mx-auto px-6 py-16 md:py-24">
         {/* Status bar + Command Palette */}
@@ -64,8 +63,11 @@ export default function Home() {
               </div>
             </AboutReveal>
 
-            {/* Right - terminal block */}
-            <CodeBlock />
+            {/* Right - terminal block with the game launcher + dino scene above it */}
+            <div>
+              <GameHeader />
+              <CodeBlock />
+            </div>
           </div>
         </section>
 
