@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { Play } from "lucide-react";
 
 function openGame() {
   window.dispatchEvent(new CustomEvent("typing-game:open"));
@@ -107,9 +108,23 @@ function PetParade() {
       title="Play the typing game"
       className="group relative flex-1 h-12 overflow-hidden cursor-pointer text-left"
     >
-      <span className="absolute top-0 left-1 text-[9px] font-mono text-neutral-600 group-hover:text-fuchsia-400 transition-colors z-10">
+      {/* pulsing invite */}
+      <motion.span
+        animate={{
+          scale: [1, 1.07, 1],
+          opacity: [0.75, 1, 0.75],
+          boxShadow: [
+            "0 0 0px rgba(168,85,247,0.0)",
+            "0 0 14px rgba(168,85,247,0.4)",
+            "0 0 0px rgba(168,85,247,0.0)",
+          ],
+        }}
+        transition={{ duration: 1.9, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1 left-1 z-10 inline-flex items-center gap-1.5 rounded-full border border-purple-500/35 bg-purple-500/10 px-2.5 py-1 font-mono text-[10px] tracking-wide text-purple-200 group-hover:text-fuchsia-200 group-hover:border-fuchsia-400/50 transition-colors"
+      >
+        <Play className="w-2.5 h-2.5 fill-current" />
         click to play
-      </span>
+      </motion.span>
 
       {/* ground */}
       <div className="absolute bottom-1.5 left-0 right-0 border-b border-dashed border-purple-500/25" />
@@ -130,39 +145,10 @@ function PetParade() {
   );
 }
 
-function PlayMeButton() {
-  return (
-    <motion.button
-      type="button"
-      onClick={openGame}
-      aria-label="Play the typing game"
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      animate={{
-        boxShadow: [
-          "0 0 0px rgba(217,70,239,0.0)",
-          "0 0 20px rgba(217,70,239,0.55)",
-          "0 0 0px rgba(217,70,239,0.0)",
-        ],
-      }}
-      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-      className="relative shrink-0 px-4 py-2 rounded-md border-2 border-fuchsia-400/70 bg-fuchsia-500/10 hover:bg-fuchsia-500/20 cursor-pointer"
-    >
-      <span
-        className="font-mono font-bold text-sm tracking-[0.2em]"
-        style={{ color: "#f5b8fb", textShadow: "0 0 8px rgba(232,121,249,0.85)" }}
-      >
-        PLAY ME
-      </span>
-    </motion.button>
-  );
-}
-
 export function GameHeader() {
   return (
-    <div className="flex items-end justify-between gap-4 mb-3">
+    <div className="flex mb-3">
       <PetParade />
-      <PlayMeButton />
     </div>
   );
 }
