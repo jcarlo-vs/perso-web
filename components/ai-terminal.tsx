@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Sparkles, X } from "lucide-react";
+import { Sparkles, X, Mail } from "lucide-react";
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
@@ -11,6 +11,17 @@ const SUGGESTIONS = [
   "Tell me about TALENT SCREEN",
   "Why should we hire him?",
 ];
+
+// The AI (and the error states) emit this token to surface a Send Email button.
+const EMAIL_CTA = "[[SEND_EMAIL]]";
+
+// Remove the token from displayed text, including a partial token still streaming in.
+function stripCta(text: string): string {
+  return text
+    .replace(/\[\[SEND_EMAIL\]\]/g, "")
+    .replace(/\s*\[\[?[A-Z_]*\]?$/, "")
+    .trimEnd();
+}
 
 export function AiTerminal() {
   const [open, setOpen] = useState(false);
@@ -76,13 +87,14 @@ export function AiTerminal() {
 
         if (!res.ok) {
           const data = await res.json().catch(() => null);
-          appendToReply(data?.error ?? "Something went wrong - please try again.");
+          const msg = data?.error ?? "Something went wrong - please try again.";
+          appendToReply(`${msg}\n\nYou can always reach Juan Carlo directly:\n${EMAIL_CTA}`);
           return;
         }
 
         const reader = res.body?.getReader();
         if (!reader) {
-          appendToReply("Something went wrong - please try again.");
+          appendToReply(`Something went wrong - please try again.\n\nYou can reach Juan Carlo directly:\n${EMAIL_CTA}`);
           return;
         }
         const decoder = new TextDecoder();
@@ -92,7 +104,7 @@ export function AiTerminal() {
           appendToReply(decoder.decode(value, { stream: true }));
         }
       } catch {
-        appendToReply("Connection failed - please try again.");
+        appendToReply(`Connection failed - please try again.\n\nYou can reach Juan Carlo directly:\n${EMAIL_CTA}`);
       } finally {
         setStreaming(false);
         inputRef.current?.focus();
@@ -100,6 +112,11 @@ export function AiTerminal() {
     },
     [messages, streaming]
   );
+
+  const openEmail = useCallback(() => {
+    setOpen(false);
+    setTimeout(() => window.dispatchEvent(new CustomEvent("open-email-modal")), 220);
+  }, []);
 
   return (
     <AnimatePresence>
@@ -182,12 +199,24 @@ export function AiTerminal() {
                         {m.content}
                       </p>
                     ) : (
-                      <p className="text-neutral-400 whitespace-pre-wrap">
-                        {m.content}
-                        {streaming && i === messages.length - 1 && (
-                          <span className="inline-block w-[7px] h-[13px] bg-purple-400/70 ml-0.5 align-middle animate-pulse" />
+                      <div>
+                        <p className="text-neutral-400 whitespace-pre-wrap">
+                          {stripCta(m.content)}
+                          {streaming && i === messages.length - 1 && (
+                            <span className="inline-block w-[7px] h-[13px] bg-purple-400/70 ml-0.5 align-middle animate-pulse" />
+                          )}
+                        </p>
+                        {m.content.includes(EMAIL_CTA) && !(streaming && i === messages.length - 1) && (
+                          <button
+                            type="button"
+                            onClick={openEmail}
+                            className="mt-2.5 inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-purple-500/15 border border-purple-500/30 text-[12px] text-purple-300 hover:text-white hover:bg-purple-500/25 hover:border-purple-400/50 transition-colors cursor-pointer"
+                          >
+                            <Mail className="w-3.5 h-3.5" />
+                            Send Juan an email
+                          </button>
                         )}
-                      </p>
+                      </div>
                     )}
                   </div>
                 ))}
