@@ -7,14 +7,14 @@ import { TypingGame } from "./games/typing-game";
 import { ReactionGame } from "./games/reaction";
 import { KeycapMemory } from "./games/keycap-memory";
 import { SnakeGame } from "./games/snake";
-import { WordleGame } from "./games/wordle";
+import { BugSquash } from "./games/bug-squash";
 
 const GAMES = [
   { id: "type", emoji: "⌨️", name: "Type the Stack", desc: "30s speed test + global leaderboard", Comp: TypingGame },
   { id: "react", emoji: "⚡", name: "Reaction Time", desc: "Click the instant it turns green", Comp: ReactionGame },
   { id: "memory", emoji: "🧠", name: "Keycap Memory", desc: "Repeat the glowing sequence", Comp: KeycapMemory },
   { id: "snake", emoji: "🐍", name: "Terminal Snake", desc: "Eat, grow, don't bite yourself", Comp: SnakeGame },
-  { id: "wordle", emoji: "🔤", name: "Dev Wordle", desc: "Guess the 5-letter tech word", Comp: WordleGame },
+  { id: "bugs", emoji: "🐛", name: "Bug Squash", desc: "Squash the bugs before they escape", Comp: BugSquash },
 ];
 
 export function Arcade({ onClose }: { onClose: () => void }) {

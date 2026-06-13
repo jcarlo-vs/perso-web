@@ -141,7 +141,7 @@ export function SnakeGame() {
     <div className="font-mono flex flex-col items-center">
       <div className="flex items-center gap-5 text-[11px] mb-3 w-full justify-center">
         <span className="text-neutral-500">SCORE <span className="text-purple-300 text-sm">{score}</span></span>
-        {best !== null && <span className="text-neutral-600 flex items-center gap-1"><Trophy className="w-3 h-3" />{best}</span>}
+        {best !== null && <span className="text-amber-300 flex items-center gap-1 text-sm"><Trophy className="w-3.5 h-3.5" />{best}</span>}
       </div>
       <div className="relative">
         <canvas ref={canvasRef} className="rounded-lg border border-white/10 bg-black/40" />
