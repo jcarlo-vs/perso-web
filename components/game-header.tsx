@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 function openGame() {
@@ -9,104 +9,136 @@ function openGame() {
 
 const rnd = (min: number, max: number) => min + Math.random() * (max - min);
 
-/** A live Chrome-dino scene driven by requestAnimationFrame: cacti scroll in at
- *  randomized speeds/gaps, and the T-rex reacts and jumps when one gets close. */
-function DinoRunner() {
+// Stick figure skeleton (local coords, facing right). punch/kick in 0..1.
+function bodyPath(punch: number, kick: number): string {
+  const leadHandX = 16 + 14 * punch;
+  const leadHandY = 14 - 2 * punch;
+  const frontFootX = 16 + 14 * kick;
+  const frontFootY = 36 - 18 * kick;
+  return (
+    `M10,10 L10,22` + // torso
+    ` M10,22 L4,36` + // back leg
+    ` M10,22 L${frontFootX.toFixed(1)},${frontFootY.toFixed(1)}` + // front leg (kicks)
+    ` M10,10 L4,18` + // rear arm (guard)
+    ` M10,10 L${leadHandX.toFixed(1)},${leadHandY.toFixed(1)}` // lead arm (punches)
+  );
+}
+
+/** Two stick fighters trading randomized punches and kicks, with impact bursts. */
+function StickFight() {
   const wrapRef = useRef<HTMLButtonElement>(null);
-  const dinoRef = useRef<HTMLSpanElement>(null);
-  const c1Ref = useRef<HTMLSpanElement>(null);
-  const c2Ref = useRef<HTMLSpanElement>(null);
-  const walkerRef = useRef<HTMLSpanElement>(null);
+  const innerA = useRef<SVGGElement>(null);
+  const innerB = useRef<SVGGElement>(null);
+  const pathA = useRef<SVGPathElement>(null);
+  const pathB = useRef<SVGPathElement>(null);
+  const sparkRef = useRef<SVGTextElement>(null);
+  const [w, setW] = useState(420);
+
+  const C = w / 2;
+  const GAP = 40;
+  const xL = C - GAP / 2;
+  const xR = C + GAP / 2;
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const wrap = wrapRef.current;
-    const dino = dinoRef.current;
-    const cacti = [c1Ref.current, c2Ref.current].filter(Boolean) as HTMLSpanElement[];
-    const walker = walkerRef.current;
-    if (!wrap || !dino) return;
+    if (!wrap) return;
+    const measure = () => setW(wrap.clientWidth || 420);
+    measure();
+    window.addEventListener("resize", measure);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return () => window.removeEventListener("resize", measure);
+    }
 
-    let width = wrap.clientWidth || 400;
-    let dinoX = width / 2; // T-rex runs in the middle
-    const onResize = () => {
-      width = wrap.clientWidth || 400;
-      dinoX = width / 2;
+    // mutable per-frame state
+    const fs = {
+      a: { punch: 0, kick: 0, lunge: 0, recoil: 0, lean: 0, phase: 0, bobOut: 0 },
+      b: { punch: 0, kick: 0, lunge: 0, recoil: 0, lean: 0, phase: 1.6, bobOut: 0 },
+      attacking: false,
+      who: "a" as "a" | "b",
+      action: "punch" as "punch" | "kick",
+      moveStart: 0,
+      moveDur: 0.34,
+      nextAt: 0.7,
+      sparked: false,
+      spark: 0,
+      t: 0,
     };
-    window.addEventListener("resize", onResize);
-
-    const GRAVITY = 1500;
-
-    // obstacle state, spaced out and at varied speeds
-    const obs = cacti.map((el, i) => ({
-      el,
-      x: width + i * rnd(200, 360) + 80,
-      speed: rnd(75, 135),
-    }));
-
-    let dy = 0; // height above ground
-    let vy = 0;
-    let jumping = false;
-
-    let wx = -30;
-    let wSpeed = rnd(20, 46);
-    let wPause = 0;
 
     let last = performance.now();
     let raf = 0;
 
+    const setFighter = (
+      inner: SVGGElement | null,
+      path: SVGPathElement | null,
+      f: typeof fs.a
+    ) => {
+      if (path) path.setAttribute("d", bodyPath(f.punch, f.kick));
+      if (inner) {
+        const tx = f.lunge - f.recoil;
+        inner.setAttribute("transform", `translate(${tx.toFixed(2)},${(-f.bobOut).toFixed(2)}) rotate(${f.lean.toFixed(2)} 10 22)`);
+      }
+    };
+
     const tick = (now: number) => {
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
+      fs.t += dt;
 
-      // move + respawn cacti with fresh random speed and gap
-      for (const o of obs) {
-        o.x -= o.speed * dt;
-        if (o.x < -26) {
-          const furthest = Math.max(width, ...obs.map((b) => b.x));
-          o.x = furthest + rnd(170, 380);
-          o.speed = rnd(75, 145);
-        }
-        o.el.style.transform = `translateX(${o.x}px)`;
+      // footwork bob
+      fs.a.bobOut = Math.sin(fs.t * 7 + fs.a.phase) * 1.1;
+      fs.b.bobOut = Math.sin(fs.t * 7 + fs.b.phase) * 1.1;
+
+      // start a move
+      if (!fs.attacking && fs.t >= fs.nextAt) {
+        fs.attacking = true;
+        fs.who = Math.random() < 0.5 ? "a" : "b";
+        fs.action = Math.random() < 0.6 ? "punch" : "kick";
+        fs.moveStart = fs.t;
+        fs.moveDur = rnd(0.28, 0.42);
+        fs.sparked = false;
       }
 
-      // react: jump when a cactus enters a (randomized) reaction window
-      if (!jumping) {
-        for (const o of obs) {
-          const dist = o.x - dinoX;
-          if (dist > 6 && dist < rnd(40, 64)) {
-            vy = rnd(245, 285);
-            jumping = true;
-            break;
-          }
-        }
-      }
-      if (jumping) {
-        dy += vy * dt;
-        vy -= GRAVITY * dt;
-        if (dy <= 0) {
-          dy = 0;
-          vy = 0;
-          jumping = false;
-        }
-      }
-      const bob = jumping ? 0 : Math.sin(now / 90) * 1.5;
-      // scaleX(-1) flips the T-rex to face right, toward the PLAY ME button
-      dino.style.transform = `translateX(${dinoX}px) translateY(${-(dy) - bob}px) scaleX(-1)`;
+      const atk = fs.who === "a" ? fs.a : fs.b;
+      const def = fs.who === "a" ? fs.b : fs.a;
 
-      // background walker: varied speed + occasional pauses
-      if (walker) {
-        if (wPause > 0) {
-          wPause -= dt;
+      if (fs.attacking) {
+        const local = Math.min(1, (fs.t - fs.moveStart) / fs.moveDur);
+        const strength = Math.sin(local * Math.PI); // 0 -> 1 -> 0
+        if (fs.action === "punch") {
+          atk.punch = strength;
+          atk.kick = 0;
         } else {
-          wx += wSpeed * dt;
-          if (wx > width + 24) {
-            wx = -30;
-            wSpeed = rnd(18, 50);
-            wPause = rnd(0, 1.8);
-          }
+          atk.kick = strength;
+          atk.punch = 0;
         }
-        walker.style.transform = `translateX(${wx}px) translateY(${-Math.sin(now / 170) * 1.2}px)`;
+        atk.lunge = strength * 5;
+        // contact near the peak
+        if (!fs.sparked && local > 0.45) {
+          fs.sparked = true;
+          def.recoil = 6;
+          def.lean = fs.who === "a" ? -10 : 10; // lean away from attacker
+          fs.spark = 1;
+        }
+        if (local >= 1) {
+          fs.attacking = false;
+          atk.punch = 0;
+          atk.kick = 0;
+          atk.lunge = 0;
+          fs.nextAt = fs.t + rnd(0.35, 1.0);
+        }
       }
+
+      // decay recoil + lean back to neutral
+      for (const f of [fs.a, fs.b]) {
+        f.recoil *= Math.pow(0.0008, dt); // fast settle
+        f.lean += (0 - f.lean) * Math.min(1, dt * 9);
+        if (f.recoil < 0.05) f.recoil = 0;
+      }
+      fs.spark = Math.max(0, fs.spark - dt * 2.4);
+
+      setFighter(innerA.current, pathA.current, fs.a);
+      setFighter(innerB.current, pathB.current, fs.b);
+      if (sparkRef.current) sparkRef.current.setAttribute("opacity", fs.spark.toFixed(2));
 
       raf = requestAnimationFrame(tick);
     };
@@ -114,10 +146,11 @@ function DinoRunner() {
 
     return () => {
       cancelAnimationFrame(raf);
-      window.removeEventListener("resize", onResize);
+      window.removeEventListener("resize", measure);
     };
   }, []);
 
+  const stroke = "#c4b5fd";
   return (
     <button
       ref={wrapRef}
@@ -125,27 +158,31 @@ function DinoRunner() {
       onClick={openGame}
       aria-label="Play the typing game"
       title="Play the typing game"
-      className="group relative flex-1 h-12 overflow-hidden cursor-pointer text-left"
+      className="group relative flex-1 h-12 cursor-pointer text-left"
     >
-      <span className="absolute top-0 left-1 text-[9px] font-mono text-neutral-600 group-hover:text-fuchsia-400 transition-colors">
+      <span className="absolute top-0 left-1 text-[9px] font-mono text-neutral-600 group-hover:text-fuchsia-400 transition-colors z-10">
         click to play
       </span>
-
-      {/* ground line */}
-      <div className="absolute bottom-1.5 left-0 right-0 border-b border-dashed border-purple-500/25" />
-
-      <span ref={walkerRef} className="absolute bottom-[7px] left-0 text-[12px] opacity-60 select-none" style={{ transform: "translateX(-30px)" }}>
-        🦕
-      </span>
-      <span ref={c1Ref} className="absolute bottom-[6px] left-0 text-[14px] select-none" style={{ transform: "translateX(400px)" }}>
-        🌵
-      </span>
-      <span ref={c2Ref} className="absolute bottom-[6px] left-0 text-[13px] select-none" style={{ transform: "translateX(700px)" }}>
-        🌵
-      </span>
-      <span ref={dinoRef} className="absolute bottom-[6px] left-0 text-[17px] select-none" style={{ transform: "translateX(160px) scaleX(-1)" }}>
-        🦖
-      </span>
+      <svg width="100%" height="46" viewBox={`0 0 ${w} 46`} preserveAspectRatio="xMidYMax meet">
+        {/* ground */}
+        <line x1="0" y1="42" x2={w} y2="42" stroke="rgba(168,85,247,0.25)" strokeWidth="1" strokeDasharray="3 3" />
+        {/* fighter A (faces right) */}
+        <g transform={`translate(${xL},6)`}>
+          <g ref={innerA}>
+            <path ref={pathA} d={bodyPath(0, 0)} stroke={stroke} strokeWidth="1.6" strokeLinecap="round" fill="none" />
+            <circle cx="10" cy="6" r="3.5" stroke={stroke} strokeWidth="1.6" fill="none" />
+          </g>
+        </g>
+        {/* fighter B (mirrored, faces left) */}
+        <g transform={`translate(${xR},6) scale(-1,1)`}>
+          <g ref={innerB}>
+            <path ref={pathB} d={bodyPath(0, 0)} stroke="#a78bfa" strokeWidth="1.6" strokeLinecap="round" fill="none" />
+            <circle cx="10" cy="6" r="3.5" stroke="#a78bfa" strokeWidth="1.6" fill="none" />
+          </g>
+        </g>
+        {/* impact burst */}
+        <text ref={sparkRef} x={C} y="20" textAnchor="middle" fontSize="13" opacity="0">💥</text>
+      </svg>
     </button>
   );
 }
@@ -181,7 +218,7 @@ function PlayMeButton() {
 export function GameHeader() {
   return (
     <div className="flex items-end justify-between gap-4 mb-3">
-      <DinoRunner />
+      <StickFight />
       <PlayMeButton />
     </div>
   );
