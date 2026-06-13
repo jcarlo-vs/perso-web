@@ -9,22 +9,42 @@ function openGame() {
 
 const rnd = (min: number, max: number) => min + Math.random() * (max - min);
 
-// Stick figure skeleton (local coords, facing right). punch/kick in 0..1.
-function bodyPath(punch: number, kick: number): string {
-  const leadHandX = 16 + 14 * punch;
-  const leadHandY = 14 - 2 * punch;
-  const frontFootX = 16 + 14 * kick;
-  const frontFootY = 36 - 18 * kick;
+// Poses: [leadHandX, leadHandY, swordTipX, swordTipY, frontFootX, frontFootY]
+// Local coords, facing right. Opponent is toward +x.
+const GUARD =      [13, 12, 21, 3, 16, 36];
+const SLASH_UP =   [7, 7, 1, -5, 15, 36];   // sword cocked overhead/behind
+const SLASH_DOWN = [17, 15, 31, 21, 18, 36]; // slashed down toward opponent
+const THRUST =     [20, 12, 34, 12, 22, 34]; // sword stabbed forward
+const PARRY =      [15, 6, 25, -2, 15, 36];  // sword raised to block
+const STAGGER =    [8, 14, 1, 10, 12, 36];   // knocked back, sword low
+const KICK =       [12, 12, 20, 3, 30, 18];  // front kick, sword in guard
+
+function pathFrom(p: number[]): string {
+  const [lhx, lhy, stx, sty, ffx, ffy] = p;
+  let dx = stx - lhx;
+  let dy = sty - lhy;
+  const len = Math.hypot(dx, dy) || 1;
+  dx /= len;
+  dy /= len;
+  const px = -dy * 2.2;
+  const py = dx * 2.2;
+  const f = (n: number) => n.toFixed(1);
   return (
     `M10,10 L10,22` + // torso
     ` M10,22 L4,36` + // back leg
-    ` M10,22 L${frontFootX.toFixed(1)},${frontFootY.toFixed(1)}` + // front leg (kicks)
-    ` M10,10 L4,18` + // rear arm (guard)
-    ` M10,10 L${leadHandX.toFixed(1)},${leadHandY.toFixed(1)}` // lead arm (punches)
+    ` M10,22 L${f(ffx)},${f(ffy)}` + // front leg
+    ` M10,10 L4,18` + // rear arm
+    ` M10,10 L${f(lhx)},${f(lhy)}` + // lead arm
+    ` M${f(lhx)},${f(lhy)} L${f(stx)},${f(sty)}` + // sword blade
+    ` M${f(lhx - px)},${f(lhy - py)} L${f(lhx + px)},${f(lhy + py)}` // hilt guard
   );
 }
 
-/** Two stick fighters trading randomized punches and kicks, with impact bursts. */
+function lerpPose(p: number[], target: number[], a: number) {
+  for (let i = 0; i < p.length; i++) p[i] += (target[i] - p[i]) * a;
+}
+
+/** Two stick swordsmen dueling with randomized slashes, thrusts, parries and kicks. */
 function StickFight() {
   const wrapRef = useRef<HTMLButtonElement>(null);
   const innerA = useRef<SVGGElement>(null);
@@ -35,9 +55,8 @@ function StickFight() {
   const [w, setW] = useState(420);
 
   const C = w / 2;
-  const GAP = 40;
-  const xL = C - GAP / 2;
-  const xR = C + GAP / 2;
+  const xL = C - 21;
+  const xR = C + 21;
 
   useEffect(() => {
     const wrap = wrapRef.current;
@@ -49,33 +68,64 @@ function StickFight() {
       return () => window.removeEventListener("resize", measure);
     }
 
-    // mutable per-frame state
+    const mk = (phase: number) => ({
+      pose: GUARD.slice(),
+      target: GUARD as number[],
+      lunge: 0,
+      recoil: 0,
+      lean: 0,
+      bobOut: 0,
+      phase,
+      recoverAt: 0,
+    });
     const fs = {
-      a: { punch: 0, kick: 0, lunge: 0, recoil: 0, lean: 0, phase: 0, bobOut: 0 },
-      b: { punch: 0, kick: 0, lunge: 0, recoil: 0, lean: 0, phase: 1.6, bobOut: 0 },
+      a: mk(0),
+      b: mk(1.6),
       attacking: false,
       who: "a" as "a" | "b",
-      action: "punch" as "punch" | "kick",
-      moveStart: 0,
-      moveDur: 0.34,
+      action: "slash" as "slash" | "thrust" | "kick",
+      step: "" as "" | "windup" | "strike" | "recover",
+      stepEnd: 0,
+      resolved: false,
       nextAt: 0.7,
-      sparked: false,
       spark: 0,
+      sparkChar: "💥",
       t: 0,
     };
 
     let last = performance.now();
     let raf = 0;
 
-    const setFighter = (
-      inner: SVGGElement | null,
-      path: SVGPathElement | null,
-      f: typeof fs.a
-    ) => {
-      if (path) path.setAttribute("d", bodyPath(f.punch, f.kick));
+    const resolveHit = () => {
+      if (fs.resolved) return;
+      fs.resolved = true;
+      const atk = fs.who === "a" ? fs.a : fs.b;
+      const def = fs.who === "a" ? fs.b : fs.a;
+      const parry = fs.action !== "kick" && Math.random() < 0.5;
+      if (parry) {
+        def.target = PARRY;
+        def.recoverAt = fs.t + 0.3;
+        atk.recoil = 3; // bounce off the block
+        fs.spark = 1;
+        fs.sparkChar = "✦";
+      } else {
+        def.target = STAGGER;
+        def.recoverAt = fs.t + 0.32;
+        def.recoil = 7;
+        def.lean = -13; // lean away from opponent
+        fs.spark = 1;
+        fs.sparkChar = "💥";
+      }
+    };
+
+    const setEl = (inner: SVGGElement | null, path: SVGPathElement | null, f: typeof fs.a) => {
+      if (path) path.setAttribute("d", pathFrom(f.pose));
       if (inner) {
         const tx = f.lunge - f.recoil;
-        inner.setAttribute("transform", `translate(${tx.toFixed(2)},${(-f.bobOut).toFixed(2)}) rotate(${f.lean.toFixed(2)} 10 22)`);
+        inner.setAttribute(
+          "transform",
+          `translate(${tx.toFixed(2)},${(-f.bobOut).toFixed(2)}) rotate(${f.lean.toFixed(2)} 10 22)`
+        );
       }
     };
 
@@ -84,61 +134,69 @@ function StickFight() {
       last = now;
       fs.t += dt;
 
-      // footwork bob
-      fs.a.bobOut = Math.sin(fs.t * 7 + fs.a.phase) * 1.1;
-      fs.b.bobOut = Math.sin(fs.t * 7 + fs.b.phase) * 1.1;
+      fs.a.bobOut = Math.sin(fs.t * 7 + fs.a.phase) * 1.0;
+      fs.b.bobOut = Math.sin(fs.t * 7 + fs.b.phase) * 1.0;
 
-      // start a move
+      // begin a move
       if (!fs.attacking && fs.t >= fs.nextAt) {
         fs.attacking = true;
         fs.who = Math.random() < 0.5 ? "a" : "b";
-        fs.action = Math.random() < 0.6 ? "punch" : "kick";
-        fs.moveStart = fs.t;
-        fs.moveDur = rnd(0.28, 0.42);
-        fs.sparked = false;
+        const r = Math.random();
+        fs.action = r < 0.55 ? "slash" : r < 0.85 ? "thrust" : "kick";
+        fs.step = "windup";
+        fs.stepEnd = fs.t + (fs.action === "slash" ? 0.14 : 0.08);
+        fs.resolved = false;
       }
-
-      const atk = fs.who === "a" ? fs.a : fs.b;
-      const def = fs.who === "a" ? fs.b : fs.a;
 
       if (fs.attacking) {
-        const local = Math.min(1, (fs.t - fs.moveStart) / fs.moveDur);
-        const strength = Math.sin(local * Math.PI); // 0 -> 1 -> 0
-        if (fs.action === "punch") {
-          atk.punch = strength;
-          atk.kick = 0;
-        } else {
-          atk.kick = strength;
-          atk.punch = 0;
-        }
-        atk.lunge = strength * 5;
-        // contact near the peak
-        if (!fs.sparked && local > 0.45) {
-          fs.sparked = true;
-          def.recoil = 6;
-          def.lean = fs.who === "a" ? -10 : 10; // lean away from attacker
-          fs.spark = 1;
-        }
-        if (local >= 1) {
-          fs.attacking = false;
-          atk.punch = 0;
-          atk.kick = 0;
-          atk.lunge = 0;
-          fs.nextAt = fs.t + rnd(0.35, 1.0);
+        const atk = fs.who === "a" ? fs.a : fs.b;
+        if (fs.step === "windup") {
+          atk.target = fs.action === "slash" ? SLASH_UP : GUARD;
+          if (fs.t >= fs.stepEnd) {
+            fs.step = "strike";
+            atk.target = fs.action === "slash" ? SLASH_DOWN : fs.action === "thrust" ? THRUST : KICK;
+            atk.lunge = fs.action === "thrust" ? 6 : fs.action === "kick" ? 3 : 4;
+            resolveHit();
+            fs.stepEnd = fs.t + 0.16;
+          }
+        } else if (fs.step === "strike") {
+          if (fs.t >= fs.stepEnd) {
+            fs.step = "recover";
+            atk.target = GUARD;
+            atk.lunge = 0;
+            fs.stepEnd = fs.t + 0.18;
+          }
+        } else if (fs.step === "recover") {
+          if (fs.t >= fs.stepEnd) {
+            fs.attacking = false;
+            fs.step = "";
+            fs.nextAt = fs.t + rnd(0.35, 1.1);
+          }
         }
       }
 
-      // decay recoil + lean back to neutral
+      // return non-attacking fighters to guard after their recovery window
+      for (const key of ["a", "b"] as const) {
+        const f = fs[key];
+        const isActiveAttacker = fs.attacking && fs.who === key;
+        if (!isActiveAttacker && fs.t > f.recoverAt) f.target = GUARD;
+      }
+
+      // integrate
       for (const f of [fs.a, fs.b]) {
-        f.recoil *= Math.pow(0.0008, dt); // fast settle
-        f.lean += (0 - f.lean) * Math.min(1, dt * 9);
-        if (f.recoil < 0.05) f.recoil = 0;
+        lerpPose(f.pose, f.target, Math.min(1, dt * 17));
+        f.recoil += (0 - f.recoil) * Math.min(1, dt * 9);
+        f.lean += (0 - f.lean) * Math.min(1, dt * 8);
+        if (f.recoil < 0.04) f.recoil = 0;
       }
-      fs.spark = Math.max(0, fs.spark - dt * 2.4);
+      fs.spark = Math.max(0, fs.spark - dt * 2.6);
 
-      setFighter(innerA.current, pathA.current, fs.a);
-      setFighter(innerB.current, pathB.current, fs.b);
-      if (sparkRef.current) sparkRef.current.setAttribute("opacity", fs.spark.toFixed(2));
+      setEl(innerA.current, pathA.current, fs.a);
+      setEl(innerB.current, pathB.current, fs.b);
+      if (sparkRef.current) {
+        sparkRef.current.textContent = fs.sparkChar;
+        sparkRef.current.setAttribute("opacity", fs.spark.toFixed(2));
+      }
 
       raf = requestAnimationFrame(tick);
     };
@@ -150,7 +208,6 @@ function StickFight() {
     };
   }, []);
 
-  const stroke = "#c4b5fd";
   return (
     <button
       ref={wrapRef}
@@ -164,24 +221,20 @@ function StickFight() {
         click to play
       </span>
       <svg width="100%" height="46" viewBox={`0 0 ${w} 46`} preserveAspectRatio="xMidYMax meet">
-        {/* ground */}
         <line x1="0" y1="42" x2={w} y2="42" stroke="rgba(168,85,247,0.25)" strokeWidth="1" strokeDasharray="3 3" />
-        {/* fighter A (faces right) */}
         <g transform={`translate(${xL},6)`}>
           <g ref={innerA}>
-            <path ref={pathA} d={bodyPath(0, 0)} stroke={stroke} strokeWidth="1.6" strokeLinecap="round" fill="none" />
-            <circle cx="10" cy="6" r="3.5" stroke={stroke} strokeWidth="1.6" fill="none" />
+            <path ref={pathA} d={pathFrom(GUARD)} stroke="#c4b5fd" strokeWidth="1.6" strokeLinecap="round" fill="none" />
+            <circle cx="10" cy="6" r="3.5" stroke="#c4b5fd" strokeWidth="1.6" fill="none" />
           </g>
         </g>
-        {/* fighter B (mirrored, faces left) */}
         <g transform={`translate(${xR},6) scale(-1,1)`}>
           <g ref={innerB}>
-            <path ref={pathB} d={bodyPath(0, 0)} stroke="#a78bfa" strokeWidth="1.6" strokeLinecap="round" fill="none" />
-            <circle cx="10" cy="6" r="3.5" stroke="#a78bfa" strokeWidth="1.6" fill="none" />
+            <path ref={pathB} d={pathFrom(GUARD)} stroke="#f0abfc" strokeWidth="1.6" strokeLinecap="round" fill="none" />
+            <circle cx="10" cy="6" r="3.5" stroke="#f0abfc" strokeWidth="1.6" fill="none" />
           </g>
         </g>
-        {/* impact burst */}
-        <text ref={sparkRef} x={C} y="20" textAnchor="middle" fontSize="13" opacity="0">💥</text>
+        <text ref={sparkRef} x={C} y="16" textAnchor="middle" fontSize="13" opacity="0">💥</text>
       </svg>
     </button>
   );
