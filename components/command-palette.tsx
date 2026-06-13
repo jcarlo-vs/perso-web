@@ -15,6 +15,7 @@ import {
   Linkedin,
   Command,
   Sparkles,
+  Gamepad2,
 } from "lucide-react";
 
 interface CommandItem {
@@ -53,6 +54,7 @@ export function CommandPalette({ onSendEmail }: CommandPaletteProps) {
 
       // Actions
       { id: "act-ai", label: "Ask AI about Juan", category: "Actions", icon: <Sparkles className="w-4 h-4" />, action: () => { setOpen(false); setTimeout(() => window.dispatchEvent(new CustomEvent("ai-terminal:open")), 200); }, keywords: ["ai", "ask", "chat", "assistant", "claude"] },
+      { id: "act-game", label: "Play the typing game", category: "Actions", icon: <Gamepad2 className="w-4 h-4" />, action: () => { setOpen(false); setTimeout(() => window.dispatchEvent(new CustomEvent("typing-game:open")), 200); }, keywords: ["play", "game", "typing", "wpm", "type", "leaderboard", "record"] },
       { id: "act-email", label: "Send Email", category: "Actions", icon: <Mail className="w-4 h-4" />, action: () => { setOpen(false); setTimeout(onSendEmail, 200); }, keywords: ["email", "contact", "message", "hire"] },
       { id: "act-cv", label: "Download CV", category: "Actions", icon: <Download className="w-4 h-4" />, action: () => { setOpen(false); window.open("/resume.pdf", "_blank"); }, keywords: ["cv", "resume", "download", "pdf"] },
 
