@@ -1,19 +1,32 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import { createPortal } from "react-dom";
+import { motion, useMotionValue, useTransform, animate, AnimatePresence } from "framer-motion";
+
+type Flash = { x: number; y: number; toLight: boolean; id: number };
+
+const SPARKS = [
+  { dx: -18, dy: -14 }, { dx: 16, dy: -18 }, { dx: -22, dy: 6 },
+  { dx: 22, dy: 2 }, { dx: -8, dy: -24 }, { dx: 8, dy: 20 },
+];
 
 export function ThemeToggle() {
   const [isDark, setIsDark] = useState(true);
   const [isPulling, setIsPulling] = useState(false);
   const [nudged, setNudged] = useState(false);
   const [tooltipVisible, setTooltipVisible] = useState(false);
+  const [flash, setFlash] = useState<Flash | null>(null);
+  const [toggleCount, setToggleCount] = useState(0);
+  const [mounted, setMounted] = useState(false);
   const chainY = useMotionValue(0);
   const startY = useRef(0);
+  const bulbRef = useRef<HTMLDivElement>(null);
 
-  // Chain stretches as you pull
-  // Chain stretches with pull - bead stays at the end
+  // Chain stretches with pull - links are revealed as it extends
   const chainLength = useTransform(chainY, [0, 25], [20, 45]);
+
+  useEffect(() => setMounted(true), []);
 
   // Show tooltip after page load, stays until first pull
   useEffect(() => {
@@ -51,6 +64,17 @@ export function ThemeToggle() {
         } else {
           document.documentElement.classList.add("light-mode");
         }
+        // Room-light flash radiating from the bulb
+        const rect = bulbRef.current?.getBoundingClientRect();
+        if (rect) {
+          setFlash({
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2,
+            toLight: !next, // next=false means light mode is turning ON
+            id: Date.now(),
+          });
+        }
+        setToggleCount((c) => c + 1);
       }
 
       animate(chainY, 0, {
@@ -71,22 +95,73 @@ export function ThemeToggle() {
     };
   }, [isPulling, isDark, chainY]);
 
+  const lightOn = !isDark;
+
   return (
     <div className="relative flex flex-col items-center select-none" style={{ width: 32, height: 72 }}>
-      {/* Bulb */}
-      <div className="relative z-10">
-        {/* Bulb glow - only when light mode (on) */}
-        {!isDark && (
+      {/* Full-page flash when the light switches - rendered in a portal so nothing clips it */}
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {flash && (
+              <motion.div
+                key={flash.id}
+                className="fixed inset-0 z-[100] pointer-events-none"
+                style={{
+                  background: flash.toLight
+                    ? `radial-gradient(circle at ${flash.x}px ${flash.y}px, rgba(255,243,196,0.95) 0%, rgba(253,224,71,0.4) 30%, transparent 65%)`
+                    : `radial-gradient(circle at ${flash.x}px ${flash.y}px, rgba(46,16,86,0.95) 0%, rgba(15,8,30,0.55) 35%, transparent 70%)`,
+                }}
+                initial={{ clipPath: `circle(0px at ${flash.x}px ${flash.y}px)`, opacity: 1 }}
+                animate={{ clipPath: `circle(160vmax at ${flash.x}px ${flash.y}px)`, opacity: 0 }}
+                transition={{ duration: 0.8, ease: [0.22, 0.8, 0.36, 1] }}
+                onAnimationComplete={() => setFlash(null)}
+              />
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
+
+      {/* Bulb - wobbles when the chain is released */}
+      <motion.div
+        ref={bulbRef}
+        className="relative z-10"
+        key={`wobble-${toggleCount}`}
+        animate={toggleCount > 0 ? { rotate: [0, -7, 5, -3, 1.5, 0] } : {}}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
+        {/* Breathing glow - only when the light is on */}
+        {lightOn && (
           <>
-            <div
-              className="absolute -inset-3 rounded-full blur-lg pointer-events-none"
-              style={{ background: "radial-gradient(circle, rgba(250,204,21,0.5) 0%, transparent 70%)" }}
+            <motion.div
+              className="absolute -inset-4 rounded-full blur-lg pointer-events-none"
+              style={{ background: "radial-gradient(circle, rgba(250,204,21,0.55) 0%, transparent 70%)" }}
+              animate={{ opacity: [0.7, 1, 0.7], scale: [1, 1.08, 1] }}
+              transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
             />
-            <div
-              className="absolute -inset-1.5 rounded-full blur-md pointer-events-none opacity-60"
-              style={{ background: "radial-gradient(circle, rgba(250,204,21,0.3) 0%, transparent 70%)" }}
+            <motion.div
+              className="absolute -inset-1.5 rounded-full blur-md pointer-events-none"
+              style={{ background: "radial-gradient(circle, rgba(250,204,21,0.35) 0%, transparent 70%)" }}
+              animate={{ opacity: [0.5, 0.8, 0.5] }}
+              transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
             />
           </>
+        )}
+
+        {/* Spark particles on switch-on */}
+        {lightOn && (
+          <div key={`sparks-${toggleCount}`} className="absolute inset-0 pointer-events-none">
+            {SPARKS.map((s, i) => (
+              <motion.span
+                key={i}
+                className="absolute left-1/2 top-1/2 w-[3px] h-[3px] rounded-full"
+                style={{ background: "#fde047", boxShadow: "0 0 6px rgba(253,224,71,0.9)" }}
+                initial={{ x: 0, y: 0, opacity: 1, scale: 1 }}
+                animate={{ x: s.dx, y: s.dy, opacity: 0, scale: 0.3 }}
+                transition={{ duration: 0.55, delay: i * 0.03, ease: "easeOut" }}
+              />
+            ))}
+          </div>
         )}
 
         {/* Bulb body */}
@@ -97,29 +172,43 @@ export function ThemeToggle() {
           <rect x="8.5" y="2.5" width="7" height="0.8" rx="0.4" fill="#636363" />
 
           {/* Glass bulb */}
-          <path
+          <motion.path
             d="M12 4C7.5 4 4 8 4 12.5C4 16 6 18.5 8 20C9 20.8 9.5 22 9.5 23H14.5C14.5 22 15 20.8 16 20C18 18.5 20 16 20 12.5C20 8 16.5 4 12 4Z"
-            fill={isDark ? "#2a2a2a" : "#fde047"}
-            stroke={isDark ? "#404040" : "#eab308"}
+            animate={{
+              fill: isDark ? "#2a2a2a" : "#fde047",
+              stroke: isDark ? "#404040" : "#eab308",
+            }}
+            transition={{ duration: 0.35 }}
             strokeWidth="0.5"
           />
 
-          {/* Filament */}
+          {/* Glass highlight */}
           <path
+            d="M8 8.5C8.5 6.8 10 5.6 11 5.4"
+            stroke={isDark ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.65)"}
+            strokeWidth="1.1"
+            strokeLinecap="round"
+            fill="none"
+          />
+
+          {/* Filament - flickers to life like a real incandescent */}
+          <motion.path
+            key={`filament-${toggleCount}`}
             d="M10 14C10.5 12 11 13 11.5 11.5C12 13 12.5 12 13 14"
             stroke={isDark ? "#555" : "#f59e0b"}
             strokeWidth="0.8"
             fill="none"
-            opacity={isDark ? 0.3 : 1}
+            animate={lightOn ? { opacity: [0, 1, 0.4, 1, 0.75, 1] } : { opacity: 0.3 }}
+            transition={lightOn ? { duration: 0.6, ease: "easeOut" } : { duration: 0.3 }}
           />
 
           {/* Bottom cap */}
           <rect x="9" y="23" width="6" height="2" rx="0.5" fill="#525252" />
           <rect x="9.5" y="25" width="5" height="1.5" rx="0.5" fill="#474747" />
         </svg>
-      </div>
+      </motion.div>
 
-      {/* Chain/string - swings like a pendulum */}
+      {/* Ball chain - swings like a pendulum, links revealed as it stretches */}
       <motion.div
         className="relative z-10 flex flex-col items-center origin-top"
         animate={isPulling || !nudged ? {} : { rotate: [0, 3, -2, 2.5, -1.5, 1, 0] }}
@@ -129,17 +218,35 @@ export function ThemeToggle() {
           ease: "easeInOut",
         }}
       >
-        {/* Chain line */}
-        <motion.div
-          className="w-[1px] bg-gradient-to-b from-neutral-500 to-neutral-600"
-          style={{ height: chainLength }}
-        />
+        {/* Chain of tiny ball links inside a stretching window */}
+        <motion.div className="overflow-hidden flex justify-center" style={{ height: chainLength, width: 6 }}>
+          <div className="flex flex-col items-center gap-[1.5px] pt-[1px]">
+            {Array.from({ length: 14 }).map((_, i) => (
+              <span
+                key={i}
+                className="w-[2.5px] h-[2.5px] rounded-full shrink-0"
+                style={{
+                  background: "linear-gradient(135deg, #8a8a8a, #5a5a5a)",
+                  boxShadow: "inset 0 0.5px 0 rgba(255,255,255,0.4)",
+                }}
+              />
+            ))}
+          </div>
+        </motion.div>
 
         {/* Pull bead + tooltip */}
         <div className="relative">
           <motion.div
             onPointerDown={(e) => { setTooltipVisible(false); onPointerDown(e); }}
-            className="w-3 h-3 rounded-full bg-neutral-400 border border-neutral-500 shadow-sm cursor-grab active:cursor-grabbing touch-none hover:bg-neutral-300 transition-colors"
+            whileHover={{ scale: 1.25 }}
+            className="w-3 h-3 rounded-full cursor-grab active:cursor-grabbing touch-none"
+            style={{
+              background: "radial-gradient(circle at 35% 30%, #d4d4d4, #737373 70%)",
+              border: "1px solid #525252",
+              boxShadow: "0 1px 3px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.35)",
+            }}
+            role="button"
+            aria-label="Toggle light and dark mode"
           />
 
           {/* Price tag - points left toward the bead */}
