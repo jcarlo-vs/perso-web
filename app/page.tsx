@@ -10,7 +10,7 @@ import { PageShell } from "@/components/page-shell";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { AiTerminal } from "@/components/ai-terminal";
 import { AiLauncher } from "@/components/ai-launcher";
-import { TypingGame } from "@/components/typing-game";
+import { ArcadeMount } from "@/components/arcade/arcade-mount";
 import { GameHeader } from "@/components/game-header";
 
 export default function Home() {
@@ -19,7 +19,7 @@ export default function Home() {
       <AuroraBackground />
       <AiTerminal />
       <AiLauncher />
-      <TypingGame />
+      <ArcadeMount />
       <main className="relative max-w-[1000px] mx-auto px-6 py-16 md:py-24">
         {/* Status bar + Command Palette */}
         <StatusBar />
