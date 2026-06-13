@@ -11,13 +11,13 @@ const output = [
   "  Installing: JavaScript, TypeScript, React, Next.js, Vue, Angular, Tailwind, Framer Motion",
   "",
   "Collecting backend...",
-  "  Installing: Node.js, Express, NestJS, PHP (Laravel), Python (FastAPI), MongoDB, PostgreSQL, MySQL, Redis, Firebase",
+  "  Installing: Node.js, Express, NestJS, PHP (Laravel), Python (FastAPI), MongoDB, PostgreSQL, MySQL, Redis",
   "",
   "Collecting devops...",
   "  Installing: Git, Docker, CI/CD, Cloudflare",
   "",
   "Collecting cloud services...",
-  "  Installing: AWS Fargate, RDS, ElastiCache, SQS, SNS, Lambda, S3, CloudWatch",
+  "  Installing: AWS (EC2, ECS, Fargate, RDS, ElastiCache, SQS, SNS, Lambda, S3, CloudWatch), Supabase, Firebase",
   "",
   "Collecting automation...",
   "  Installing: n8n, Zapier",
@@ -25,7 +25,7 @@ const output = [
   "Collecting ai tools...",
   "  Installing: Claude, GitHub Copilot",
   "",
-  "✓ Successfully installed 34 packages",
+  "✓ Successfully installed 37 packages",
 ];
 
 export function TechImports() {
