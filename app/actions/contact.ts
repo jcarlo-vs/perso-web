@@ -2,6 +2,7 @@
 
 import nodemailer from "nodemailer";
 import { headers } from "next/headers";
+import { clientIpFrom, makeRateLimiter } from "@/lib/rate-limit";
 
 export type ContactFormState = {
   success: boolean;
@@ -12,27 +13,8 @@ const MAX_NAME_LENGTH = 100;
 const MAX_EMAIL_LENGTH = 200;
 const MAX_MESSAGE_LENGTH = 5000;
 
-// Best-effort rate limit (per serverless instance): 3 sends per IP per 10 minutes
-const RATE_LIMIT = 3;
-const RATE_WINDOW_MS = 10 * 60 * 1000;
-const recentSends = new Map<string, number[]>();
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const recent = (recentSends.get(ip) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
-  if (recent.length >= RATE_LIMIT) {
-    recentSends.set(ip, recent);
-    return true;
-  }
-  recent.push(now);
-  recentSends.set(ip, recent);
-  if (recentSends.size > 1000) {
-    for (const [key, times] of recentSends) {
-      if (times.every((t) => now - t >= RATE_WINDOW_MS)) recentSends.delete(key);
-    }
-  }
-  return false;
-}
+// Best-effort throttle: 3 sends per IP per 10 minutes (see lib/rate-limit.ts)
+const isRateLimited = makeRateLimiter(3, 10 * 60 * 1000);
 
 function escapeHtml(text: string): string {
   return text
@@ -88,7 +70,8 @@ export async function sendContactEmail(
     };
   }
 
-  const ip = (await headers()).get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  const h = await headers();
+  const ip = clientIpFrom((n) => h.get(n));
   if (isRateLimited(ip)) {
     return {
       success: false,

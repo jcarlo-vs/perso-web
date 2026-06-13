@@ -9,12 +9,14 @@ import { StatusBar } from "@/components/status-bar";
 import { PageShell } from "@/components/page-shell";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { AiTerminal } from "@/components/ai-terminal";
+import { AiLauncher } from "@/components/ai-launcher";
 
 export default function Home() {
   return (
     <div className="relative bg-black min-h-screen">
       <AuroraBackground />
       <AiTerminal />
+      <AiLauncher />
       <main className="relative max-w-[1000px] mx-auto px-6 py-16 md:py-24">
         {/* Status bar + Command Palette */}
         <StatusBar />

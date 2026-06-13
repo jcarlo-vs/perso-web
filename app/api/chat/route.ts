@@ -1,5 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { buildSystemPrompt } from '@/lib/ai-profile';
+import { clientIpFrom, makeRateLimiter } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 export const maxDuration = 30;
@@ -7,27 +8,8 @@ export const maxDuration = 30;
 const MAX_TURNS = 12;
 const MAX_MESSAGE_LENGTH = 1000;
 
-// Best-effort rate limit (per serverless instance): 10 messages per IP per 10 minutes
-const RATE_LIMIT = 10;
-const RATE_WINDOW_MS = 10 * 60 * 1000;
-const recentRequests = new Map<string, number[]>();
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const recent = (recentRequests.get(ip) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
-  if (recent.length >= RATE_LIMIT) {
-    recentRequests.set(ip, recent);
-    return true;
-  }
-  recent.push(now);
-  recentRequests.set(ip, recent);
-  if (recentRequests.size > 1000) {
-    for (const [key, times] of recentRequests) {
-      if (times.every((t) => now - t >= RATE_WINDOW_MS)) recentRequests.delete(key);
-    }
-  }
-  return false;
-}
+// Best-effort throttle: 20 messages per IP per 10 minutes (see lib/rate-limit.ts)
+const isRateLimited = makeRateLimiter(20, 10 * 60 * 1000);
 
 type ChatMessage = { role: 'user' | 'assistant'; content: string };
 
@@ -50,7 +32,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
+  const ip = clientIpFrom((n) => req.headers.get(n));
   if (isRateLimited(ip)) {
     return Response.json(
       { error: 'Too many messages. Please wait a few minutes and try again.' },

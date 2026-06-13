@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Command, Sparkles } from "lucide-react";
+import { Command } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export function StatusBar() {
@@ -30,16 +30,6 @@ export function StatusBar() {
           {time && (
             <span className="font-mono">{time} PHT</span>
           )}
-          <button
-            type="button"
-            onClick={() => {
-              window.dispatchEvent(new CustomEvent("ai-terminal:open"));
-            }}
-            className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-purple-500/25 text-purple-400/80 hover:text-purple-300 hover:border-purple-400/40 hover:bg-purple-500/10 transition-colors cursor-pointer"
-          >
-            <Sparkles className="w-3 h-3" />
-            <span className="font-mono">ASK AI</span>
-          </button>
           <button
             type="button"
             onClick={() => {
