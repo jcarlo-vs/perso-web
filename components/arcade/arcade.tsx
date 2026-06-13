@@ -49,6 +49,7 @@ export function Arcade({ onClose }: { onClose: () => void }) {
   return (
     <AnimatePresence>
       <motion.div
+        key="arcade-backdrop"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -57,6 +58,7 @@ export function Arcade({ onClose }: { onClose: () => void }) {
         onClick={onClose}
       />
       <motion.div
+        key="arcade-panel"
         initial={{ opacity: 0, scale: 0.95, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 10 }}
