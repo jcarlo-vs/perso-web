@@ -67,7 +67,7 @@ export const skills = {
 
 export const experience = [
   {
-    period: '2024 – 2025',
+    period: '2024 – 2026',
     title: 'Full Stack Developer',
     company: 'Independent Contractor',
   },
