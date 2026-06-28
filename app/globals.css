@@ -27,7 +27,7 @@
   /* --accent: 0 0% 72%; */
 
   /* White  #ffffff */
-  /* --accent: 0 0% 100%; */
+  --accent: 0 0% 100%;
 
   /* Blue  #3b82f6 */
   /* --accent: 217 91% 60%; */
@@ -57,7 +57,7 @@
   /* --accent: 330 81% 60%; */
 
   /* Purple (old brand)  #a855f7 */
-  --accent: 271 91% 65%;
+  /* --accent: 271 91% 65%; */
   --accent-foreground: 0 0% 100%;
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 0 0% 100%;
