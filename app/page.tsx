@@ -47,7 +47,7 @@ export default function Home() {
             {/* Left - label + text */}
             <AboutReveal>
               <div>
-                <h2 className="text-xs font-mono tracking-[0.2em] text-purple-400/80 uppercase mb-3">
+                <h2 className="text-xs font-mono tracking-[0.2em] text-accent/80 uppercase mb-3">
                   About
                 </h2>
                 <p className="text-sm text-neutral-400 leading-relaxed">
@@ -57,7 +57,7 @@ export default function Home() {
                 </p>
                 <p className="mt-8 text-xl font-bold font-mono tracking-tight">
                   <span className="text-white/80">Ship fast.</span>{" "}
-                  <span className="text-purple-400/80">Real results.</span>{" "}
+                  <span className="text-accent/80">Real results.</span>{" "}
                   <span className="text-white/80">Sleep well.</span>
                 </p>
               </div>
@@ -75,7 +75,7 @@ export default function Home() {
         <div className="grid md:grid-cols-2 gap-12 mb-16">
           {/* Tech Stack */}
           <section id="tech-stack">
-            <h2 className="text-xs font-mono tracking-[0.2em] text-purple-400/80 uppercase mb-6">
+            <h2 className="text-xs font-mono tracking-[0.2em] text-accent/80 uppercase mb-6">
               Tech Stack
             </h2>
             <TechImports />
@@ -84,7 +84,7 @@ export default function Home() {
           {/* Experience */}
           <FadeIn>
           <section id="experience">
-            <h2 className="text-xs font-mono tracking-[0.2em] text-purple-400/80 uppercase mb-6">
+            <h2 className="text-xs font-mono tracking-[0.2em] text-accent/80 uppercase mb-6">
               Experience
             </h2>
 
@@ -98,9 +98,9 @@ export default function Home() {
                   className="relative flex items-start justify-between gap-4 group"
                 >
                   <div className="flex items-start gap-2.5 min-w-0">
-                    <span className="relative z-10 mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-500/50 group-hover:bg-purple-400 shrink-0 transition-colors" />
+                    <span className="relative z-10 mt-1.5 w-1.5 h-1.5 rounded-full bg-accent/50 group-hover:bg-accent shrink-0 transition-colors" />
                     <div>
-                    <p className="text-sm font-medium text-white/90 group-hover:text-purple-300 transition-colors">
+                    <p className="text-sm font-medium text-white/90 group-hover:text-accent transition-colors">
                       {item.title}
                     </p>
                     <p className="text-xs text-neutral-600">{item.company}</p>
@@ -117,12 +117,12 @@ export default function Home() {
         </div>
 
         {/* ── Divider ── */}
-        <div className="border-t border-dashed border-purple-500/10 mb-16" />
+        <div className="border-t border-dashed border-accent/10 mb-16" />
 
         {/* ── Projects ── */}
         <FadeIn>
         <section id="projects" className="mb-16">
-          <h2 className="text-xs font-mono tracking-[0.2em] text-purple-400/80 uppercase mb-6">
+          <h2 className="text-xs font-mono tracking-[0.2em] text-accent/80 uppercase mb-6">
             Featured Projects
           </h2>
 
@@ -136,7 +136,7 @@ export default function Home() {
         </FadeIn>
 
         {/* ── Footer ── */}
-        <footer className="pt-8 border-t border-purple-500/10">
+        <footer className="pt-8 border-t border-accent/10">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-3 text-[11px] text-neutral-700">
             <p>{personalInfo.copyright}</p>
             <p className="font-mono flex items-center gap-1.5">

@@ -11,7 +11,7 @@ interface TermLine {
 }
 
 const lines: TermLine[] = [
-  { text: "running jcsenin@latest...", prefix: ">", prefixColor: "#c084fc", color: "#a3a3a3" },
+  { text: "running jcsenin@latest...", prefix: ">", prefixColor: "hsl(var(--accent))", color: "#a3a3a3" },
   { text: "", prefix: "", prefixColor: "", color: "transparent" },
   { text: "4+ years building for the web", prefix: "✓", prefixColor: "#4ade80", color: "#e4e4e7" },
   { text: "20+ projects shipped to production", prefix: "✓", prefixColor: "#4ade80", color: "#e4e4e7" },
@@ -118,10 +118,10 @@ export function CodeBlock() {
         {/* cd command - types after output finishes */}
         {showCd && (
           <div className="mt-1">
-            <span className="text-purple-400">❯ </span>
+            <span className="text-accent">❯ </span>
             <span className="text-neutral-300">{typedCd}</span>
             {!cdDone && (
-              <span className="inline-block w-[7px] h-[14px] bg-purple-400/70 ml-0.5 align-middle" />
+              <span className="inline-block w-[7px] h-[14px] bg-accent/70 ml-0.5 align-middle" />
             )}
           </div>
         )}
@@ -129,11 +129,11 @@ export function CodeBlock() {
         {/* Idle cursor between output done and cd start */}
         {outputDone && !showCd && (
           <div className="mt-1">
-            <span className="text-purple-400">❯ </span>
+            <span className="text-accent">❯ </span>
             <motion.span
               animate={{ opacity: [1, 0] }}
               transition={{ duration: 0.6, repeat: Infinity, repeatType: "reverse" }}
-              className="inline-block w-[7px] h-[14px] bg-purple-400/70 align-middle"
+              className="inline-block w-[7px] h-[14px] bg-accent/70 align-middle"
             />
           </div>
         )}

@@ -107,16 +107,16 @@ function PetParade() {
       className="group relative flex-1 h-12 overflow-hidden cursor-pointer text-left"
     >
       {/* invite (borderless, right side) with a pulsing dot cue */}
-      <span className="absolute top-1 right-1 z-10 inline-flex items-center gap-1.5 font-mono text-[10px] tracking-wide text-neutral-500 group-hover:text-fuchsia-300 transition-colors">
+      <span className="absolute top-1 right-1 z-10 inline-flex items-center gap-1.5 font-mono text-[10px] tracking-wide text-neutral-500 group-hover:text-accent transition-colors">
         click to play
         <span className="relative flex h-1.5 w-1.5">
-          <span className="absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75 animate-ping" />
-          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-purple-500" />
+          <span className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-75 animate-ping" />
+          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
         </span>
       </span>
 
       {/* ground */}
-      <div className="absolute bottom-1.5 left-0 right-0 border-b border-dashed border-purple-500/25" />
+      <div className="absolute bottom-1.5 left-0 right-0 border-b border-dashed border-accent/25" />
 
       {SPECIES.map((s, i) => (
         <span

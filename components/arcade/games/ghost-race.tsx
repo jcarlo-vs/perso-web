@@ -91,13 +91,13 @@ export function GhostRace() {
   return (
     <div className="font-mono" onClick={() => !result && inputRef.current?.focus()}>
       <p className="text-[11px] text-neutral-500 mb-3">
-        <span className="text-purple-400">❯</span> race the ghost of <span className="text-amber-300">{ghostName}</span> ({ghostWpm} wpm) — type the line before it finishes
+        <span className="text-accent">❯</span> race the ghost of <span className="text-amber-300">{ghostName}</span> ({ghostWpm} wpm) — type the line before it finishes
       </p>
 
       <div className="space-y-2 mb-4">
         <div>
-          <div className="flex justify-between text-[10px] mb-1"><span className="text-purple-300">you</span><span className="text-neutral-500">{Math.round(playerPct)}%</span></div>
-          <div className="h-2 rounded-full bg-white/[0.05] overflow-hidden"><div className="h-full bg-purple-400 transition-[width] duration-75" style={{ width: `${playerPct}%` }} /></div>
+          <div className="flex justify-between text-[10px] mb-1"><span className="text-accent">you</span><span className="text-neutral-500">{Math.round(playerPct)}%</span></div>
+          <div className="h-2 rounded-full bg-white/[0.05] overflow-hidden"><div className="h-full bg-accent transition-[width] duration-75" style={{ width: `${playerPct}%` }} /></div>
         </div>
         <div>
           <div className="flex justify-between text-[10px] mb-1"><span className="text-amber-300/80">👻 {ghostName}</span><span className="text-neutral-500">{Math.round(ghostPct)}%</span></div>
@@ -114,7 +114,7 @@ export function GhostRace() {
               let cls = "text-neutral-600";
               if (i < typed.length) cls = typed[i] === ch ? "text-white" : "text-red-400 bg-red-500/15 rounded-sm";
               const isCaret = i === typed.length;
-              return <span key={i} ref={isCaret ? caretRef : undefined} className={`${cls} ${isCaret ? "border-l-2 border-purple-400 -ml-[1px] animate-pulse" : ""}`}>{ch}</span>;
+              return <span key={i} ref={isCaret ? caretRef : undefined} className={`${cls} ${isCaret ? "border-l-2 border-accent -ml-[1px] animate-pulse" : ""}`}>{ch}</span>;
             })}
           </div>
           {!started && <p className="mt-4 text-[11px] text-neutral-600">start typing to begin the race…</p>}
@@ -124,7 +124,7 @@ export function GhostRace() {
           <p className={`text-xl font-bold ${result === "win" ? "text-emerald-300" : "text-neutral-300"}`}>
             {result === "win" ? "🏁 You beat the ghost!" : "👻 The ghost won this one"}
           </p>
-          <button type="button" onClick={() => reset(buildPassage())} className="mt-4 px-4 py-2 rounded-lg bg-purple-500/15 border border-purple-500/30 text-[13px] text-purple-300 hover:text-white hover:bg-purple-500/25 transition-colors cursor-pointer">Race again</button>
+          <button type="button" onClick={() => reset(buildPassage())} className="mt-4 px-4 py-2 rounded-lg bg-accent/15 border border-accent/30 text-[13px] text-accent hover:text-white hover:bg-accent/25 transition-colors cursor-pointer">Race again</button>
         </div>
       )}
     </div>

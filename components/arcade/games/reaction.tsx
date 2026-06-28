@@ -54,7 +54,7 @@ export function ReactionGame() {
   const border =
     phase === "go" ? "rgba(74,222,128,0.5)" :
     phase === "waiting" ? "rgba(248,113,113,0.4)" :
-    "rgba(168,85,247,0.25)";
+    "hsl(var(--accent) / 0.25)";
 
   return (
     <div className="font-mono">
@@ -66,7 +66,7 @@ export function ReactionGame() {
       >
         {phase === "idle" && (
           <>
-            <Zap className="w-8 h-8 text-purple-300" />
+            <Zap className="w-8 h-8 text-accent" />
             <p className="text-sm text-white">Reaction Time</p>
             <p className="text-[12px] text-neutral-400">Click to start, then click the instant it turns green.</p>
           </>
@@ -86,7 +86,7 @@ export function ReactionGame() {
         )}
         {phase === "result" && (
           <>
-            <div className="flex items-end gap-1"><span className="text-5xl font-bold text-white">{ms}</span><span className="text-sm text-purple-300 mb-1.5">ms</span></div>
+            <div className="flex items-end gap-1"><span className="text-5xl font-bold text-white">{ms}</span><span className="text-sm text-accent mb-1.5">ms</span></div>
             <p className="text-[12px] text-neutral-400">{ms < 200 ? "lightning ⚡" : ms < 280 ? "sharp" : ms < 380 ? "solid" : "click again to beat it"}</p>
             <p className="text-[12px] text-neutral-500">click to go again</p>
           </>

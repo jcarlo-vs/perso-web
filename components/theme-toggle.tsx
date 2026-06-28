@@ -110,7 +110,7 @@ export function ThemeToggle() {
                 style={{
                   background: flash.toLight
                     ? `radial-gradient(circle at ${flash.x}px ${flash.y}px, rgba(255,243,196,0.95) 0%, rgba(253,224,71,0.4) 30%, transparent 65%)`
-                    : `radial-gradient(circle at ${flash.x}px ${flash.y}px, rgba(46,16,86,0.95) 0%, rgba(15,8,30,0.55) 35%, transparent 70%)`,
+                    : `radial-gradient(circle at ${flash.x}px ${flash.y}px, rgba(40,40,46,0.95) 0%, rgba(16,16,20,0.55) 35%, transparent 70%)`,
                 }}
                 initial={{ clipPath: `circle(0px at ${flash.x}px ${flash.y}px)`, opacity: 1 }}
                 animate={{ clipPath: `circle(160vmax at ${flash.x}px ${flash.y}px)`, opacity: 0 }}

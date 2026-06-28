@@ -14,7 +14,50 @@
   --secondary-foreground: 0 0% 100%;
   --muted: 0 0% 20%;
   --muted-foreground: 0 0% 60%;
-  --accent: 0 0% 65%;
+  /* ===========================================================
+     THEME ACCENT  ::  recolors the ENTIRE site (UI + games).
+     To switch: comment the uncommented --accent line, then
+     uncomment the one you want. Keep exactly ONE uncommented.
+     =========================================================== */
+
+  /* Steel grey  #8a8a8a  (current) */
+  /* --accent: 0 0% 54%; */
+
+  /* Silver  #b8b8b8 */
+  /* --accent: 0 0% 72%; */
+
+  /* White  #ffffff */
+  /* --accent: 0 0% 100%; */
+
+  /* Blue  #3b82f6 */
+  /* --accent: 217 91% 60%; */
+
+  /* Indigo  #6366f1 */
+  /* --accent: 239 84% 67%; */
+
+  /* Sky  #0ea5e9 */
+  /* --accent: 199 89% 48%; */
+
+  /* Teal  #14b8a6 */
+  /* --accent: 173 80% 40%; */
+
+  /* Emerald  #10b981 */
+  /* --accent: 160 84% 39%; */
+
+  /* Amber  #f59e0b */
+  /* --accent: 38 92% 50%; */
+
+  /* Orange  #f97316 */
+  /* --accent: 25 95% 53%; */
+
+  /* Red  #ef4444 */
+  /* --accent: 0 84% 60%; */
+
+  /* Pink  #ec4899 */
+  /* --accent: 330 81% 60%; */
+
+  /* Purple (old brand)  #a855f7 */
+  --accent: 271 91% 65%;
   --accent-foreground: 0 0% 100%;
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 0 0% 100%;
@@ -79,12 +122,12 @@ body {
 
 /* Text selection */
 ::selection {
-  background: rgba(168, 85, 247, 0.3);
+  background: hsl(var(--accent) / 0.3);
   color: #ffffff;
 }
 
 ::-moz-selection {
-  background: rgba(168, 85, 247, 0.3);
+  background: hsl(var(--accent) / 0.3);
   color: #ffffff;
 }
 
@@ -135,12 +178,12 @@ body {
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: rgba(168, 85, 247, 0.2);
+  background: hsl(var(--accent) / 0.2);
   border-radius: 2px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: rgba(168, 85, 247, 0.4);
+  background: hsl(var(--accent) / 0.4);
 }
 
 /* Light mode - inverts the dark theme */
@@ -155,7 +198,7 @@ body {
 
 /* Focus styles */
 *:focus-visible {
-  outline: 2px solid rgba(168, 85, 247, 0.4);
+  outline: 2px solid hsl(var(--accent) / 0.4);
   outline-offset: 2px;
 }
 
@@ -199,7 +242,7 @@ body {
   height: 540px;
   left: -140px;
   top: -160px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.55), transparent 65%);
+  background: radial-gradient(circle, hsl(var(--accent) / 0.55), transparent 65%);
   animation: aurora-drift-1 26s ease-in-out infinite alternate;
 }
 .aurora-blob-2 {
@@ -207,7 +250,7 @@ body {
   height: 640px;
   right: -180px;
   top: 16%;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.5), transparent 65%);
+  background: radial-gradient(circle, hsl(var(--accent) / 0.5), transparent 65%);
   animation: aurora-drift-2 32s ease-in-out infinite alternate;
 }
 .aurora-blob-3 {
@@ -215,7 +258,7 @@ body {
   height: 500px;
   left: 28%;
   bottom: -200px;
-  background: radial-gradient(circle, rgba(217, 70, 239, 0.4), transparent 65%);
+  background: radial-gradient(circle, hsl(var(--accent) / 0.4), transparent 65%);
   animation: aurora-drift-3 38s ease-in-out infinite alternate;
 }
 @keyframes aurora-drift-1 {

@@ -51,9 +51,9 @@ export function AiLauncher() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.96 }}
             transition={{ type: "spring", stiffness: 300, damping: 24 }}
-            className="relative max-w-[230px] rounded-xl rounded-br-sm border border-purple-500/25 px-3.5 py-2.5 pr-7"
+            className="relative max-w-[230px] rounded-xl rounded-br-sm border border-accent/25 px-3.5 py-2.5 pr-7"
             style={{
-              background: "linear-gradient(135deg, rgba(24,18,38,0.95) 0%, rgba(14,10,22,0.95) 100%)",
+              background: "linear-gradient(135deg, rgba(26,26,30,0.95) 0%, rgba(16,16,18,0.95) 100%)",
               backdropFilter: "blur(12px)",
               boxShadow: "0 8px 28px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06)",
             }}
@@ -67,7 +67,7 @@ export function AiLauncher() {
               <X className="w-3 h-3" />
             </button>
             <p className="text-[12.5px] leading-snug text-neutral-200">
-              Hiring or curious? <span className="text-purple-300">Ask my AI anything</span> about my work.
+              Hiring or curious? <span className="text-accent">Ask my Assistant anything</span> about my work.
             </p>
           </motion.div>
         )}
@@ -84,26 +84,26 @@ export function AiLauncher() {
             transition={{ type: "spring", stiffness: 260, damping: 18 }}
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
-            aria-label="Ask my AI about Juan Carlo"
-            className="group relative inline-flex items-center gap-2 rounded-full border border-purple-500/35 pl-3.5 pr-4 py-2.5 cursor-pointer"
+            aria-label="Ask my Assistant about Juan Carlo"
+            className="group relative inline-flex items-center gap-2 rounded-full border border-accent/35 pl-3.5 pr-4 py-2.5 cursor-pointer"
             style={{
-              background: "linear-gradient(135deg, rgba(124,58,237,0.22) 0%, rgba(20,14,32,0.9) 100%)",
+              background: "linear-gradient(135deg, hsl(var(--accent) / 0.22) 0%, rgba(22,22,26,0.9) 100%)",
               backdropFilter: "blur(12px)",
-              boxShadow: "0 6px 24px rgba(124,58,237,0.28), inset 0 1px 0 rgba(255,255,255,0.1)",
+              boxShadow: "0 6px 24px hsl(var(--accent) / 0.28), inset 0 1px 0 rgba(255,255,255,0.1)",
             }}
           >
             {/* Pulsing ring to draw the eye */}
-            <span className="absolute inset-0 rounded-full border border-purple-400/40 animate-ping-slow pointer-events-none" />
+            <span className="absolute inset-0 rounded-full border border-accent/40 animate-ping-slow pointer-events-none" />
 
             <motion.span
               animate={{ rotate: [0, 12, -8, 0], scale: [1, 1.15, 1] }}
               transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-              className="relative text-purple-300 group-hover:text-purple-200"
+              className="relative text-accent group-hover:text-accent"
             >
               <Sparkles className="w-4 h-4" />
             </motion.span>
             <span className="relative text-[13px] font-medium text-white/90 group-hover:text-white font-mono">
-              Ask my AI
+              Ask my Assistant
             </span>
           </motion.button>
         )}

@@ -174,7 +174,7 @@ export function AiTerminal() {
                 {messages.length === 0 && (
                   <div>
                     <p className="text-neutral-400 mb-1">
-                      <span className="text-purple-400">❯</span> Hi! Ask me anything about Juan Carlo — his experience, projects, or skills.
+                      <span className="text-accent">❯</span> Hi! Ask me anything about Juan Carlo — his experience, projects, or skills.
                     </p>
                     <div className="flex flex-wrap gap-1.5 mt-3">
                       {SUGGESTIONS.map((s) => (
@@ -182,7 +182,7 @@ export function AiTerminal() {
                           key={s}
                           type="button"
                           onClick={() => send(s)}
-                          className="text-[11px] text-purple-300/80 px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 hover:bg-purple-500/20 hover:text-white transition-colors cursor-pointer"
+                          className="text-[11px] text-accent/80 px-2.5 py-1 rounded-full bg-accent/10 border border-accent/20 hover:bg-accent/20 hover:text-white transition-colors cursor-pointer"
                         >
                           {s}
                         </button>
@@ -195,7 +195,7 @@ export function AiTerminal() {
                   <div key={i} className="mb-3">
                     {m.role === "user" ? (
                       <p className="text-white/90">
-                        <span className="text-purple-400">❯ </span>
+                        <span className="text-accent">❯ </span>
                         {m.content}
                       </p>
                     ) : (
@@ -203,14 +203,14 @@ export function AiTerminal() {
                         <p className="text-neutral-400 whitespace-pre-wrap">
                           {stripCta(m.content)}
                           {streaming && i === messages.length - 1 && (
-                            <span className="inline-block w-[7px] h-[13px] bg-purple-400/70 ml-0.5 align-middle animate-pulse" />
+                            <span className="inline-block w-[7px] h-[13px] bg-accent/70 ml-0.5 align-middle animate-pulse" />
                           )}
                         </p>
                         {m.content.includes(EMAIL_CTA) && !(streaming && i === messages.length - 1) && (
                           <button
                             type="button"
                             onClick={openEmail}
-                            className="mt-2.5 inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-purple-500/15 border border-purple-500/30 text-[12px] text-purple-300 hover:text-white hover:bg-purple-500/25 hover:border-purple-400/50 transition-colors cursor-pointer"
+                            className="mt-2.5 inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-accent/15 border border-accent/30 text-[12px] text-accent hover:text-white hover:bg-accent/25 hover:border-accent/50 transition-colors cursor-pointer"
                           >
                             <Mail className="w-3.5 h-3.5" />
                             Send Juan an email
@@ -230,7 +230,7 @@ export function AiTerminal() {
                 }}
                 className="flex items-center gap-2 px-4 py-3 border-t border-white/[0.08]"
               >
-                <span className="text-purple-400 font-mono text-sm">❯</span>
+                <span className="text-accent font-mono text-sm">❯</span>
                 <input
                   ref={inputRef}
                   value={input}
@@ -244,7 +244,7 @@ export function AiTerminal() {
                   type="submit"
                   disabled={streaming || !input.trim()}
                   title="Send"
-                  className="p-1.5 rounded-lg text-purple-400 hover:text-white hover:bg-purple-500/20 transition-colors disabled:opacity-30 cursor-pointer"
+                  className="p-1.5 rounded-lg text-accent hover:text-white hover:bg-accent/20 transition-colors disabled:opacity-30 cursor-pointer"
                 >
                   <Sparkles className="w-4 h-4" />
                 </button>

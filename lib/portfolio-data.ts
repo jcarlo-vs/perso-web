@@ -103,37 +103,35 @@ export const projects = [
     title: 'TALENT SCREEN',
     description:
       'An AI-assisted job hiring platform that screens resumes in seconds with transparent, auditable scoring - AI ranks and explains every candidate while humans keep the final say.',
-    image: '/assets/images/talentscreenv1.png',
-    modalImage: '/assets/images/talentscreen-overview.png',
+    image: '/assets/images/talentscreen-jobs.png',
+    modalImage: '/assets/images/talentscreen-jobs.png',
     technologies: ['NEXT JS', 'SUPABASE', 'INNGEST'],
     demoLink: 'https://talent-screen.vercel.app/',
     githubLink: 'https://github.com/jcarlo-vs/job-hiring-platform',
   },
   {
-    title: 'CRYPTO METER',
+    title: 'AMBAGAN',
     description:
-      'An all-in-one cryptocurrency library for browsing exchanges, tracking thousands of coins, reading crypto news, and calculating conversions - all in a single, responsive dashboard.',
-    image: '/assets/images/cryptometerv1.png',
-    technologies: ['REACT JS', 'REDUX', 'REST APIS'],
-    githubLink: 'https://github.com/jcarlo-vs/CRYPTO-METER',
+      'A trust-first donation platform for Filipino causes - browse human-verified campaigns and give via GCash, Maya, QR Ph, or card, with funds released only after a second human review.',
+    image: '/assets/images/ambaganv1.png',
+    modalImage: '/assets/images/ambaganv1.png',
+    technologies: ['NEXT JS', 'SUPABASE', 'XENDIT'],
+    demoLink: 'https://www.ambagan.org',
+    privateRepo: true,
   },
   {
-    title: 'PICABOOK',
+    title: 'TREE MAKER',
     description:
-      'A social media platform for sharing photos publicly, adding captions, and browsing user profiles - built with a full MERN stack and real-time data syncing.',
-    image: '/assets/images/picabookv1.png',
-    technologies: ['MONGODB', 'EXPRESS JS', 'REACT JS', 'NODE JS'],
-    githubLink: 'https://github.com/jcarlo-vs/picabook-app',
+      'A no-signup diagram builder for family trees, org charts, mind maps, and more - drop nodes on a canvas, rearrange freely, and share the whole tree with a single link.',
+    image: '/assets/images/familytreev1.png',
+    modalImage: '/assets/images/familytreev1.png',
+    technologies: ['NEXT JS', 'DRIZZLE', 'POSTGRES'],
+    demoLink: 'https://familia-tree.vercel.app',
+    githubLink: 'https://github.com/jcarlo-vs/node-tree',
   },
 ];
 
 export const currentlyBuilding = [
-  {
-    name: 'Familia Tree',
-    description: 'Interactive family tree builder with drag-and-drop nodes',
-    link: 'https://familia-tree.vercel.app/',
-    status: 'In Progress' as const,
-  },
   {
     name: 'Portfolio v2',
     description: 'This site - compact, dark, command-palette-powered',

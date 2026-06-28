@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { accent } from "@/lib/accent";
 
 /**
  * Tactile grid - cells near the cursor rise like keyboard keycaps.
@@ -82,14 +83,14 @@ function TactileGrid() {
 
           // keycap face - lighter at the top like catching light
           const grad = ctx.createLinearGradient(0, y, 0, y + s);
-          grad.addColorStop(0, `rgba(192, 140, 255, ${0.2 * f})`);
-          grad.addColorStop(1, `rgba(110, 55, 210, ${0.06 * f})`);
+          grad.addColorStop(0, accent(0.2 * f));
+          grad.addColorStop(1, accent(0.06 * f));
           ctx.fillStyle = grad;
           roundRect(x, y, s, 7);
           ctx.fill();
 
           // keycap edge
-          ctx.strokeStyle = `rgba(192, 132, 252, ${0.28 * f})`;
+          ctx.strokeStyle = accent(0.28 * f);
           ctx.lineWidth = 1;
           ctx.stroke();
 
@@ -97,7 +98,7 @@ function TactileGrid() {
           ctx.beginPath();
           ctx.moveTo(x + 6, y + 1.5);
           ctx.lineTo(x + s - 6, y + 1.5);
-          ctx.strokeStyle = `rgba(233, 213, 255, ${0.45 * f})`;
+          ctx.strokeStyle = accent(0.45 * f);
           ctx.stroke();
         }
       }
@@ -179,7 +180,7 @@ export function AuroraBackground() {
     const move = (e: PointerEvent) => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        el.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(168,85,247,0.06), transparent 70%)`;
+        el.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, ${accent(0.06)}, transparent 70%)`;
       });
     };
     window.addEventListener("pointermove", move);

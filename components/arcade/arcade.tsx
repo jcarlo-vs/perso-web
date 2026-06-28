@@ -103,7 +103,7 @@ export function Arcade({ onClose }: { onClose: () => void }) {
             ) : (
               <div>
                 <p className="font-mono text-[11px] text-neutral-500 mb-4">
-                  <span className="text-purple-400">❯</span> pick a game — high scores save locally
+                  <span className="text-accent">❯</span> pick a game — high scores save locally
                 </p>
                 <div className="grid sm:grid-cols-2 gap-2.5 max-h-[60vh] overflow-y-auto pr-1 scrollbar-thin">
                   {GAMES.map((g) => (
@@ -111,11 +111,11 @@ export function Arcade({ onClose }: { onClose: () => void }) {
                       key={g.id}
                       type="button"
                       onClick={() => setActive(g.id)}
-                      className="group flex items-center gap-3 p-3 rounded-xl border border-white/[0.08] hover:border-purple-500/40 hover:bg-purple-500/[0.06] transition-all text-left cursor-pointer"
+                      className="group flex items-center gap-3 p-3 rounded-xl border border-white/[0.08] hover:border-accent/40 hover:bg-accent/[0.06] transition-all text-left cursor-pointer"
                     >
                       <span className="text-2xl shrink-0 group-hover:scale-110 transition-transform">{g.emoji}</span>
                       <span className="min-w-0">
-                        <span className="block text-sm text-white/90 group-hover:text-purple-200 transition-colors">{g.name}</span>
+                        <span className="block text-sm text-white/90 group-hover:text-accent transition-colors">{g.name}</span>
                         <span className="block text-[11px] text-neutral-500 truncate">{g.desc}</span>
                       </span>
                     </button>

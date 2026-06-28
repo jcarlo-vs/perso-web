@@ -93,7 +93,7 @@ export function IncidentRush() {
   return (
     <div className="font-mono flex flex-col items-center">
       <div className="flex items-center gap-5 text-[11px] mb-4 w-full justify-center">
-        <span className="text-neutral-500">RESOLVED <span className="text-purple-300 text-sm">{score}</span></span>
+        <span className="text-neutral-500">RESOLVED <span className="text-accent text-sm">{score}</span></span>
         <span className="text-red-400/80 text-sm">{"♥".repeat(Math.max(0, lives))}</span>
         {best !== null && <span className="text-amber-300 flex items-center gap-1 text-sm"><Trophy className="w-3.5 h-3.5" />{best}</span>}
       </div>
@@ -129,7 +129,7 @@ export function IncidentRush() {
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/55 rounded-xl backdrop-blur-sm">
             <p className="text-sm text-white text-center">{phase === "over" ? `Outage! Resolved ${score} incidents` : "On-Call: Incident Rush"}</p>
             {phase === "idle" && <p className="text-[11px] text-neutral-400 text-center px-6">Click 🔥 services to resolve incidents before they time out. 3 strikes.</p>}
-            <button type="button" onClick={start} className="px-4 py-2 rounded-lg bg-purple-500/15 border border-purple-500/30 text-[13px] text-purple-300 hover:text-white hover:bg-purple-500/25 transition-colors cursor-pointer">{phase === "over" ? "Back on call" : "Start shift"}</button>
+            <button type="button" onClick={start} className="px-4 py-2 rounded-lg bg-accent/15 border border-accent/30 text-[13px] text-accent hover:text-white hover:bg-accent/25 transition-colors cursor-pointer">{phase === "over" ? "Back on call" : "Start shift"}</button>
           </div>
         )}
       </div>

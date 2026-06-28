@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { accent } from "@/lib/accent";
 import { Trophy, ArrowUp, ArrowDown } from "lucide-react";
 
 const W = 460;
@@ -64,7 +65,7 @@ export function HireRunner() {
   const drawRunner = useCallback((ctx: CanvasRenderingContext2D) => {
     const sliding = isSliding();
     const bottom = GROUND - y.current;
-    const P = "#c4b5fd";
+    const P = accent();
     ctx.save();
     ctx.fillStyle = P;
     ctx.strokeStyle = P;
@@ -101,7 +102,7 @@ export function HireRunner() {
     const ctx = canvasRef.current?.getContext("2d");
     if (!ctx) return;
     ctx.clearRect(0, 0, W, H);
-    ctx.strokeStyle = "rgba(168,85,247,0.3)";
+    ctx.strokeStyle = accent(0.3);
     ctx.setLineDash([4, 4]);
     ctx.beginPath(); ctx.moveTo(0, GROUND); ctx.lineTo(W, GROUND); ctx.stroke();
     ctx.setLineDash([]);
@@ -122,11 +123,11 @@ export function HireRunner() {
     }
     for (const p of pickups.current) {
       if (p.got) continue;
-      ctx.fillStyle = "rgba(168,85,247,0.18)";
-      ctx.strokeStyle = "rgba(192,132,252,0.7)";
+      ctx.fillStyle = accent(0.18);
+      ctx.strokeStyle = accent(0.7);
       ctx.lineWidth = 1;
       ctx.beginPath(); ctx.roundRect(p.x, p.y, 34, 16, 4); ctx.fill(); ctx.stroke();
-      ctx.fillStyle = "#d8b4fe"; ctx.font = "9px monospace"; ctx.textAlign = "center";
+      ctx.fillStyle = accent(); ctx.font = "9px monospace"; ctx.textAlign = "center";
       ctx.fillText(p.label, p.x + 17, p.y + 11);
     }
     drawRunner(ctx);
@@ -237,7 +238,7 @@ export function HireRunner() {
   return (
     <div className="font-mono flex flex-col items-center">
       <div className="flex items-center gap-5 text-[11px] mb-3 w-full justify-center">
-        <span className="text-neutral-500">SCORE <span className="text-purple-300 text-sm">{score}</span></span>
+        <span className="text-neutral-500">SCORE <span className="text-accent text-sm">{score}</span></span>
         {best !== null && <span className="text-amber-300 flex items-center gap-1 text-sm"><Trophy className="w-3.5 h-3.5" />{best}</span>}
       </div>
       <div className="relative">
@@ -246,20 +247,20 @@ export function HireRunner() {
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 bg-black/55 rounded-lg backdrop-blur-sm">
             <p className="text-sm text-white text-center px-4">{over ? `Game over — score ${score}` : "Hire Juan: The Runner"}</p>
             {!over && <p className="text-[11px] text-neutral-400 text-center px-6">Jump low rejections, hold slide under overhead ones, grab skills.</p>}
-            <button type="button" onClick={start} className="px-4 py-2 rounded-lg bg-purple-500/15 border border-purple-500/30 text-[13px] text-purple-300 hover:text-white hover:bg-purple-500/25 transition-colors cursor-pointer">{over ? "Run again" : "Start running"}</button>
+            <button type="button" onClick={start} className="px-4 py-2 rounded-lg bg-accent/15 border border-accent/30 text-[13px] text-accent hover:text-white hover:bg-accent/25 transition-colors cursor-pointer">{over ? "Run again" : "Start running"}</button>
           </div>
         )}
       </div>
       {running && (
         <div className="flex gap-2 mt-3">
-          <button type="button" onClick={jump} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/[0.04] border border-white/10 text-[12px] text-neutral-300 hover:border-purple-500/40 hover:text-white transition-colors cursor-pointer active:scale-95"><ArrowUp className="w-3.5 h-3.5" /> Jump</button>
+          <button type="button" onClick={jump} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/[0.04] border border-white/10 text-[12px] text-neutral-300 hover:border-accent/40 hover:text-white transition-colors cursor-pointer active:scale-95"><ArrowUp className="w-3.5 h-3.5" /> Jump</button>
           <button
             type="button"
             onPointerDown={(e) => { e.preventDefault(); slideHeld.current = true; }}
             onPointerUp={() => { slideHeld.current = false; }}
             onPointerLeave={() => { slideHeld.current = false; }}
             onPointerCancel={() => { slideHeld.current = false; }}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/[0.04] border border-white/10 text-[12px] text-neutral-300 hover:border-purple-500/40 hover:text-white transition-colors cursor-pointer active:scale-95 touch-none"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/[0.04] border border-white/10 text-[12px] text-neutral-300 hover:border-accent/40 hover:text-white transition-colors cursor-pointer active:scale-95 touch-none"
           ><ArrowDown className="w-3.5 h-3.5" /> Slide (hold)</button>
         </div>
       )}

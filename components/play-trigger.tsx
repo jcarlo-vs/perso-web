@@ -6,7 +6,7 @@ import { Gamepad2 } from "lucide-react";
 
 /**
  * Floating, attention-seeking launcher for the typing game.
- * Sits bottom-left (opposite the Ask my AI launcher), gently bobs, and pulses
+ * Sits bottom-left (opposite the Ask my Assistant launcher), gently bobs, and pulses
  * a ring so it reads as "click me".
  */
 export function PlayTrigger() {
@@ -34,20 +34,20 @@ export function PlayTrigger() {
             }}
             whileHover={{ scale: 1.06, y: -2 }}
             whileTap={{ scale: 0.95 }}
-            className="group relative inline-flex items-center gap-2 rounded-full border border-purple-500/35 pl-3.5 pr-4 py-2.5 cursor-pointer"
+            className="group relative inline-flex items-center gap-2 rounded-full border border-accent/35 pl-3.5 pr-4 py-2.5 cursor-pointer"
             style={{
-              background: "linear-gradient(135deg, rgba(124,58,237,0.22) 0%, rgba(20,14,32,0.9) 100%)",
+              background: "linear-gradient(135deg, hsl(var(--accent) / 0.22) 0%, rgba(22,22,26,0.9) 100%)",
               backdropFilter: "blur(12px)",
-              boxShadow: "0 6px 24px rgba(124,58,237,0.3), inset 0 1px 0 rgba(255,255,255,0.1)",
+              boxShadow: "0 6px 24px hsl(var(--accent) / 0.3), inset 0 1px 0 rgba(255,255,255,0.1)",
             }}
           >
             {/* Pulsing rings */}
-            <span className="absolute inset-0 rounded-full border border-purple-400/40 animate-ping-slow pointer-events-none" />
+            <span className="absolute inset-0 rounded-full border border-accent/40 animate-ping-slow pointer-events-none" />
 
             <motion.span
               animate={{ rotate: [0, -10, 10, 0] }}
               transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-              className="relative text-purple-300 group-hover:text-purple-200"
+              className="relative text-accent group-hover:text-accent"
             >
               <Gamepad2 className="w-4 h-4" />
             </motion.span>

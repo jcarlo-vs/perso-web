@@ -76,11 +76,11 @@ export function HeaderAnimations({ name, title, email, linkedin, github }: Heade
       </h1>
 
       {/* Title - typing effect */}
-      <p className="text-sm text-purple-400 mt-1 font-mono h-5 flex items-center">
+      <p className="text-sm text-accent mt-1 font-mono h-5 flex items-center">
         <span>{typedTitle}</span>
         {showCursor && (
           <span
-            className={`inline-block w-[2px] h-[14px] bg-purple-400 ml-0.5 ${typingDone ? "animate-pulse" : ""}`}
+            className={`inline-block w-[2px] h-[14px] bg-accent ml-0.5 ${typingDone ? "animate-pulse" : ""}`}
           />
         )}
       </p>
@@ -98,7 +98,7 @@ export function HeaderAnimations({ name, title, email, linkedin, github }: Heade
         <button
           type="button"
           onClick={() => setModalOpen(true)}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-500/15 border border-purple-500/30 text-xs text-purple-300 hover:text-white hover:bg-purple-500/25 hover:border-purple-400/50 transition-colors cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-accent/15 border border-accent/30 text-xs text-accent hover:text-white hover:bg-accent/25 hover:border-accent/50 transition-colors cursor-pointer"
         >
           <HiOutlineEnvelope className="w-3 h-3" />
           Send Email
@@ -107,7 +107,7 @@ export function HeaderAnimations({ name, title, email, linkedin, github }: Heade
           href={linkedin}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 text-xs text-neutral-400 hover:text-white hover:border-purple-500/30 transition-colors"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 text-xs text-neutral-400 hover:text-white hover:border-accent/30 transition-colors"
         >
           <FaLinkedinIn className="w-3 h-3" />
           LinkedIn
@@ -116,7 +116,7 @@ export function HeaderAnimations({ name, title, email, linkedin, github }: Heade
           href={github}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 text-xs text-neutral-400 hover:text-white hover:border-purple-500/30 transition-colors"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 text-xs text-neutral-400 hover:text-white hover:border-accent/30 transition-colors"
         >
           <FaGithub className="w-3 h-3" />
           GitHub

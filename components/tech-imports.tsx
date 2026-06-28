@@ -90,11 +90,11 @@ export function TechImports() {
         {/* Waiting state - blinking cursor */}
         {!started && (
           <div>
-            <span className="text-purple-400">❯ </span>
+            <span className="text-accent">❯ </span>
             <motion.span
               animate={{ opacity: [1, 0] }}
               transition={{ duration: 0.6, repeat: Infinity, repeatType: "reverse" }}
-              className="inline-block w-[7px] h-[14px] bg-purple-400/70 align-middle"
+              className="inline-block w-[7px] h-[14px] bg-accent/70 align-middle"
             />
           </div>
         )}
@@ -102,13 +102,13 @@ export function TechImports() {
         {/* Command line */}
         {started && (
           <div>
-            <span className="text-purple-400">❯ </span>
+            <span className="text-accent">❯ </span>
             <span className="text-neutral-300">{typedCmd}</span>
             {!showOutput && (
               <motion.span
                 animate={{ opacity: [1, 0] }}
                 transition={{ duration: 0.6, repeat: Infinity, repeatType: "reverse" }}
-                className="inline-block w-[7px] h-[14px] bg-purple-400/70 ml-0.5 align-middle"
+                className="inline-block w-[7px] h-[14px] bg-accent/70 ml-0.5 align-middle"
               />
             )}
           </div>
@@ -142,11 +142,11 @@ export function TechImports() {
         {/* Final cursor */}
         {visibleLines >= output.length && started && (
           <div className="mt-1">
-            <span className="text-purple-400">❯ </span>
+            <span className="text-accent">❯ </span>
             <motion.span
               animate={{ opacity: [1, 0] }}
               transition={{ duration: 0.6, repeat: Infinity, repeatType: "reverse" }}
-              className="inline-block w-[7px] h-[14px] bg-purple-400/70 align-middle"
+              className="inline-block w-[7px] h-[14px] bg-accent/70 align-middle"
             />
           </div>
         )}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { accent } from "@/lib/accent";
 import { Trophy } from "lucide-react";
 
 const LANES = ["1", "2", "3", "4"];
@@ -9,7 +10,7 @@ const W = LANES.length * LANE_W;
 const H = 240;
 const HIT_Y = H - 38;
 const HIT_WINDOW = 26;
-const COLORS = ["#a855f7", "#22d3ee", "#f472b6", "#fbbf24"];
+const COLORS = [accent(), "#22d3ee", "#f472b6", "#fbbf24"];
 const BEST_KEY = "keyfall-best";
 
 export function Keyfall() {
@@ -55,7 +56,7 @@ export function Keyfall() {
       ctx.fillRect(i * LANE_W, 0, LANE_W, H);
     }
     // hit line
-    ctx.strokeStyle = "rgba(168,85,247,0.5)";
+    ctx.strokeStyle = accent(0.5);
     ctx.lineWidth = 2;
     ctx.beginPath(); ctx.moveTo(0, HIT_Y); ctx.lineTo(W, HIT_Y); ctx.stroke();
     // tiles
@@ -158,7 +159,7 @@ export function Keyfall() {
   return (
     <div className="font-mono flex flex-col items-center">
       <div className="flex items-center gap-5 text-[11px] mb-3 w-full justify-center">
-        <span className="text-neutral-500">HITS <span className="text-purple-300 text-sm">{score}</span></span>
+        <span className="text-neutral-500">HITS <span className="text-accent text-sm">{score}</span></span>
         <span className="text-neutral-500">COMBO <span className="text-cyan-300 text-sm">{combo}</span></span>
         <span className="text-red-400/80 text-sm">{"♥".repeat(Math.max(0, lives))}</span>
         {best !== null && <span className="text-amber-300 flex items-center gap-1 text-sm"><Trophy className="w-3.5 h-3.5" />{best}</span>}
@@ -169,7 +170,7 @@ export function Keyfall() {
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/55 rounded-lg backdrop-blur-sm">
             <p className="text-sm text-white text-center">{over ? `Game over — ${score} hits` : "Keyfall"}</p>
             {!over && <p className="text-[11px] text-neutral-400 text-center px-4">Press 1 2 3 4 as the tiles hit the line.</p>}
-            <button type="button" onClick={start} className="px-4 py-2 rounded-lg bg-purple-500/15 border border-purple-500/30 text-[13px] text-purple-300 hover:text-white hover:bg-purple-500/25 transition-colors cursor-pointer">{over ? "Play again" : "Start"}</button>
+            <button type="button" onClick={start} className="px-4 py-2 rounded-lg bg-accent/15 border border-accent/30 text-[13px] text-accent hover:text-white hover:bg-accent/25 transition-colors cursor-pointer">{over ? "Play again" : "Start"}</button>
           </div>
         )}
       </div>

@@ -64,7 +64,7 @@ export function CommandPalette({ onSendEmail }: CommandPaletteProps) {
 
       // Projects
       { id: "proj-talentscreen", label: "View Talent Screen", category: "Projects", icon: <ExternalLink className="w-4 h-4" />, action: () => { setOpen(false); window.open("https://talent-screen.vercel.app/", "_blank"); }, keywords: ["talent", "screen", "hiring", "jobs", "ai"] },
-      { id: "proj-crypto", label: "Crypto Meter on GitHub", category: "Projects", icon: <Github className="w-4 h-4" />, action: () => { setOpen(false); window.open("https://github.com/jcarlo-vs/CRYPTO-METER", "_blank"); }, keywords: ["crypto", "meter", "exchange"] },
+      { id: "proj-ambagan", label: "View Ambagan", category: "Projects", icon: <ExternalLink className="w-4 h-4" />, action: () => { setOpen(false); window.open("https://www.ambagan.org/", "_blank"); }, keywords: ["ambagan", "donation", "charity", "fundraising", "causes", "philippines"] },
       { id: "proj-picabook", label: "Picabook on GitHub", category: "Projects", icon: <Github className="w-4 h-4" />, action: () => { setOpen(false); window.open("https://github.com/jcarlo-vs/picabook-app", "_blank"); }, keywords: ["picabook", "social", "photos"] },
     ],
     [scrollTo, onSendEmail]
@@ -170,10 +170,10 @@ export function CommandPalette({ onSendEmail }: CommandPaletteProps) {
             transition={{ duration: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
             className="fixed left-1/2 top-[20%] -translate-x-1/2 z-[60] w-[90%] max-w-lg"
           >
-            <div className="bg-neutral-950 border border-white/10 rounded-2xl shadow-2xl shadow-purple-500/5 overflow-hidden">
+            <div className="bg-neutral-950 border border-white/10 rounded-2xl shadow-2xl shadow-accent/5 overflow-hidden">
               {/* Search input */}
               <div className="flex items-center gap-3 px-4 py-3 border-b border-white/6">
-                <Search className="w-4 h-4 text-purple-400 shrink-0" />
+                <Search className="w-4 h-4 text-accent shrink-0" />
                 <input
                   ref={inputRef}
                   type="text"
@@ -196,7 +196,7 @@ export function CommandPalette({ onSendEmail }: CommandPaletteProps) {
                 ) : (
                   Array.from(grouped.entries()).map(([category, categoryItems]) => (
                     <div key={category}>
-                      <p className="px-4 py-1.5 text-[10px] font-mono tracking-wider text-purple-400/60 uppercase">
+                      <p className="px-4 py-1.5 text-[10px] font-mono tracking-wider text-accent/60 uppercase">
                         {category}
                       </p>
                       {categoryItems.map((item) => {
@@ -212,11 +212,11 @@ export function CommandPalette({ onSendEmail }: CommandPaletteProps) {
                             onMouseEnter={() => setActiveIndex(idx)}
                             className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors cursor-pointer ${
                               isActive
-                                ? "bg-purple-500/10 text-white"
+                                ? "bg-accent/10 text-white"
                                 : "text-neutral-400 hover:text-white"
                             }`}
                           >
-                            <span className={isActive ? "text-purple-400" : "text-neutral-600"}>
+                            <span className={isActive ? "text-accent" : "text-neutral-600"}>
                               {item.icon}
                             </span>
                             <span className="text-sm">{item.label}</span>

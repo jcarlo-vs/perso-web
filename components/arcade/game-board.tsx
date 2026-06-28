@@ -74,9 +74,9 @@ export function GameBoard({
             onKeyDown={(e) => e.key === "Enter" && submit()}
             placeholder="your name"
             maxLength={20}
-            className="w-32 px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 focus:border-purple-500/40 outline-none text-[12px] text-white placeholder:text-neutral-600"
+            className="w-32 px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 focus:border-accent/40 outline-none text-[12px] text-white placeholder:text-neutral-600"
           />
-          <button type="button" onClick={submit} disabled={submitting} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-500/15 border border-purple-500/30 text-[12px] text-purple-300 hover:text-white hover:bg-purple-500/25 transition-colors cursor-pointer disabled:opacity-50">
+          <button type="button" onClick={submit} disabled={submitting} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-accent/15 border border-accent/30 text-[12px] text-accent hover:text-white hover:bg-accent/25 transition-colors cursor-pointer disabled:opacity-50">
             <Send className="w-3.5 h-3.5" />{submitting ? "…" : "Submit"}
           </button>
         </div>
@@ -94,7 +94,7 @@ export function GameBoard({
               <div key={i} className="flex items-center gap-3 px-3 py-1 rounded-md text-[12px] bg-white/[0.02]">
                 <span className={`w-4 ${i === 0 ? "text-amber-300" : "text-neutral-600"}`}>{i + 1}</span>
                 <span className="flex-1 truncate text-neutral-200">{s.name}</span>
-                <span className="text-purple-300">{fmt(s.score)}</span>
+                <span className="text-accent">{fmt(s.score)}</span>
               </div>
             ))}
           </div>

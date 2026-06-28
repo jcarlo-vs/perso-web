@@ -5,7 +5,7 @@ import { Trophy } from "lucide-react";
 
 const BEST_KEY = "memory-best-round";
 const KEYS = [
-  { label: "Q", color: "#a855f7" },
+  { label: "Q", color: "hsl(var(--accent))" },
   { label: "W", color: "#22d3ee" },
   { label: "E", color: "#f472b6" },
   { label: "R", color: "#fbbf24" },
@@ -103,9 +103,9 @@ export function KeycapMemory() {
       </div>
 
       <div className="mt-5 h-9 flex flex-col items-center justify-center">
-        {state === "idle" && <button type="button" onClick={start} className="px-4 py-2 rounded-lg bg-purple-500/15 border border-purple-500/30 text-[13px] text-purple-300 hover:text-white hover:bg-purple-500/25 transition-colors cursor-pointer">Start</button>}
-        {(state === "showing" || state === "input") && <p className="text-sm text-white">round <span className="text-purple-300">{round}</span></p>}
-        {state === "over" && <button type="button" onClick={start} className="px-4 py-2 rounded-lg bg-purple-500/15 border border-purple-500/30 text-[13px] text-purple-300 hover:text-white hover:bg-purple-500/25 transition-colors cursor-pointer">reached round {Math.max(0, seq.length - 1)} · retry</button>}
+        {state === "idle" && <button type="button" onClick={start} className="px-4 py-2 rounded-lg bg-accent/15 border border-accent/30 text-[13px] text-accent hover:text-white hover:bg-accent/25 transition-colors cursor-pointer">Start</button>}
+        {(state === "showing" || state === "input") && <p className="text-sm text-white">round <span className="text-accent">{round}</span></p>}
+        {state === "over" && <button type="button" onClick={start} className="px-4 py-2 rounded-lg bg-accent/15 border border-accent/30 text-[13px] text-accent hover:text-white hover:bg-accent/25 transition-colors cursor-pointer">reached round {Math.max(0, seq.length - 1)} · retry</button>}
       </div>
 
       {best !== null && <p className="mt-2 text-[11px] text-neutral-500 flex items-center justify-center gap-1.5"><Trophy className="w-3 h-3 text-amber-300/80" /> best round {best}</p>}

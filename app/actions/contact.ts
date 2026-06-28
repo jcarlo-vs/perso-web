@@ -98,7 +98,7 @@ export async function sendContactEmail(
       subject: `Portfolio Contact: ${name.replace(/[\r\n]+/g, " ").slice(0, 80)}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #7c3aed; border-bottom: 2px solid #7c3aed; padding-bottom: 10px;">
+          <h2 style="color: #8a8a8a; border-bottom: 2px solid #8a8a8a; padding-bottom: 10px;">
             New Contact Form Submission
           </h2>
 
@@ -108,12 +108,12 @@ export async function sendContactEmail(
             </p>
             <p style="margin: 0 0 10px 0;">
               <strong style="color: #475569;">Email:</strong>
-              <a href="mailto:${safeEmail}" style="color: #7c3aed;">${safeEmail}</a>
+              <a href="mailto:${safeEmail}" style="color: #8a8a8a;">${safeEmail}</a>
             </p>
           </div>
 
           <div style="background: #1e293b; color: #e2e8f0; padding: 20px; border-radius: 8px;">
-            <h3 style="margin: 0 0 10px 0; color: #a78bfa;">Message:</h3>
+            <h3 style="margin: 0 0 10px 0; color: #8a8a8a;">Message:</h3>
             <p style="margin: 0; line-height: 1.6; white-space: pre-wrap;">${safeMessage}</p>
           </div>
 

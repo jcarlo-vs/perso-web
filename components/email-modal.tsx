@@ -64,8 +64,8 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
               {/* Header */}
               <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-white/[0.08]">
                 <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-purple-500/15 border border-purple-500/20">
-                    <Mail className="w-4 h-4 text-purple-400" />
+                  <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-accent/15 border border-accent/20">
+                    <Mail className="w-4 h-4 text-accent" />
                   </div>
                   <div>
                     <h3 className="text-sm font-semibold text-white">Send a message</h3>

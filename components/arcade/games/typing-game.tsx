@@ -143,8 +143,8 @@ export function TypingGame() {
   return (
     <div className="font-mono" onClick={() => !finished && inputRef.current?.focus()}>
       <div className="flex items-center gap-5 text-[11px] mb-4">
-        <span className="text-neutral-500">WPM <span className="text-purple-300 text-sm">{result ? result.wpm : liveWpm}</span></span>
-        <span className="text-neutral-500">ACC <span className="text-purple-300 text-sm">{result ? result.acc : liveAcc}%</span></span>
+        <span className="text-neutral-500">WPM <span className="text-accent text-sm">{result ? result.wpm : liveWpm}</span></span>
+        <span className="text-neutral-500">ACC <span className="text-accent text-sm">{result ? result.acc : liveAcc}%</span></span>
         <span className="ml-auto tabular-nums text-amber-300/90 text-sm">{Math.ceil(timeLeft)}s</span>
         {best !== null && <span className="text-neutral-600 flex items-center gap-1"><Trophy className="w-3 h-3" />{best}</span>}
       </div>
@@ -167,27 +167,27 @@ export function TypingGame() {
               let cls = "text-neutral-600";
               if (i < typed.length) cls = typed[i] === ch ? "text-white" : "text-red-400 bg-red-500/15 rounded-sm";
               const isCaret = i === typed.length;
-              return <span key={i} ref={isCaret ? caretRef : undefined} className={`${cls} ${isCaret ? "border-l-2 border-purple-400 -ml-[1px] animate-pulse" : ""}`}>{ch}</span>;
+              return <span key={i} ref={isCaret ? caretRef : undefined} className={`${cls} ${isCaret ? "border-l-2 border-accent -ml-[1px] animate-pulse" : ""}`}>{ch}</span>;
             })}
           </div>
-          {!started && <p className="mt-5 text-[11px] text-neutral-600"><span className="text-purple-400">❯</span> start typing to begin the {DURATION}s test...</p>}
+          {!started && <p className="mt-5 text-[11px] text-neutral-600"><span className="text-accent">❯</span> start typing to begin the {DURATION}s test...</p>}
         </>
       ) : (
         <div className="text-center">
           {beatRecord ? (
             <p className="text-[11px] text-amber-300 mb-2 flex items-center justify-center gap-1.5"><Trophy className="w-3.5 h-3.5" /> you beat the top record!</p>
           ) : best !== null && result && result.wpm >= best && result.wpm > 0 ? (
-            <p className="text-[11px] text-purple-300 mb-2">new personal best!</p>
+            <p className="text-[11px] text-accent mb-2">new personal best!</p>
           ) : null}
-          <div className="flex items-end justify-center gap-1"><span className="text-6xl font-bold text-white">{result?.wpm}</span><span className="text-sm text-purple-300 mb-2">wpm</span></div>
-          <div className="flex items-center justify-center gap-6 mt-2 text-[12px] text-neutral-400"><span>accuracy <span className="text-purple-300">{result?.acc}%</span></span><span>chars <span className="text-purple-300">{result?.chars}</span></span></div>
+          <div className="flex items-end justify-center gap-1"><span className="text-6xl font-bold text-white">{result?.wpm}</span><span className="text-sm text-accent mb-2">wpm</span></div>
+          <div className="flex items-center justify-center gap-6 mt-2 text-[12px] text-neutral-400"><span>accuracy <span className="text-accent">{result?.acc}%</span></span><span>chars <span className="text-accent">{result?.chars}</span></span></div>
           {topRecord && !beatRecord && (
             <p className="mt-3 text-[11px] text-amber-300/90 flex items-center justify-center gap-1.5"><Trophy className="w-3 h-3" /> record: {topRecord.wpm} by {topRecord.name}{result && result.wpm > 0 && <span className="text-neutral-500">({topRecord.wpm - result.wpm} to go)</span>}</p>
           )}
           {result && result.wpm > 0 && !submitted && (
             <div className="mt-5 flex items-center justify-center gap-2">
-              <input value={playerName} onChange={(e) => setPlayerName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && submitScore()} placeholder="your name" maxLength={20} className="w-36 px-3 py-2 rounded-lg bg-white/[0.04] border border-white/10 focus:border-purple-500/40 outline-none text-[12px] text-white placeholder:text-neutral-600" />
-              <button type="button" onClick={submitScore} disabled={submitting} className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/15 border border-purple-500/30 text-[12px] text-purple-300 hover:text-white hover:bg-purple-500/25 transition-colors cursor-pointer disabled:opacity-50"><Send className="w-3.5 h-3.5" />{submitting ? "Saving..." : "Submit"}</button>
+              <input value={playerName} onChange={(e) => setPlayerName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && submitScore()} placeholder="your name" maxLength={20} className="w-36 px-3 py-2 rounded-lg bg-white/[0.04] border border-white/10 focus:border-accent/40 outline-none text-[12px] text-white placeholder:text-neutral-600" />
+              <button type="button" onClick={submitScore} disabled={submitting} className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-accent/15 border border-accent/30 text-[12px] text-accent hover:text-white hover:bg-accent/25 transition-colors cursor-pointer disabled:opacity-50"><Send className="w-3.5 h-3.5" />{submitting ? "Saving..." : "Submit"}</button>
             </div>
           )}
           {submitted && board.length > 0 && (
@@ -198,14 +198,14 @@ export function TypingGame() {
                   <div key={i} className="flex items-center gap-3 px-3 py-1.5 rounded-md text-[12px] bg-white/[0.02]">
                     <span className={`w-4 ${i === 0 ? "text-amber-300" : "text-neutral-600"}`}>{i + 1}</span>
                     <span className="flex-1 truncate text-neutral-200">{s.name}</span>
-                    <span className="text-purple-300">{s.wpm}</span>
+                    <span className="text-accent">{s.wpm}</span>
                     <span className="text-neutral-600 text-[10px]">{s.accuracy}%</span>
                   </div>
                 ))}
               </div>
             </div>
           )}
-          <button type="button" onClick={reset} className="mt-6 inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-white/10 text-sm text-neutral-300 hover:text-white hover:border-purple-500/40 hover:bg-purple-500/10 transition-colors cursor-pointer"><RotateCcw className="w-3.5 h-3.5" /> Play again</button>
+          <button type="button" onClick={reset} className="mt-6 inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-white/10 text-sm text-neutral-300 hover:text-white hover:border-accent/40 hover:bg-accent/10 transition-colors cursor-pointer"><RotateCcw className="w-3.5 h-3.5" /> Play again</button>
         </div>
       )}
     </div>

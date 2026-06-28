@@ -74,7 +74,7 @@ export function BugSquash() {
   return (
     <div className="font-mono flex flex-col items-center">
       <div className="flex items-center gap-5 text-[11px] mb-3 w-full justify-center">
-        <span className="text-neutral-500">SQUASHED <span className="text-purple-300 text-sm">{score}</span></span>
+        <span className="text-neutral-500">SQUASHED <span className="text-accent text-sm">{score}</span></span>
         <span className="text-amber-300/90 tabular-nums text-sm">{Math.ceil(timeLeft)}s</span>
         {best !== null && <span className="text-amber-300 flex items-center gap-1 text-sm"><Trophy className="w-3.5 h-3.5" />{best}</span>}
       </div>
@@ -103,7 +103,7 @@ export function BugSquash() {
               {phase === "over" ? `Time! You squashed ${score} 🐞` : "Bug Squash"}
             </p>
             {phase === "idle" && <p className="text-[11px] text-neutral-400 text-center px-6">Click the bugs before they scurry off. 20 seconds.</p>}
-            <button type="button" onClick={start} className="px-4 py-2 rounded-lg bg-purple-500/15 border border-purple-500/30 text-[13px] text-purple-300 hover:text-white hover:bg-purple-500/25 transition-colors cursor-pointer">
+            <button type="button" onClick={start} className="px-4 py-2 rounded-lg bg-accent/15 border border-accent/30 text-[13px] text-accent hover:text-white hover:bg-accent/25 transition-colors cursor-pointer">
               {phase === "over" ? "Play again" : "Start"}
             </button>
           </div>

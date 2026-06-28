@@ -5,7 +5,7 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { HiArrowUpRight } from "react-icons/hi2";
-import { X, ExternalLink, Github, ImageIcon } from "lucide-react";
+import { X, ExternalLink, Github, ImageIcon, Lock } from "lucide-react";
 
 interface Project {
   title: string;
@@ -14,7 +14,8 @@ interface Project {
   modalImage?: string;
   technologies: string[];
   demoLink?: string;
-  githubLink: string;
+  githubLink?: string;
+  privateRepo?: boolean;
 }
 
 function ImagePlaceholder() {
@@ -23,7 +24,7 @@ function ImagePlaceholder() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: "radial-gradient(circle at 50% 60%, rgba(168,85,247,0.08) 0%, transparent 70%)",
+          background: "radial-gradient(circle at 50% 60%, hsl(var(--accent) / 0.08) 0%, transparent 70%)",
         }}
       />
       <ImageIcon className="w-6 h-6 text-neutral-600" />
@@ -106,7 +107,7 @@ export function ProjectCard({ project }: { project: Project }) {
               <button
                 type="button"
                 onClick={() => setModalOpen(true)}
-                className="group flex flex-col h-full w-full p-4 rounded-xl border border-white/[0.12] hover:border-purple-500/40 transition-all duration-300 relative overflow-hidden text-left cursor-pointer"
+                className="group flex flex-col h-full w-full p-4 rounded-xl border border-white/[0.12] hover:border-accent/40 transition-all duration-300 relative overflow-hidden text-left cursor-pointer"
                 style={{
                   background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 100%)",
                   backdropFilter: "blur(12px) saturate(1.4)",
@@ -118,12 +119,12 @@ export function ProjectCard({ project }: { project: Project }) {
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10"
                   style={{
-                    background: `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(168,85,247,0.08) 0%, transparent 60%)`,
+                    background: `radial-gradient(circle at ${glareX}% ${glareY}%, hsl(var(--accent) / 0.08) 0%, transparent 60%)`,
                   }}
                 />
 
                 {/* Thumbnail */}
-                <div className="relative w-full h-[160px] rounded-lg overflow-hidden bg-neutral-900 mb-3 group-hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] transition-shadow duration-300">
+                <div className="relative w-full h-[160px] rounded-lg overflow-hidden bg-neutral-900 mb-3 group-hover:shadow-[0_0_30px_hsl(var(--accent)_/_0.15)] transition-shadow duration-300">
                   {project.image ? (
                     <Image src={project.image} alt={project.title} fill className="object-contain p-2 group-hover:scale-105 transition-transform duration-500" />
                   ) : (
@@ -134,16 +135,16 @@ export function ProjectCard({ project }: { project: Project }) {
                 {/* Title + description */}
                 <div className="flex items-start justify-between gap-2 flex-1 min-h-0">
                   <div className="min-w-0">
-                    <h3 className="text-sm font-semibold text-white/90 group-hover:text-purple-300 transition-colors duration-200 truncate">{project.title}</h3>
+                    <h3 className="text-sm font-semibold text-white/90 group-hover:text-accent transition-colors duration-200 truncate">{project.title}</h3>
                     <p className="text-[11px] text-neutral-400 mt-1 line-clamp-3 leading-relaxed">{project.description}</p>
                   </div>
-                  <HiArrowUpRight className="w-3.5 h-3.5 text-neutral-700 group-hover:text-purple-400 shrink-0 mt-0.5 transition-all duration-200" />
+                  <HiArrowUpRight className="w-3.5 h-3.5 text-neutral-700 group-hover:text-accent shrink-0 mt-0.5 transition-all duration-200" />
                 </div>
 
                 {/* Tech tags */}
                 <div className="flex flex-wrap gap-1.5 mt-3">
                   {project.technologies.map((tech) => (
-                    <span key={tech} className="text-[10px] text-neutral-600 group-hover:text-purple-300/80 px-1.5 py-0.5 rounded bg-white/[0.03] border border-white/6 group-hover:border-purple-500/30 group-hover:bg-purple-500/10 transition-colors duration-200">
+                    <span key={tech} className="text-[10px] text-neutral-600 group-hover:text-accent/80 px-1.5 py-0.5 rounded bg-white/[0.03] border border-white/6 group-hover:border-accent/30 group-hover:bg-accent/10 transition-colors duration-200">
                       {tech}
                     </span>
                   ))}
@@ -153,7 +154,7 @@ export function ProjectCard({ project }: { project: Project }) {
           </motion.div>
         ) : (
           // Empty ghost slot - dashed border where the card was
-          <div className="h-full rounded-xl border border-dashed border-purple-500/15 bg-purple-500/[0.02]" />
+          <div className="h-full rounded-xl border border-dashed border-accent/15 bg-accent/[0.02]" />
         )}
       </div>
 
@@ -209,12 +210,12 @@ export function ProjectCard({ project }: { project: Project }) {
                   {/* Details */}
                   <div className="p-6">
                     <h3 className="text-lg font-bold text-white mb-2">{project.title}</h3>
-                    <p className="text-sm text-neutral-400 leading-relaxed mb-4">{project.description}</p>
+                    <p className="text-sm text-neutral-200 leading-relaxed mb-4">{project.description}</p>
 
                     {/* Tech */}
                     <div className="flex flex-wrap gap-1.5 mb-6">
                       {project.technologies.map((tech) => (
-                        <span key={tech} className="text-[11px] text-purple-300/80 px-2 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/20">
+                        <span key={tech} className="text-[11px] text-accent/80 px-2 py-0.5 rounded-full bg-accent/10 border border-accent/20">
                           {tech}
                         </span>
                       ))}
@@ -223,15 +224,25 @@ export function ProjectCard({ project }: { project: Project }) {
                     {/* Actions */}
                     <div className="flex gap-3">
                       {project.demoLink && (
-                        <Link href={project.demoLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-purple-500/15 border border-purple-500/25 text-sm text-purple-300 hover:text-white hover:bg-purple-500/25 hover:border-purple-400/40 transition-colors">
+                        <Link href={project.demoLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-accent/15 border border-accent/25 text-sm text-accent hover:text-white hover:bg-accent/25 hover:border-accent/40 transition-colors">
                           <ExternalLink className="w-3.5 h-3.5" />
                           Live Demo
                         </Link>
                       )}
-                      <Link href={project.githubLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-white/10 text-sm text-neutral-400 hover:text-white hover:border-white/20 transition-colors">
-                        <Github className="w-3.5 h-3.5" />
-                        Source Code
-                      </Link>
+                      {project.githubLink ? (
+                        <Link href={project.githubLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-white/10 text-sm text-neutral-400 hover:text-white hover:border-white/20 transition-colors">
+                          <Github className="w-3.5 h-3.5" />
+                          Source Code
+                        </Link>
+                      ) : project.privateRepo ? (
+                        <span
+                          title="This is a real product I'm launching soon, so the source is kept private for now."
+                          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-white/10 bg-white/[0.02] text-sm text-neutral-400 cursor-default select-none"
+                        >
+                          <Lock className="w-3.5 h-3.5" />
+                          Source private · launching soon
+                        </span>
+                      ) : null}
                     </div>
                   </div>
                 </div>

@@ -6,7 +6,7 @@ import { Send, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const inputStyles =
-  "w-full px-4 py-3 rounded-md text-sm text-white placeholder:text-neutral-600 outline-none transition-all border border-white/10 focus:border-purple-500/40 focus:ring-1 focus:ring-purple-500/20";
+  "w-full px-4 py-3 rounded-md text-sm text-white placeholder:text-neutral-600 outline-none transition-all border border-white/10 focus:border-accent/40 focus:ring-1 focus:ring-accent/20";
 
 export function ContactForm() {
   const [state, formAction, isPending] = useActionState<ContactFormState, FormData>(
@@ -112,7 +112,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={isPending}
-        className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md bg-purple-500/15 border border-purple-500/25 text-sm text-purple-300 hover:text-white hover:bg-purple-500/25 hover:border-purple-400/40 transition-all disabled:opacity-50 font-medium cursor-pointer"
+        className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md bg-accent/15 border border-accent/25 text-sm text-accent hover:text-white hover:bg-accent/25 hover:border-accent/40 transition-all disabled:opacity-50 font-medium cursor-pointer"
       >
         {isPending ? (
           <>

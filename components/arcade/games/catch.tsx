@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { accent } from "@/lib/accent";
 import { Trophy } from "lucide-react";
 import { GameBoard } from "../game-board";
 
@@ -53,8 +54,8 @@ export function PacketCatch() {
     // items
     for (const it of items.current) {
       if (it.good) {
-        ctx.fillStyle = "#a855f7";
-        ctx.shadowColor = "rgba(168,85,247,0.6)";
+        ctx.fillStyle = accent();
+        ctx.shadowColor = accent(0.6);
         ctx.shadowBlur = 8;
         ctx.beginPath(); ctx.arc(it.x, it.y, R, 0, Math.PI * 2); ctx.fill();
         ctx.shadowBlur = 0;
@@ -69,11 +70,11 @@ export function PacketCatch() {
       }
     }
     // paddle (catcher)
-    ctx.fillStyle = "#d8b4fe";
+    ctx.fillStyle = accent();
     ctx.beginPath();
     ctx.roundRect(px.current - PW / 2, PY, PW, 11, 5);
     ctx.fill();
-    ctx.fillStyle = "rgba(216,180,254,0.25)";
+    ctx.fillStyle = accent(0.25);
     ctx.beginPath();
     ctx.roundRect(px.current - PW / 2, PY + 11, PW, 5, 3);
     ctx.fill();
@@ -166,7 +167,7 @@ export function PacketCatch() {
   return (
     <div className="font-mono flex flex-col items-center">
       <div className="flex items-center gap-5 text-[11px] mb-3 w-full justify-center">
-        <span className="text-neutral-500">CAUGHT <span className="text-purple-300 text-sm">{score}</span></span>
+        <span className="text-neutral-500">CAUGHT <span className="text-accent text-sm">{score}</span></span>
         <span className="text-red-400/80 text-sm">{"♥".repeat(Math.max(0, lives))}</span>
         {best !== null && <span className="text-amber-300 flex items-center gap-1 text-sm"><Trophy className="w-3.5 h-3.5" />{best}</span>}
       </div>
@@ -177,10 +178,10 @@ export function PacketCatch() {
             <p className="text-sm text-white text-center px-4">{over ? `Game over — caught ${score}` : "Packet Catch"}</p>
             {!over && (
               <p className="text-[11px] text-neutral-400 text-center px-6">
-                Catch the <span className="text-purple-300">purple packets</span>, dodge the <span className="text-red-400">red bugs ✕</span>. Move with your mouse or ← →.
+                Catch the <span className="text-accent">purple packets</span>, dodge the <span className="text-red-400">red bugs ✕</span>. Move with your mouse or ← →.
               </p>
             )}
-            <button type="button" onClick={start} className="px-4 py-2 rounded-lg bg-purple-500/15 border border-purple-500/30 text-[13px] text-purple-300 hover:text-white hover:bg-purple-500/25 transition-colors cursor-pointer">{over ? "Play again" : "Start"}</button>
+            <button type="button" onClick={start} className="px-4 py-2 rounded-lg bg-accent/15 border border-accent/30 text-[13px] text-accent hover:text-white hover:bg-accent/25 transition-colors cursor-pointer">{over ? "Play again" : "Start"}</button>
           </div>
         )}
       </div>

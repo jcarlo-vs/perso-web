@@ -49,7 +49,7 @@ export function ProfileCard({ src, alt }: ProfileCardProps) {
       <motion.div
         animate={{ rotateX, rotateY }}
         transition={{ type: "spring", stiffness: 200, damping: 25 }}
-        className="relative w-28 h-28 rounded-2xl border border-purple-500/30 bg-neutral-900/50 backdrop-blur-sm cursor-pointer p-2"
+        className="relative w-28 h-28 rounded-2xl border border-accent/30 bg-neutral-900/50 backdrop-blur-sm cursor-pointer p-2"
       >
         <div className="relative w-full h-full rounded-xl overflow-hidden">
         <Image
@@ -66,7 +66,7 @@ export function ProfileCard({ src, alt }: ProfileCardProps) {
           className="absolute inset-0 transition-opacity duration-300 pointer-events-none"
           style={{
             opacity: hovering ? 1 : 0,
-            background: `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(168,85,247,0.25) 0%, transparent 60%)`,
+            background: `radial-gradient(circle at ${glareX}% ${glareY}%, hsl(var(--accent) / 0.25) 0%, transparent 60%)`,
           }}
         />
 
@@ -75,7 +75,7 @@ export function ProfileCard({ src, alt }: ProfileCardProps) {
           className="absolute inset-0 rounded-2xl transition-opacity duration-300 pointer-events-none"
           style={{
             opacity: hovering ? 1 : 0,
-            boxShadow: "0 0 20px 2px rgba(168,85,247,0.2), inset 0 0 20px 2px rgba(168,85,247,0.05)",
+            boxShadow: "0 0 20px 2px hsl(var(--accent) / 0.2), inset 0 0 20px 2px hsl(var(--accent) / 0.05)",
           }}
         />
       </motion.div>

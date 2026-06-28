@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { accent } from "@/lib/accent";
 import { Trophy } from "lucide-react";
 import { GameBoard } from "../game-board";
 
@@ -38,7 +39,7 @@ export function SnakeGame() {
     if (!ctx) return;
     ctx.clearRect(0, 0, COLS * CELL, ROWS * CELL);
     // subtle grid
-    ctx.strokeStyle = "rgba(168,85,247,0.06)";
+    ctx.strokeStyle = accent(0.06);
     ctx.lineWidth = 1;
     for (let x = 0; x <= COLS; x++) { ctx.beginPath(); ctx.moveTo(x * CELL + 0.5, 0); ctx.lineTo(x * CELL + 0.5, ROWS * CELL); ctx.stroke(); }
     for (let y = 0; y <= ROWS; y++) { ctx.beginPath(); ctx.moveTo(0, y * CELL + 0.5); ctx.lineTo(COLS * CELL, y * CELL + 0.5); ctx.stroke(); }
@@ -54,7 +55,7 @@ export function SnakeGame() {
     // snake
     snake.current.forEach((s, i) => {
       const head = i === snake.current.length - 1;
-      ctx.fillStyle = head ? "#d8b4fe" : "#a855f7";
+      ctx.fillStyle = head ? accent() : accent(0.6);
       ctx.beginPath();
       ctx.roundRect(s.x * CELL + 1.5, s.y * CELL + 1.5, CELL - 3, CELL - 3, 3);
       ctx.fill();
@@ -141,7 +142,7 @@ export function SnakeGame() {
   return (
     <div className="font-mono flex flex-col items-center">
       <div className="flex items-center gap-5 text-[11px] mb-3 w-full justify-center">
-        <span className="text-neutral-500">SCORE <span className="text-purple-300 text-sm">{score}</span></span>
+        <span className="text-neutral-500">SCORE <span className="text-accent text-sm">{score}</span></span>
         {best !== null && <span className="text-amber-300 flex items-center gap-1 text-sm"><Trophy className="w-3.5 h-3.5" />{best}</span>}
       </div>
       <div className="relative">
@@ -149,7 +150,7 @@ export function SnakeGame() {
         {!running && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/55 rounded-lg backdrop-blur-sm">
             <p className="text-sm text-white">{over ? `Game over — score ${score}` : "Terminal Snake"}</p>
-            <button type="button" onClick={start} className="px-4 py-2 rounded-lg bg-purple-500/15 border border-purple-500/30 text-[13px] text-purple-300 hover:text-white hover:bg-purple-500/25 transition-colors cursor-pointer">{over ? "Play again" : "Start"}</button>
+            <button type="button" onClick={start} className="px-4 py-2 rounded-lg bg-accent/15 border border-accent/30 text-[13px] text-accent hover:text-white hover:bg-accent/25 transition-colors cursor-pointer">{over ? "Play again" : "Start"}</button>
             <p className="text-[10px] text-neutral-500">arrow keys / WASD</p>
           </div>
         )}
