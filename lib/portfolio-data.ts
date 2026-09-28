@@ -61,23 +61,24 @@ export const skills = {
     { name: 'GIT' },
     { name: 'AWS' },
     { name: 'DOCKER' },
+    { name: 'TERRAFORM' },
     { name: 'CLOUDFLARE' },
   ],
 };
 
 export const experience = [
   {
-    period: '2024 – 2026',
+    period: '2024 - 2026',
     title: 'Full Stack Developer',
     company: 'Independent Contractor',
   },
   {
-    period: '2023 – 2024',
+    period: '2023 - 2024',
     title: 'Software Engineer',
     company: 'Pointwest Squad Inc.',
   },
   {
-    period: '2022 – 2023',
+    period: '2022 - 2023',
     title: 'Software Engineer',
     company: 'Vtimetech Consulting Inc.',
   },
@@ -87,12 +88,12 @@ export const experience = [
     company: 'Lobster Technologies',
   },
   {
-    period: '2017 – 2021',
+    period: '2017 - 2021',
     title: 'Research Analyst',
     company: 'SEAL Capital',
   },
   {
-    period: '2013 – 2018',
+    period: '2013 - 2018',
     title: 'BS Computer Engineering',
     company: 'University of Pangasinan',
   },

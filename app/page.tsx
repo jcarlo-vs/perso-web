@@ -12,6 +12,7 @@ import { AiTerminal } from "@/components/ai-terminal";
 import { AiLauncher } from "@/components/ai-launcher";
 import { ArcadeMount } from "@/components/arcade/arcade-mount";
 import { GameHeader } from "@/components/game-header";
+import { PipelineFlow } from "@/components/pipeline-flow";
 
 export default function Home() {
   return (
@@ -84,6 +85,7 @@ export default function Home() {
           {/* Experience */}
           <FadeIn>
           <section id="experience">
+            <PipelineFlow />
             <h2 className="text-xs font-mono tracking-[0.2em] text-accent/80 uppercase mb-6">
               Experience
             </h2>

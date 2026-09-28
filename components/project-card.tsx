@@ -12,7 +12,6 @@ interface Project {
   description: string;
   image: string;
   modalImage?: string;
-  technologies: string[];
   demoLink?: string;
   githubLink?: string;
   privateRepo?: boolean;
@@ -140,15 +139,6 @@ export function ProjectCard({ project }: { project: Project }) {
                   </div>
                   <HiArrowUpRight className="w-3.5 h-3.5 text-neutral-700 group-hover:text-accent shrink-0 mt-0.5 transition-all duration-200" />
                 </div>
-
-                {/* Tech tags */}
-                <div className="flex flex-wrap gap-1.5 mt-3">
-                  {project.technologies.map((tech) => (
-                    <span key={tech} className="text-[10px] text-neutral-600 group-hover:text-accent/80 px-1.5 py-0.5 rounded bg-white/[0.03] border border-white/6 group-hover:border-accent/30 group-hover:bg-accent/10 transition-colors duration-200">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
               </button>
             </motion.div>
           </motion.div>
@@ -210,16 +200,7 @@ export function ProjectCard({ project }: { project: Project }) {
                   {/* Details */}
                   <div className="p-6">
                     <h3 className="text-lg font-bold text-white mb-2">{project.title}</h3>
-                    <p className="text-sm text-neutral-200 leading-relaxed mb-4">{project.description}</p>
-
-                    {/* Tech */}
-                    <div className="flex flex-wrap gap-1.5 mb-6">
-                      {project.technologies.map((tech) => (
-                        <span key={tech} className="text-[11px] text-accent/80 px-2 py-0.5 rounded-full bg-accent/10 border border-accent/20">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
+                    <p className="text-sm text-neutral-200 leading-relaxed mb-6">{project.description}</p>
 
                     {/* Actions */}
                     <div className="flex gap-3">

@@ -14,18 +14,18 @@ const output = [
   "  Installing: Node.js, Express, NestJS, PHP (Laravel), Python (FastAPI), MongoDB, PostgreSQL, MySQL, Redis",
   "",
   "Collecting devops...",
-  "  Installing: Git, Docker, CI/CD, Cloudflare",
+  "  Installing: Git, Docker, CI/CD, Terraform",
   "",
   "Collecting cloud services...",
-  "  Installing: AWS (EC2, ECS, Fargate, RDS, ElastiCache, SQS, SNS, Lambda, S3, CloudWatch), Supabase, Firebase",
+  "  Installing: AWS (EC2, ECS, Fargate, RDS, ElastiCache, SQS, SNS, Lambda, S3, CloudWatch), Cloudflare, Supabase, Firebase",
   "",
   "Collecting automation...",
   "  Installing: n8n, Zapier",
   "",
   "Collecting ai tools...",
-  "  Installing: Claude, GitHub Copilot",
+  "  Installing: Anthropic (Claude), GitHub Copilot",
   "",
-  "✓ Successfully installed 37 packages",
+  "✓ Successfully installed 38 packages",
 ];
 
 export function TechImports() {
